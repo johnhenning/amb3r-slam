@@ -6,13 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "amber-slam"
 version = "0.1.0"
 description = "Independent AMB3R-SLAM reproduction and experimental mobile student"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.13"
 dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "Pillow>=10", "opencv-python-headless>=4.8"]
 
 [project.optional-dependencies]
 train = ["torch>=2.6"]
 export = ["torch>=2.6", "onnx>=1.16", "onnxruntime>=1.18"]
+da3 = ["depth-anything-3", "numpy<2", "opencv-python-headless<4.12"]
+
+[dependency-groups]
 dev = ["pytest>=8", "ruff>=0.9"]
+
+[tool.uv.sources]
+depth-anything-3 = { git = "https://github.com/ByteDance-Seed/Depth-Anything-3", rev = "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4" }
 
 [project.scripts]
 amber = "amber_slam.cli:main"

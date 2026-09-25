@@ -1,0 +1,49 @@
+cff-version: 1.2.0
+message: >-
+  Please credit the original AMB3R-SLAM paper when using this independent
+  implementation, and cite Depth Anything 3 when using its models.
+  Cite the repository URL and commit separately to identify this implementation.
+title: 'Amber SLAM: Independent AMB3R-SLAM Implementation'
+type: software
+authors:
+  - family-names: Henning
+    given-names: John
+repository-code: 'https://github.com/johnhenning/amb3r-slam'
+license: MIT
+preferred-citation:
+  type: article
+  title: 'AMB3R-SLAM: Kilometer-scale SLAM with Hierarchical Backend'
+  authors:
+    - family-names: Wang
+      given-names: Hengyi
+    - family-names: Agapito
+      given-names: Lourdes
+  year: 2026
+  journal: arXiv
+  url: 'https://arxiv.org/abs/2609.19518'
+  identifiers:
+    - type: other
+      value: 'arXiv:2609.19518'
+references:
+  - type: article
+    title: 'Depth Anything 3: Recovering the Visual Space from Any Views'
+    authors:
+      - family-names: Lin
+        given-names: Haotong
+      - family-names: Chen
+        given-names: Sili
+      - family-names: Liew
+        given-names: Jun Hao
+      - family-names: Chen
+        given-names: Donny Y.
+      - family-names: Li
+        given-names: Zhenyu
+      - family-names: Shi
+        given-names: Guang
+      - family-names: Feng
+        given-names: Jiashi
+      - family-names: Kang
+        given-names: Bingyi
+    year: 2025
+    journal: arXiv
+    url: 'https://arxiv.org/abs/2511.10647'

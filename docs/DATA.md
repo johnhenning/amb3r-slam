@@ -37,9 +37,9 @@ Sparse LiDAR must provide enough valid projected depth for scale fitting.
 ## Existing converters
 
 ```bash
-python scripts/prepare_dataset.py tum /path/to/tum data/tum.json \
+uv run --no-sync scripts/prepare_dataset.py tum /path/to/tum data/tum.json \
   --id tum-desk --intrinsics 517.3 516.5 318.6 255.3
-python scripts/prepare_dataset.py kitti /path/to/sequences/00 data/kitti00.json \
+uv run --no-sync scripts/prepare_dataset.py kitti /path/to/sequences/00 data/kitti00.json \
   --id kitti-00 --poses /path/to/poses/00.txt
 ```
 

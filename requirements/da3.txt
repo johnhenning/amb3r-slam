@@ -1,5 +1,0 @@
-# Reproduction integration pinned to the reviewed upstream source revision.
-# Install in a fresh Python 3.10-3.12 environment with matching torch/torchvision.
-numpy>=1.24,<2
-opencv-python-headless>=4.8,<4.12
-depth-anything-3 @ git+https://github.com/ByteDance-Seed/Depth-Anything-3.git@3d835ec1a5802d64a8b8b15f817a1ab54809bfe4

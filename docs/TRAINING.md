@@ -21,8 +21,8 @@ scene-held-out validation, atomic checkpoints and resume. It writes config and
 JSONL metrics. It does not acquire datasets or manage a cluster.
 
 ```bash
-python -m amber_slam train configs/smoke_train.json
-python -m torch.distributed.run --nproc_per_node=4 -m amber_slam train my_training.json
+uv run --no-sync amber train configs/smoke_train.json
+uv run --no-sync torchrun --nproc_per_node=4 -m amber_slam train my_training.json
 ```
 
 Set `resume` to an owned `last.pt` in the configuration. Checkpoints include

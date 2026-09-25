@@ -44,7 +44,7 @@ Date: 2026-09-25. CPU-only development environment; CUDA unavailable.
 Python 3.12; PyTorch 2.14.0; NumPy 2.3.5; SciPy 1.17.0;
 OpenCV headless 5.0.0.93; ONNX 1.23.0; ONNX Runtime 1.30.0;
 pytest 9.1.1; Ruff 0.16.9. This is a development snapshot, not a universal
-platform lock. DA3 declares NumPy<2 in its upstream package; use the dedicated
-requirements in a clean environment for a supported integration install.
+platform lock. DA3 declares NumPy<2 in its upstream package; use `uv sync --locked --extra da3 --extra train --extra export`
+in a clean environment for a supported integration install.
 The isolated development smoke used already-installed dependencies and is not
 proof of compatibility across other DA3 optional features.

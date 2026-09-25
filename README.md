@@ -5,6 +5,21 @@ An independent Python implementation of the **AMB3R-SLAM system design**, using
 repository includes replay/live capture, evaluation, experimental training,
 ONNX export, and a small C++ network-inference library.
 
+**Research credit:** [AMB3R-SLAM: Kilometer-scale SLAM with Hierarchical
+Backend](https://arxiv.org/abs/2609.19518) by **Hengyi Wang and Lourdes Agapito**
+(UCL, 2026) provides the system design reproduced here. See the
+[authors' project](https://hengyiwang.github.io/projects/amber-slam) and
+[official repository](https://github.com/HengyiWang/amb3r-slam).
+Geometry predictions use [Depth Anything 3](https://arxiv.org/abs/2511.10647)
+by Haotong Lin, Sili Chen, Jun Hao Liew, Donny Y. Chen, Zhenyu Li, Guang Shi,
+Jiashi Feng, and Bingyi Kang (ByteDance Seed, 2025).
+
+This repository is an independent implementation, not an official release or
+affiliation with either research team. The algorithmic contributions belong to
+the original researchers. See [citation entries](CITATIONS.bib),
+[attribution notice](NOTICE.md), and [implementation differences](docs/FIDELITY.md).
+
+
 **Status:** research implementation, not an official implementation or a claim
 of reproduced benchmark results. Read [verification](docs/VERIFICATION.md) for
 what was actually run and [fidelity](docs/FIDELITY.md) for deviations. The
@@ -21,13 +36,13 @@ the C++/iOS/Android boundary and acceptance gates.
 
 ## Install
 
-Use Python 3.10–3.12 in a virtual environment. Install a matching PyTorch and
-TorchVision build for your CPU/CUDA platform first, following PyTorch's install
-instructions. Then, from the repository root:
+Install [uv](https://docs.astral.sh/uv/getting-started/installation/). The
+project pins Python 3.12 in `.python-version`; uv manages the environment and
+resolves dependencies from the committed `uv.lock`. From the repository root:
 
 ```bash
-python -m pip install -e '.[dev,train,export]'
-python -m pytest -q
+uv sync --locked --extra train --extra export
+uv run --no-sync pytest -q
 ```
 
 For the actual checkpoint-backed SLAM path, also install the pinned upstream
@@ -35,8 +50,13 @@ DA3 dependency. Its package includes substantial optional visualization and
 CUDA dependencies; follow upstream installation guidance for your platform.
 
 ```bash
-python -m pip install -r requirements/da3.txt
+uv sync --locked --extra da3 --extra train --extra export
 ```
+
+Development tools are in the default `dev` dependency group. `train`, `export`,
+and `da3` are optional extras. Commands below use `--no-sync` after the explicit
+sync step so they retain the selected extras. To update dependencies deliberately,
+run `uv lock --upgrade`, review the diff, then `uv sync` with your chosen extras.
 
 The base package intentionally does not install or download DA3 checkpoints.
 They are fetched by DA3 on first explicit use, or you can pass local checkpoint
@@ -50,7 +70,7 @@ converters. Monocular runs ignore depth for geometric inference, while metric
 mode uses registered sensor depth to calibrate scale.
 
 ```bash
-python -m amber_slam run \
+uv run --no-sync amber run \
   --manifest data/my_sequence.json --sequence my-sequence \
   --frontend depth-anything/DA3-SMALL \
   --backend depth-anything/DA3-GIANT \
@@ -65,7 +85,7 @@ substituted. Record the chosen model/revision when comparing results.
 Live camera (a desktop with a camera and sufficient compute):
 
 ```bash
-python -m amber_slam run --camera 0 --async-backend \
+uv run --no-sync amber run --camera 0 --async-backend \
   --device cuda --output runs/live --max-frames 600
 ```
 
@@ -83,9 +103,9 @@ the sequence. Loss of tracking raises an error rather than inventing poses.
 ## Evaluate and export a map
 
 ```bash
-python -m amber_slam evaluate data/groundtruth.tum runs/my-sequence/trajectory.tum \
+uv run --no-sync amber evaluate data/groundtruth.tum runs/my-sequence/trajectory.tum \
   --alignment sim3 --output runs/my-sequence/metrics.json
-python scripts/export_map.py runs/my-sequence runs/my-sequence/map.ply
+uv run --no-sync scripts/export_map.py runs/my-sequence runs/my-sequence/map.ply
 ```
 
 Use `--alignment se3` for metric-scale evaluation. Evaluate
@@ -100,10 +120,10 @@ These commands train a **tiny independent model on analytic fixtures**, not
 DA3, and test the training/deployment plumbing:
 
 ```bash
-python -m amber_slam synthetic data/synthetic --frames 16 --size 32
-python -m amber_slam train configs/smoke_train.json
-python -m amber_slam export runs/smoke_training/last.pt runs/smoke_training/model.onnx --views 4
-python -m amber_slam benchmark runs/smoke_training/model.onnx
+uv run --no-sync amber synthetic data/synthetic --frames 16 --size 32
+uv run --no-sync amber train configs/smoke_train.json
+uv run --no-sync amber export runs/smoke_training/last.pt runs/smoke_training/model.onnx --views 4
+uv run --no-sync amber benchmark runs/smoke_training/model.onnx
 ```
 
 Use the ONNX model as a frontend with `--model onnx` only when its fixed view
@@ -123,3 +143,21 @@ Checkpoints, datasets and run outputs are excluded from version control. The
 original code is MIT licensed; external software, checkpoints and datasets
 retain their own licenses. In particular, consult the DA3 model cards before
 using giant weights in a commercial app. See [sources](docs/SOURCES.md).
+
+## Citing the research
+
+If you use this implementation in research, cite the original AMB3R-SLAM paper
+and Depth Anything 3 when using its models. Machine-readable references are in
+[`CITATIONS.bib`](CITATIONS.bib); [`CITATION.cff`](CITATION.cff) identifies the
+original paper as the preferred research citation. Cite this repository's URL
+and commit separately when identifying the specific implementation evaluated.
+
+```bibtex
+@article{wang2026amb3rslam,
+  title = {{AMB3R-SLAM}: Kilometer-scale {SLAM} with Hierarchical Backend},
+  author = {Wang, Hengyi and Agapito, Lourdes},
+  journal = {arXiv preprint arXiv:2609.19518},
+  year = {2026},
+  url = {https://arxiv.org/abs/2609.19518}
+}
+```
