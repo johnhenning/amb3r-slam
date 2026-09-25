@@ -67,3 +67,19 @@ platform lock. DA3 declares NumPy<2 in its upstream package; use `uv sync --lock
 in a clean environment for a supported integration install.
 The isolated development smoke used already-installed dependencies and is not
 proof of compatibility across other DA3 optional features.
+
+
+## Concurrent pipeline update
+
+Validated on Python 3.12 using the locked development/train/export/benchmark
+installation. Ruff lint/format and Pyrefly pass. The offline suite has **33 passing
+tests**; **6 external-data/report tests are skipped** without their environment
+variables. No pretrained TUM inference or GPU/mobile timing was rerun for this change.
+
+New checks establish that tracking and next-window local mapping progress while
+graph processing is explicitly blocked; outstanding work stays bounded with
+backpressure; sequential and concurrent oracle trajectories/graph edges agree
+across capacities 1–3; final tail mapping and idempotent shutdown work; mapping,
+graph, and caller errors clean up both workers. Existing long-context, loop
+verification, and RGB-D checks now run in both execution modes. These tests verify
+orchestration correctness, not learned-model accuracy or hardware speedup.

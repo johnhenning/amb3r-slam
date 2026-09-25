@@ -170,3 +170,16 @@ and commit separately when identifying the specific implementation evaluated.
   url = {https://arxiv.org/abs/2609.19518}
 }
 ```
+
+
+### Concurrent execution
+
+Tracking, local reconstruction, and graph processing now run as a bounded pipeline
+by default. Local reconstruction can overlap the previous window's graph work;
+loop and long-context inference share the backend model safely. Live capture has
+its own latest-frame thread. Use `--max-pending-windows 2` to set the outstanding
+window limit (default 2), or `--no-async-backend` for sequential execution.
+
+See [state ownership and shutdown](docs/ARCHITECTURE.md#state-and-concurrency)
+and [benchmark comparison commands](docs/BENCHMARKS.md#concurrent-versus-sequential-execution).
+Concurrency is enabled; real-device speedup has not yet been measured.
