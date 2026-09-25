@@ -1,9 +1,0 @@
-{
-  "initial_cost": 6.436464748580844,
-  "final_cost": 6.0581490462154575,
-  "success": true,
-  "evaluations": 21,
-  "submaps": 63,
-  "edges": 205,
-  "rejected_loops": 0
-}

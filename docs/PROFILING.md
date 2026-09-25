@@ -45,7 +45,7 @@ The report generator checks identical inputs/settings/source across the matrix,
 recomputes metrics and compares online/corrected ATE against independent `evo`.
 Large frame/submap caches are not committed; the experiment recreates them.
 
-[Recorded experiment and recovery disclosure](../reports/concurrency_review_2026-09-25/README.md).
+[Recorded experiment and recovery disclosure](https://github.com/johnhenning/amb3r-slam/blob/codex/profile-comparisons/reports/concurrency_review_2026-09-25/README.md).
 The earlier six-run summary was recovered from retained tool output after
 workspace maintenance removed its raw traces. It must not be treated as raw
 trace evidence or combined with fresh runs to estimate variance.
