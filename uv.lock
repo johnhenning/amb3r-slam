@@ -33,6 +33,7 @@ dependencies = [
 benchmark = [
     { name = "huggingface-hub" },
     { name = "matplotlib" },
+    { name = "psutil" },
     { name = "threadpoolctl" },
 ]
 da3 = [
@@ -70,6 +71,7 @@ requires-dist = [
     { name = "opencv-python-headless", specifier = ">=4.8" },
     { name = "opencv-python-headless", marker = "extra == 'da3'", specifier = "<4.12" },
     { name = "pillow", specifier = ">=10" },
+    { name = "psutil", marker = "extra == 'benchmark'", specifier = ">=7.2" },
     { name = "scipy", specifier = ">=1.10,<2" },
     { name = "threadpoolctl", marker = "extra == 'benchmark'", specifier = ">=3.6" },
     { name = "torch", marker = "extra == 'export'", specifier = ">=2.6" },

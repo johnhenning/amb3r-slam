@@ -28,6 +28,7 @@ from .evaluation import (
     read_tum,
     write_tum,
 )
+from .profiling import ReplayProfiler
 from .runtime import SlamSystem
 from .types import Frame, GeometryModel
 
@@ -160,22 +161,29 @@ def run_tum_sequence(
     write_tum(output / "reference.tum", gt_times, gt_poses)
     selected = [(t, p.relative_to(directory).as_posix(), sha256_file(p)) for t, p in samples]
     (output / "inputs.json").write_text(json.dumps(selected, indent=2))
-    started = time.perf_counter()
-    with SlamSystem(
-        frontend,
-        backend,
-        output / "runtime",
-        config,
-        asynchronous=asynchronous,
-        max_pending_windows=max_pending_windows,
-    ) as system:
-        for index, (timestamp, path) in enumerate(samples):
-            with Image.open(path) as image:
-                rgb = np.array(image.convert("RGB"))
-            system.push(Frame(index, timestamp, rgb))
-            if index % 10 == 0:
-                print(f"{directory.name}: {index + 1}/{len(samples)}", flush=True)
-    elapsed = time.perf_counter() - started
+    with ReplayProfiler(output / "profile") as profile:
+        started = time.perf_counter()
+        with SlamSystem(
+            frontend,
+            backend,
+            output / "runtime",
+            config,
+            asynchronous=asynchronous,
+            max_pending_windows=max_pending_windows,
+        ) as system:
+            system.frontend.track = profile.wrap("tracking", system.frontend.track)
+            system.backend.prepare = profile.wrap("mapping.prepare", system.backend.prepare)
+            system.backend.integrate = profile.wrap("graph.integrate", system.backend.integrate)
+            system.backend.graph.optimize = profile.wrap(
+                "graph.optimize", system.backend.graph.optimize
+            )
+            for index, (timestamp, path) in enumerate(samples):
+                with Image.open(path) as image:
+                    rgb = np.array(image.convert("RGB"))
+                system.push(Frame(index, timestamp, rgb))
+                if index % 10 == 0:
+                    print(f"{directory.name}: {index + 1}/{len(samples)}", flush=True)
+        elapsed = time.perf_counter() - started
     write_tum(output / "trajectory.tum", system.timestamps, system.trajectory())
     write_tum(output / "trajectory_online.tum", system.timestamps, np.stack(system.online_poses))
     np.savetxt(

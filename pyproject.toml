@@ -23,6 +23,7 @@ benchmark = [
     "huggingface-hub>=0.34",
     "matplotlib>=3.9",
     "threadpoolctl>=3.6",
+    "psutil>=7.2",
 ]
 
 [dependency-groups]
