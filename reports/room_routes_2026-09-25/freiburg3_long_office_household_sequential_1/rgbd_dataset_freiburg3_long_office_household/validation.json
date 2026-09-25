@@ -1,0 +1,12 @@
+{
+  "online": {
+    "evo_ate_rmse_m": 0.4118361351906327,
+    "matched": 258,
+    "sampled": 259
+  },
+  "corrected": {
+    "evo_ate_rmse_m": 0.1505265948415564,
+    "matched": 258,
+    "sampled": 259
+  }
+}

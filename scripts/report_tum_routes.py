@@ -83,6 +83,10 @@ def summarize(root: Path) -> None:
         validation[run["label"]] = validate(path, result)
         edges = json.loads((path / "runtime/graph_edges.json").read_text())
         corrections = json.loads((path / "corrections.json").read_text())
+        if len(corrections) != result["statistics"]["submaps"]:
+            raise ValueError("Correction timeline does not cover every submap")
+        if any(b["replay_s"] < a["replay_s"] for a, b in zip(corrections, corrections[1:])):
+            raise ValueError("Correction timeline is not chronological")
         loops = [e for e in edges if e["kind"] == "loop"]
         for event in corrections:
             index = event["graph"]["submaps"] - 1
