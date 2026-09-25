@@ -188,5 +188,5 @@ Concurrency is enabled; real-device speedup has not yet been measured.
 
 [Profiling documentation](docs/PROFILING.md) covers matched sequential/concurrent
 TUM runs, process CPU and memory traces, stage timing, and passive-wait diagnostics.
-[Results and provenance](reports/concurrency_review_2026-09-25/README.md) distinguish
-the historical six-run summary from the fresh diagnostic matrix.
+[Experiment tracking](docs/EXPERIMENTS.md) sends each benchmark run, its measured
+resource timelines, and trajectory artifacts to W&B. Generated results stay outside Git.

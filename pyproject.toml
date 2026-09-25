@@ -25,6 +25,9 @@ benchmark = [
     "threadpoolctl>=3.6",
     "psutil>=7.2",
 ]
+tracking = [
+    "wandb>=0.30.0",
+]
 
 [dependency-groups]
 dev = ["pytest>=8", "ruff>=0.9", "pyrefly>=1.3.1"]

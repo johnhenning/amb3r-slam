@@ -1,9 +1,6 @@
 name: Full-route TUM profiling
 on:
   workflow_dispatch:
-  push:
-    branches: [codex/slam-profiling]
-    paths: [.github/workflows/route-benchmark.yml]
 permissions:
   contents: read
 concurrency:
@@ -26,12 +23,26 @@ jobs:
           enable-cache: false
       - name: Install locked benchmark dependencies
         run: |
-          uv sync --locked --extra da3 --extra benchmark
+          uv sync --locked --extra da3 --extra benchmark --extra tracking
           uv cache clean
       - name: Replay matched full-route pairs on this runner
         run: uv run --no-sync python scripts/profile_tum_routes.py --output reports/room_routes_ci
       - name: Independently validate and generate comparison
         run: uv run --no-sync python scripts/report_tum_routes.py reports/room_routes_ci
+      - name: Publish completed runs to the experiment tracker
+        if: always()
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_ENTITY: ${{ vars.WANDB_ENTITY }}
+          WANDB_PROJECT: ${{ vars.WANDB_PROJECT || 'amb3r-slam' }}
+        run: |
+          if ! python -c "from pathlib import Path; import sys; sys.exit(not any(Path('reports/room_routes_ci').rglob('results.json')))"; then
+            echo "No completed runs to publish"
+            exit 0
+          fi
+          mode=offline
+          if [ -n "$WANDB_API_KEY" ] && [ -n "$WANDB_ENTITY" ]; then mode=online; fi
+          uv run --no-sync python scripts/export_wandb.py reports/room_routes_ci --mode "$mode"
       - name: Preserve raw profiles, trajectories, logs and all report images
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,6 +51,7 @@ jobs:
           retention-days: 90
           if-no-files-found: error
           path: |
+            wandb/**
             reports/room_routes_ci/**
             !reports/room_routes_ci/**/runtime/frames/**
             !reports/room_routes_ci/**/runtime/submaps/**
