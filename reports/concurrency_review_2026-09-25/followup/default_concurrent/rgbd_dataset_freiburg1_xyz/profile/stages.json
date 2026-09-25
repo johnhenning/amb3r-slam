@@ -1,0 +1,940 @@
+[
+  {
+    "name": "tracking",
+    "start_s": 0.04830242399998497,
+    "duration_s": 0.3080172710000397,
+    "caller_thread_cpu_s": 0.2981130570000001,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 0.3913575870000159,
+    "duration_s": 0.5389996170000586,
+    "caller_thread_cpu_s": 0.5175195449999999,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 0.9660497639999903,
+    "duration_s": 0.6671224960000472,
+    "caller_thread_cpu_s": 0.6541001229999992,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 1.6696817110000666,
+    "duration_s": 0.9557742709999957,
+    "caller_thread_cpu_s": 0.9275177000000001,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 2.6624702249999928,
+    "duration_s": 0.9585119179999992,
+    "caller_thread_cpu_s": 0.939364458,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 3.6576334879999877,
+    "duration_s": 0.9877281579999817,
+    "caller_thread_cpu_s": 0.962271223000001,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 4.6801506460000155,
+    "duration_s": 0.8790782449999597,
+    "caller_thread_cpu_s": 0.839602137,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 5.619100257000014,
+    "duration_s": 0.890946807999967,
+    "caller_thread_cpu_s": 0.8749685439999997,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 6.539093086999969,
+    "duration_s": 0.8082818730000554,
+    "caller_thread_cpu_s": 0.7924162409999997,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 7.376564347999988,
+    "duration_s": 0.8297304400000485,
+    "caller_thread_cpu_s": 0.8137589910000003,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 8.240516022000065,
+    "duration_s": 1.0013844629999085,
+    "caller_thread_cpu_s": 0.977472315,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 9.278174499999977,
+    "duration_s": 0.8178056760000345,
+    "caller_thread_cpu_s": 0.8029523479999998,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 10.162318401999983,
+    "duration_s": 0.9635367719999977,
+    "caller_thread_cpu_s": 0.9218838869999999,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 10.096279857000013,
+    "duration_s": 1.5585942390000582,
+    "caller_thread_cpu_s": 1.510054624,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 11.750243260000047,
+    "duration_s": 9.454999940317066e-06,
+    "caller_thread_cpu_s": 7.141000000002173e-06,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 11.654959710000071,
+    "duration_s": 0.10476712999991378,
+    "caller_thread_cpu_s": 0.084127099,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 11.162157712000067,
+    "duration_s": 0.9371480879999581,
+    "caller_thread_cpu_s": 0.8578312750000006,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 12.13620623899999,
+    "duration_s": 0.8997388520000413,
+    "caller_thread_cpu_s": 0.8851642609999999,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 13.077021409000054,
+    "duration_s": 0.7890024989999347,
+    "caller_thread_cpu_s": 0.7687026990000021,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 13.924340832999974,
+    "duration_s": 0.9613105350000524,
+    "caller_thread_cpu_s": 0.9077200499999982,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 13.866253539000013,
+    "duration_s": 1.6721250809999901,
+    "caller_thread_cpu_s": 1.63580119,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 15.643271906999985,
+    "duration_s": 0.012858729000072344,
+    "caller_thread_cpu_s": 0.012491580000000002,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 15.538523689000044,
+    "duration_s": 0.1366502619999892,
+    "caller_thread_cpu_s": 0.135765589,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 14.924775201999978,
+    "duration_s": 1.061073896000039,
+    "caller_thread_cpu_s": 1.023184570999998,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 16.014807544000064,
+    "duration_s": 0.8459916719999683,
+    "caller_thread_cpu_s": 0.8110134809999998,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 16.89247553100006,
+    "duration_s": 0.956208280999931,
+    "caller_thread_cpu_s": 0.9417125429999977,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 17.907220358000018,
+    "duration_s": 0.9650331929999538,
+    "caller_thread_cpu_s": 0.9219167299999995,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 17.848895992000053,
+    "duration_s": 1.449162589000025,
+    "caller_thread_cpu_s": 1.4107007979999997,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 19.396763777000047,
+    "duration_s": 0.11391465999997763,
+    "caller_thread_cpu_s": 0.11192119500000003,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 19.298192087000075,
+    "duration_s": 0.23537434200000007,
+    "caller_thread_cpu_s": 0.232844086,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 18.91187854100008,
+    "duration_s": 0.9981383179999739,
+    "caller_thread_cpu_s": 0.9115717829999994,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 19.945631140000046,
+    "duration_s": 0.8126678989999618,
+    "caller_thread_cpu_s": 0.7951528309999993,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 20.79121205299998,
+    "duration_s": 0.812345194000045,
+    "caller_thread_cpu_s": 0.7878423559999987,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 21.668718161000015,
+    "duration_s": 1.047800025000015,
+    "caller_thread_cpu_s": 0.9982545879999982,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 21.603746957999988,
+    "duration_s": 1.725461143000075,
+    "caller_thread_cpu_s": 1.640552693,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 23.43342016300005,
+    "duration_s": 0.2508219650000001,
+    "caller_thread_cpu_s": 0.24606033100000002,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 23.329295643000023,
+    "duration_s": 0.38485040099999424,
+    "caller_thread_cpu_s": 0.37916961400000004,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 22.75551932899998,
+    "duration_s": 1.0449104570000145,
+    "caller_thread_cpu_s": 0.8425192449999983,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 23.84064296100007,
+    "duration_s": 0.8521077309999328,
+    "caller_thread_cpu_s": 0.837352991000003,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 24.729535768000005,
+    "duration_s": 0.8335832710000659,
+    "caller_thread_cpu_s": 0.8187965940000019,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 25.61655961200006,
+    "duration_s": 0.9645423449999271,
+    "caller_thread_cpu_s": 0.9061137089999995,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 25.563311964000036,
+    "duration_s": 1.5635833569999704,
+    "caller_thread_cpu_s": 1.5011645419999997,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 27.21064109400004,
+    "duration_s": 0.2546210099999371,
+    "caller_thread_cpu_s": 0.24843221300000007,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 27.127036003000057,
+    "duration_s": 0.3757702599999675,
+    "caller_thread_cpu_s": 0.3691267279999999,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 26.628033758000015,
+    "duration_s": 1.0072287189999543,
+    "caller_thread_cpu_s": 0.8544727739999978,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 27.672658453000054,
+    "duration_s": 1.0020933929999956,
+    "caller_thread_cpu_s": 0.9159871590000002,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 28.707087761000025,
+    "duration_s": 0.8288885040000196,
+    "caller_thread_cpu_s": 0.8154466920000019,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 29.595163666000076,
+    "duration_s": 0.9690987699999596,
+    "caller_thread_cpu_s": 0.9162904749999967,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 29.536151609000058,
+    "duration_s": 1.7140392029999703,
+    "caller_thread_cpu_s": 1.5813000619999995,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 30.594736544000057,
+    "duration_s": 0.9580432259999725,
+    "caller_thread_cpu_s": 0.8953926330000002,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 31.588095819000046,
+    "duration_s": 0.8883353869999837,
+    "caller_thread_cpu_s": 0.8760272250000014,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 32.516372692999994,
+    "duration_s": 1.0800433200000725,
+    "caller_thread_cpu_s": 0.976694197999997,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 33.64363588000003,
+    "duration_s": 0.9498347149999518,
+    "caller_thread_cpu_s": 0.895999304,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 34.63472399099999,
+    "duration_s": 0.9836606300000312,
+    "caller_thread_cpu_s": 0.9643541229999997,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 35.964063675000034,
+    "duration_s": 0.5608245710000119,
+    "caller_thread_cpu_s": 0.5428207830000007,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 31.25032394699997,
+    "duration_s": 5.32216819700011,
+    "caller_thread_cpu_s": 4.987756206999999,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 35.65881828600004,
+    "duration_s": 1.1238072379999267,
+    "caller_thread_cpu_s": 0.8467802589999991,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 33.599223241000004,
+    "duration_s": 3.716317310000022,
+    "caller_thread_cpu_s": 1.2884885539999988,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 36.81641626600003,
+    "duration_s": 1.326814497999976,
+    "caller_thread_cpu_s": 0.8741612860000032,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 37.41179941799999,
+    "duration_s": 0.7995048029999907,
+    "caller_thread_cpu_s": 0.7460312059999996,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 37.31563040100002,
+    "duration_s": 0.975979299999949,
+    "caller_thread_cpu_s": 0.8979054959999999,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 38.24791290100006,
+    "duration_s": 0.7872404679999363,
+    "caller_thread_cpu_s": 0.7425096300000007,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 38.143407475000004,
+    "duration_s": 1.4408104290000665,
+    "caller_thread_cpu_s": 1.350900523,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 39.07294377100004,
+    "duration_s": 0.9453242299999829,
+    "caller_thread_cpu_s": 0.8708786739999965,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 40.06030174800003,
+    "duration_s": 0.9289759619999813,
+    "caller_thread_cpu_s": 0.8709820100000059,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 41.037487167999984,
+    "duration_s": 0.8944108250000227,
+    "caller_thread_cpu_s": 0.8690903880000036,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 42.45274202899998,
+    "duration_s": 1.0352501130000746,
+    "caller_thread_cpu_s": 0.9838467589999986,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 41.974728828000025,
+    "duration_s": 1.5391967470000054,
+    "caller_thread_cpu_s": 0.9791198560000041,
+    "tid": 2056
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 39.58430837599997,
+    "duration_s": 3.963225527000077,
+    "caller_thread_cpu_s": 3.8205707060000007,
+    "tid": 2254
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 41.93207344799998,
+    "duration_s": 2.12310547900006,
+    "caller_thread_cpu_s": 1.3621301839999997,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 43.556008286000065,
+    "duration_s": 1.0096132009999792,
+    "caller_thread_cpu_s": 0.9727825300000035,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 44.60554753500003,
+    "duration_s": 0.9975430209999558,
+    "caller_thread_cpu_s": 0.9639518749999993,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 45.63710749699999,
+    "duration_s": 1.063527600000043,
+    "caller_thread_cpu_s": 1.0190954879999978,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 46.735097395000025,
+    "duration_s": 1.006019637999998,
+    "caller_thread_cpu_s": 0.9790833819999989,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 47.77491610499999,
+    "duration_s": 1.0059703660000423,
+    "caller_thread_cpu_s": 0.9248975579999978,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 48.82321419900006,
+    "duration_s": 1.4632725579999715,
+    "caller_thread_cpu_s": 1.3927816570000005,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 44.05525888300008,
+    "duration_s": 6.3010908279999285,
+    "caller_thread_cpu_s": 6.018554811,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 48.831922398000074,
+    "duration_s": 1.7680328369999643,
+    "caller_thread_cpu_s": 1.1579244099999997,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 46.70107348800002,
+    "duration_s": 4.170844351000028,
+    "caller_thread_cpu_s": 1.7594349610000002,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 50.97015009500001,
+    "duration_s": 1.1862894309999774,
+    "caller_thread_cpu_s": 1.1688099759999986,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 50.875783227000056,
+    "duration_s": 1.3565156839999872,
+    "caller_thread_cpu_s": 1.3379479130000007,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 50.643578697000066,
+    "duration_s": 1.7206336599999759,
+    "caller_thread_cpu_s": 1.2197069389999982,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 52.411384913000006,
+    "duration_s": 1.142753890999984,
+    "caller_thread_cpu_s": 1.109947298999998,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 52.364627197999994,
+    "duration_s": 1.67536480199999,
+    "caller_thread_cpu_s": 1.619043297000001,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 53.59143098200002,
+    "duration_s": 1.000970045000031,
+    "caller_thread_cpu_s": 0.9550740319999989,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 54.63471526700005,
+    "duration_s": 0.843583370000033,
+    "caller_thread_cpu_s": 0.7941772839999999,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 55.528872449999994,
+    "duration_s": 0.9260058649999792,
+    "caller_thread_cpu_s": 0.8223619970000016,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 56.496017703999996,
+    "duration_s": 0.897407754000028,
+    "caller_thread_cpu_s": 0.8289971479999991,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 56.45505187100002,
+    "duration_s": 1.7243055830000458,
+    "caller_thread_cpu_s": 1.2537104029999995,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 57.42621643000007,
+    "duration_s": 0.9120947099999057,
+    "caller_thread_cpu_s": 0.8951239399999977,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 58.37172245700003,
+    "duration_s": 1.0047543140000244,
+    "caller_thread_cpu_s": 0.9408372389999968,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 59.411245914999995,
+    "duration_s": 1.976997191999999,
+    "caller_thread_cpu_s": 0.9583106819999969,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 59.63073201999998,
+    "duration_s": 2.0083926840000004,
+    "caller_thread_cpu_s": 1.9680726799999988,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 54.04381515900002,
+    "duration_s": 7.67391287199996,
+    "caller_thread_cpu_s": 6.197741805,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 61.79158696000002,
+    "duration_s": 0.8306506129999889,
+    "caller_thread_cpu_s": 0.8075453820000007,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 61.71925532299997,
+    "duration_s": 1.5563146720000987,
+    "caller_thread_cpu_s": 1.5025218619999983,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 62.65527784900007,
+    "duration_s": 0.8815320439999823,
+    "caller_thread_cpu_s": 0.8660374670000053,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 63.57304101,
+    "duration_s": 0.9781909280000036,
+    "caller_thread_cpu_s": 0.9244495710000038,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 64.58570688700001,
+    "duration_s": 0.8651918020000267,
+    "caller_thread_cpu_s": 0.8362738790000037,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 72.20768682900007,
+    "duration_s": 2.325104699999997,
+    "caller_thread_cpu_s": 2.3205941129999985,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 61.71777939800006,
+    "duration_s": 12.903449617999968,
+    "caller_thread_cpu_s": 11.235026365,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 74.70734153800004,
+    "duration_s": 1.2021962520000216,
+    "caller_thread_cpu_s": 1.1633013399999967,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 74.62267989400004,
+    "duration_s": 1.88031662100002,
+    "caller_thread_cpu_s": 1.815515854000001,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 75.950801716,
+    "duration_s": 1.3301316079999879,
+    "caller_thread_cpu_s": 1.2748290149999946,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 77.31924854099998,
+    "duration_s": 1.6689145170000756,
+    "caller_thread_cpu_s": 1.2003820770000004,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 78.30327226100007,
+    "duration_s": 2.3726170459999594,
+    "caller_thread_cpu_s": 2.316478320999998,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 74.62128627200002,
+    "duration_s": 6.15994673199998,
+    "caller_thread_cpu_s": 4.342166497999997,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 79.135926455,
+    "duration_s": 1.6688205110000354,
+    "caller_thread_cpu_s": 1.0200546869999982,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 80.86429755799998,
+    "duration_s": 1.1498462870000594,
+    "caller_thread_cpu_s": 1.0027679880000022,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 80.80523172599999,
+    "duration_s": 1.5550132470000335,
+    "caller_thread_cpu_s": 1.4822941669999992,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 82.04951772700008,
+    "duration_s": 1.0286729299999706,
+    "caller_thread_cpu_s": 0.9482327019999985,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 83.112421315,
+    "duration_s": 1.048657048999985,
+    "caller_thread_cpu_s": 0.9882629549999962,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 84.20622404799997,
+    "duration_s": 0.8768618340000103,
+    "caller_thread_cpu_s": 0.8557668929999949,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 86.58661402200005,
+    "duration_s": 2.189077253999926,
+    "caller_thread_cpu_s": 2.1853189409999985,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 80.78127219300006,
+    "duration_s": 8.091593192000005,
+    "caller_thread_cpu_s": 6.481511474000001,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 88.93448209899998,
+    "duration_s": 0.9800494110000955,
+    "caller_thread_cpu_s": 0.948264518000002,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 88.87425953700006,
+    "duration_s": 1.3193619529999978,
+    "caller_thread_cpu_s": 1.227621611,
+    "tid": 2253
+  },
+  {
+    "name": "tracking",
+    "start_s": 89.96037786099998,
+    "duration_s": 0.9320207279999977,
+    "caller_thread_cpu_s": 0.8877076769999945,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 90.93070717600006,
+    "duration_s": 1.0056199189999688,
+    "caller_thread_cpu_s": 0.9084084969999964,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 91.97677263399999,
+    "duration_s": 1.1392182750000757,
+    "caller_thread_cpu_s": 1.089483506999997,
+    "tid": 2056
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 98.23135936599999,
+    "duration_s": 2.7227649910000764,
+    "caller_thread_cpu_s": 2.7183061329999987,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 88.87292119900007,
+    "duration_s": 12.187850979999894,
+    "caller_thread_cpu_s": 10.644757316000003,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 101.12679279999998,
+    "duration_s": 1.9380463980000968,
+    "caller_thread_cpu_s": 0.9068703450000015,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 101.06207515300002,
+    "duration_s": 2.0028524479999987,
+    "caller_thread_cpu_s": 1.3815980499999974,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 101.15764119300002,
+    "duration_s": 2.5945014349999838,
+    "caller_thread_cpu_s": 2.4836525579999957,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 101.06084903500005,
+    "duration_s": 2.81806700300001,
+    "caller_thread_cpu_s": 2.688361907000001,
+    "tid": 2254
+  },
+  {
+    "name": "tracking",
+    "start_s": 103.22907944400004,
+    "duration_s": 1.2635850100000425,
+    "caller_thread_cpu_s": 0.9317040220000052,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 104.53707300100007,
+    "duration_s": 0.9246385669999881,
+    "caller_thread_cpu_s": 0.8618338969999968,
+    "tid": 2056
+  },
+  {
+    "name": "tracking",
+    "start_s": 105.49854879600002,
+    "duration_s": 1.0023335949999819,
+    "caller_thread_cpu_s": 0.9478168999999923,
+    "tid": 2056
+  },
+  {
+    "name": "mapping.prepare",
+    "start_s": 106.50101078400007,
+    "duration_s": 2.503438646999939,
+    "caller_thread_cpu_s": 1.3663201899999997,
+    "tid": 2253
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 106.69917036900006,
+    "duration_s": 2.7841052389999277,
+    "caller_thread_cpu_s": 2.7408467819999984,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 103.87894964899999,
+    "duration_s": 5.709736711999994,
+    "caller_thread_cpu_s": 5.538201026000003,
+    "tid": 2254
+  },
+  {
+    "name": "graph.optimize",
+    "start_s": 117.49835846100007,
+    "duration_s": 4.24777561999997,
+    "caller_thread_cpu_s": 4.237827152999998,
+    "tid": 2254
+  },
+  {
+    "name": "graph.integrate",
+    "start_s": 109.58873507400006,
+    "duration_s": 12.274574155999971,
+    "caller_thread_cpu_s": 12.079614196999998,
+    "tid": 2254
+  }
+]
