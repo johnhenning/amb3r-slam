@@ -43,3 +43,17 @@ counts. Native thread waiting, cache/memory contention and host scheduling remai
 candidate causes. The original telemetry did not isolate them. The follow-up adds
 stage spans and a separate OMP_WAIT_POLICY=PASSIVE comparison; it is diagnostic,
 not a parameter-tuned replacement for the historical results.
+
+## Fresh follow-up
+
+[Stage-level matched diagnostics](followup/README.md) use one fresh process for each
+of four policy/mode combinations. These are new measurements after the workspace
+restart, with full retained traces. They are not pooled with the historical runs.
+
+### Fresh follow-up interpretation
+
+Default concurrent replay took 121.854 s versus 159.174 s sequential (1.31x), at 391.787 versus 338.117 CPU core-seconds and 1706 versus 1542 MiB sampled peak RSS. Passive waiting changed concurrent replay to 119.246 s (-2.1%) and CPU time to 349.798 core-seconds (-10.7%); sequential replay changed to 161.483 s (+1.5%) and CPU time to 323.210 (-4.4%). This is consistent with avoidable waiting overhead, but single trials do not establish causality or reduced variance. The application default remains unchanged.
+
+All four runs recorded zero cgroup throttling. Only the first run recorded storage reads (11.86 MiB) and major faults (8); the final sequential run was still similarly slow with neither. Downloads cannot explain replay timing because loading/downloading precedes the timer. Concurrent stages overlap but individual stage durations increase, consistent with resource contention; concurrent inference also processes 632 views versus 597 sequential despite identical 123 model-call counts. Host scheduling and frequency effects remain unmeasured. Repeated randomized warm-cache runs on an otherwise idle dedicated host would be needed to isolate the remaining variance.
+
+Memory figures are sampled, not exact high-water marks. psutil reads RSS and USS through separate OS interfaces; concurrent allocation changes can produce a USS sample/peak above the RSS sample/peak (observed in default concurrent), so these should not be treated as a simultaneous memory accounting identity.

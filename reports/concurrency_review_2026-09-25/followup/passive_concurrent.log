@@ -1,0 +1,511 @@
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:03<00:03,  3.01s/it]Fetching 2 files: 100%|██████████| 2/2 [00:03<00:00,  1.51s/it]
+WARNING[XFORMERS]: xFormers can't load C++/CUDA extensions. xFormers was built for:
+    PyTorch 2.10.0+cu128 with CUDA 1208 (you have 2.14.0+cu130)
+    Python  3.10.19 (you have 3.12.14)
+  Please reinstall xformers (see https://github.com/facebookresearch/xformers#installing-xformers)
+  Memory-efficient attention, SwiGLU, sparse and more won't be available.
+  Set XFORMERS_MORE_DETAILS=1 for more details
+[93m[WARN ] Dependency `gsplat` is required for rendering 3DGS. Install via: pip install git+https://github.com/nerfstudio-project/gsplat.git@0b4dddf04cb687367602c01196913cde6a743d70[0m
+[97m[INFO ] using MLP layer as FFN[0m
+Loading weights from local directory
+[97m[INFO ] using MLP layer as FFN[0m
+Loading weights from local directory
+[97m[INFO ] Processed Images Done taking 0.013410568237304688 seconds. Shape:  torch.Size([1, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.2954738140106201 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 9.72747802734375e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 1/80
+[97m[INFO ] Processed Images Done taking 0.007051706314086914 seconds. Shape:  torch.Size([2, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.43779563903808594 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.651878356933594e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007765769958496094 seconds. Shape:  torch.Size([3, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.6236963272094727 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.5789947509765625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007880687713623047 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9318332672119141 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.91278076171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.00988149642944336 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8301844596862793 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.00010371208190917969 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008754253387451172 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8345820903778076 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.340576171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008791923522949219 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8041331768035889 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.698204040527344e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009747505187988281 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8185694217681885 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.626678466796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.013998031616210938 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9066662788391113 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.507469177246094e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008841514587402344 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8222789764404297 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.888938903808594e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007669210433959961 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8634088039398193 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.008148193359375e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 11/80
+[97m[INFO ] Processed Images Done taking 0.009609699249267578 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9944226741790771 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.698204040527344e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011821746826171875 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.008934259414672852 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9824643135070801 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.5789947509765625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008301019668579102 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.48030686378479 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7697296142578125e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8372948169708252 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009924173355102539 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8368868827819824 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.000102996826171875 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011394977569580078 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.7780609130859375 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.555152893066406e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.02225494384765625 seconds. Shape:  torch.Size([7, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.011414051055908203 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8882040977478027 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.152557373046875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011692285537719727 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5579497814178467 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8999106884002686 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 8.344650268554688e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010452032089233398 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8886516094207764 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.9604644775390625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.00968313217163086 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8266160488128662 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7220458984375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.014042139053344727 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.007642269134521484 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9546377658843994 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 8.940696716308594e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 21/80
+[97m[INFO ] Processed Images Done taking 0.0076141357421875 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.530285120010376 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7220458984375e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0342676639556885 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.699562072753906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008240461349487305 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.7825911045074463 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007941961288452148 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8376553058624268 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.793571472167969e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011481285095214844 seconds. Shape:  torch.Size([7, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.009877681732177734 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0700733661651611 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.4836273193359375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008104085922241211 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.7596657276153564 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0001232624053955078 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0301239490509033 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.02217411994934082 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8929159641265869 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.602836608886719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008423089981079102 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8382086753845215 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.5789947509765625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012524604797363281 seconds. Shape:  torch.Size([7, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.009784698486328125 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9621524810791016 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.437301635742188e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008055925369262695 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.644014596939087 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.602836608886719e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0411806106567383 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 9.417533874511719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.0173337459564209 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8052513599395752 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.4836273193359375e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 31/80
+[97m[INFO ] Processed Images Done taking 0.008219718933105469 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8527991771697998 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010727643966674805 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.0077207088470458984 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9806184768676758 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.555152893066406e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008339643478393555 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.46343994140625 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.103515625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.034775495529174805 seconds. Shape:  torch.Size([18, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9344594478607178 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.984306335449219e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.00796198844909668 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8308861255645752 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.0558319091796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.0074291229248046875 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8920352458953857 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.5789947509765625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011247396469116211 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0296821594238281 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.6743621826171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008948802947998047 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9230835437774658 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.843971252441406e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008090019226074219 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 4.317154884338379 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.534027099609375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.018062114715576172 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2075746059417725 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.796287536621094e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010008096694946289 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5428006649017334 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 9.72747802734375e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3533177375793457 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.103515625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012550592422485352 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.010088682174682617 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8812849521636963 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.079673767089844e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 41/80
+[97m[INFO ] Processed Images Done taking 0.011006355285644531 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3714022636413574 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.510185241699219e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012546300888061523 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9105978012084961 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01020669937133789 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2020018100738525 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.91278076171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.016513586044311523 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8480749130249023 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.316734313964844e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.021026611328125 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9146277904510498 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.4836273193359375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009851694107055664 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.539581298828125 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.008148193359375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01778888702392578 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.487168788909912 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0008442401885986328 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010340213775634766 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5883169174194336 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.796287536621094e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.027716398239135742 seconds. Shape:  torch.Size([17, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0351834297180176 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.079673767089844e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.018404006958007812 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9426751136779785 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.817413330078125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007767438888549805 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9483237266540527 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.3882598876953125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009075641632080078 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9335193634033203 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.817413330078125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.00838780403137207 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 4.029892206192017 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.0558319091796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01804184913635254 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.7131538391113281 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0011017322540283203 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.06609630584716797 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.7739439010620117 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.91278076171875e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.4986839294433594 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0024924278259277344 seconds[0m
+rgbd_dataset_freiburg1_xyz: 51/80
+[97m[INFO ] Processed Images Done taking 0.06757688522338867 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8014469146728516 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.602836608886719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.013357162475585938 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.008943319320678711 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8216445446014404 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.841255187988281e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007397651672363281 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2773950099945068 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.745887756347656e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010517597198486328 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.960219144821167 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.43865966796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.007742404937744141 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8828091621398926 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.00018787384033203125 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.4123525619506836 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.1021575927734375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011789321899414062 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.009743213653564453 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9528124332427979 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 8.58306884765625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.00986623764038086 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.406442642211914 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.91278076171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.02077484130859375 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8413009643554688 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.413459777832031e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009976625442504883 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.307032823562622 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7697296142578125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.011145830154418945 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9186804294586182 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.557868957519531e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010061979293823242 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8860595226287842 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.555152893066406e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012369394302368164 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3553602695465088 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.8650970458984375e-05 seconds[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 2.172565221786499 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.007712125778198242 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.023775577545166016 seconds. Shape:  torch.Size([7, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.010874032974243164 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9150073528289795 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.486343383789062e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 61/80
+[97m[INFO ] Processed Images Done taking 0.010738611221313477 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5290031433105469 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.602836608886719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.031568050384521484 seconds. Shape:  torch.Size([17, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9491066932678223 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.9604644775390625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008785247802734375 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9144642353057861 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.817413330078125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.013973236083984375 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.7844221591949463 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.000240325927734375 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 4.034204006195068 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 9.369850158691406e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.0110931396484375 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2338707447052002 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.626678466796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.015777587890625 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2890377044677734 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.507469177246094e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012628316879272461 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3011131286621094 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.341934204101562e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.017911672592163086 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.02224135398864746 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9424800872802734 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.00026679039001464844 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008717775344848633 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.4337544441223145 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7220458984375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012729883193969727 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0690484046936035 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.365776062011719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.0205538272857666 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.441878318786621 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.841255187988281e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5840697288513184 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0022106170654296875 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.04620718955993652 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Processed Images Done taking 0.013206243515014648 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.5212266445159912 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.91278076171875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008748054504394531 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.023850679397583 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.00013065338134765625 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.010798215866088867 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.38714599609375 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.53131103515625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.02608013153076172 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8646841049194336 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 8.654594421386719e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008143901824951172 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2565340995788574 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.626678466796875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012568235397338867 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0465867519378662 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.937980651855469e-05 seconds[0m
+rgbd_dataset_freiburg1_xyz: 71/80
+[97m[INFO ] Processed Images Done taking 0.009942293167114258 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.420459508895874 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.413459777832031e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.014475345611572266 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9825942516326904 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.00011205673217773438 seconds[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3036043643951416 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7220458984375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.014238834381103516 seconds. Shape:  torch.Size([5, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.00792551040649414 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.9009015560150146 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.459785461425781e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008434534072875977 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.304565668106079 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.152557373046875e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.03421592712402344 seconds. Shape:  torch.Size([18, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.942746639251709 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.936622619628906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008273124694824219 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.8603520393371582 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.605552673339844e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.009951353073120117 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0297648906707764 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.008148193359375e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 4.642432689666748 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.580352783203125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.012062788009643555 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3335747718811035 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.151199340820312e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.018036842346191406 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.4042367935180664 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.103515625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.020256757736206055 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.4579131603240967 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.462501525878906e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01842951774597168 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Processed Images Done taking 0.009000301361083984 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.7869164943695068 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.004419565200805664 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.04028630256652832 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 2.0654635429382324 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0010924339294433594 seconds[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Processed Images Done taking 0.01287984848022461 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.211456298828125 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 6.031990051269531e-05 seconds[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Processed Images Done taking 0.011539459228515625 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 0.889763355255127 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.05718994140625e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.008725404739379883 seconds. Shape:  torch.Size([4, 3, 126, 168])[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.3893764019012451 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 7.033348083496094e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01789259910583496 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.0621464252471924 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7220458984375e-05 seconds[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.428410291671753 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.7697296142578125e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01810479164123535 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 2.664015769958496 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 0.0022974014282226562 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.025902986526489258 seconds. Shape:  torch.Size([17, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 3.764037847518921 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 8.416175842285156e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.01215219497680664 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.323612928390503 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.984306335449219e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.014448881149291992 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.2364990711212158 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 9.059906005859375e-05 seconds[0m
+[97m[INFO ] Processed Images Done taking 0.0183107852935791 seconds. Shape:  torch.Size([6, 3, 126, 168])[0m
+[97m[INFO ] Selecting reference view using strategy: first[0m
+[97m[INFO ] Model Forward Pass Done. Time: 1.1948587894439697 seconds[0m
+[97m[INFO ] Conversion to Prediction Done. Time: 5.984306335449219e-05 seconds[0m
+Report: reports/concurrency_review_2026-09-25/followup/passive_concurrent/README.md

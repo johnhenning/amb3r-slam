@@ -1,0 +1,678 @@
+[
+  {
+    "label": "default_sequential",
+    "result": {
+      "sequence": "rgbd_dataset_freiburg1_xyz",
+      "source_rgb_frames": 798,
+      "sampled_frames": 80,
+      "sampling_stride": 10,
+      "max_frames": null,
+      "sampled_duration_s": 26.33612895011902,
+      "sampled_gt_match_fraction": 1.0,
+      "groundtruth_sha256": "aac0319a6ef4e1cdf61e779d2152b95aa7e9f7b1749d6d18717b43ddabffede2",
+      "rgb_list_sha256": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+      "input_manifest_sha256": "01ed726721ee3efa4a38a709102e263aa93d57e0f8b6632c136bbcf0b2ab3714",
+      "config": {
+        "window": 12,
+        "stride": 3,
+        "long_every": 3,
+        "long_window": 6,
+        "long_views_per_submap": 3,
+        "confidence_fraction": 0.5,
+        "minimum_overlap": 0.15,
+        "voxel_size": 0.15,
+        "loop_exclusion": 6,
+        "loop_score": 0.12,
+        "max_loop_rotation_deg": 90.0,
+        "max_loop_translation": 50.0,
+        "metric": false,
+        "lidar": false,
+        "enable_loops": true,
+        "enable_long_context": true,
+        "whiten": true,
+        "graph_iterations": 25
+      },
+      "metrics": {
+        "corrected": {
+          "alignment": "sim3",
+          "alignment_scale": 0.9840408077416443,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.140917314893554,
+          "rpe_translation_rmse_m": 0.0748456817749822,
+          "rpe_rotation_rmse_deg": 3.267583997765697,
+          "translation_auc": {
+            "0.05": 0.014166374501077068,
+            "0.1": 0.11074129906250607,
+            "0.5": 0.7454908924595617,
+            "1.0": 0.8727454462297807,
+            "10.0": 0.987274544622978
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        },
+        "online": {
+          "alignment": "sim3",
+          "alignment_scale": 0.6001189584783889,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.14180068927098624,
+          "rpe_translation_rmse_m": 0.090730069907442,
+          "rpe_rotation_rmse_deg": 5.5271035612591515,
+          "translation_auc": {
+            "0.05": 0.030486139355390334,
+            "0.1": 0.12463776434767448,
+            "0.5": 0.7460518128547465,
+            "1.0": 0.8730259064273733,
+            "10.0": 0.9873025906427373
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        }
+      },
+      "statistics": {
+        "frames": 80,
+        "push_latency_ms_p50": 835.0746200000003,
+        "push_latency_ms_p95": 7922.809125800054,
+        "push_throughput_fps": 0.5042529210585015,
+        "submaps": 18,
+        "edges": 68,
+        "execution_mode": "sequential",
+        "max_pending_windows": 2,
+        "pending_windows_peak": 0,
+        "backpressure_waits": 0,
+        "backpressure_ms": 0.0,
+        "replay_elapsed_s": 159.17443839199996,
+        "end_to_end_fps": 0.5025932606275856
+      }
+    },
+    "profile": {
+      "scope": "Replay including tracking, mapping, graph, I/O and final drain; excludes model loading and report generation",
+      "elapsed_s": 159.182532261,
+      "cpu_total_s": 338.117276,
+      "cpu_user_s": 317.367794,
+      "cpu_system_s": 20.749482,
+      "cpu_percent_mean": 212.4085295022281,
+      "cpu_percent_p95_sampled": 252.44159265333982,
+      "cpu_percent_peak_sampled": 300.9397833536158,
+      "rss_peak_bytes_sampled": 1616826368,
+      "uss_peak_bytes_sampled": 1612603392,
+      "threads_peak_sampled": 43,
+      "minor_page_faults": 824657,
+      "major_page_faults": 8,
+      "voluntary_context_switches": 91545,
+      "involuntary_context_switches": 127347,
+      "storage_read_bytes": 12439552,
+      "storage_write_bytes": 71237632,
+      "read_syscalls": 21531,
+      "write_syscalls": 1729,
+      "cgroup_cpu_stat_delta": {
+        "usage_usec": 359122299,
+        "user_usec": 325657581,
+        "system_usec": 33464717,
+        "nice_usec": 0,
+        "nr_periods": 1592,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "cgroup_scope": "container-wide, may include other processes; not host-wide scheduling data",
+      "cpu_affinity_count": 9,
+      "wait_environment": {
+        "OMP_WAIT_POLICY": null,
+        "GOMP_SPINCOUNT": null,
+        "KMP_BLOCKTIME": null
+      },
+      "sample_interval_s": 0.2,
+      "samples": 748,
+      "maximum_sample_gap_s": 0.4165562980000459,
+      "stages": {
+        "graph.integrate": {
+          "calls": 18,
+          "wall_sum_s": 71.23546111200005,
+          "wall_p50_s": 3.724855941499982,
+          "wall_p95_s": 10.657359267000004,
+          "caller_thread_cpu_sum_s": 69.908730369
+        },
+        "graph.optimize": {
+          "calls": 18,
+          "wall_sum_s": 23.316116606000037,
+          "wall_p50_s": 1.1599959380000087,
+          "wall_p95_s": 2.776223838049963,
+          "caller_thread_cpu_sum_s": 23.268136186000024
+        },
+        "mapping.prepare": {
+          "calls": 18,
+          "wall_sum_s": 23.92784710100011,
+          "wall_p50_s": 1.3058456835000243,
+          "wall_p95_s": 1.5763272658500107,
+          "caller_thread_cpu_sum_s": 23.27950195099992
+        },
+        "tracking": {
+          "calls": 80,
+          "wall_sum_s": 60.94586433299935,
+          "wall_p50_s": 0.7972479439999915,
+          "wall_p95_s": 0.9494710013500537,
+          "caller_thread_cpu_sum_s": 59.592765623999995
+        }
+      },
+      "stage_semantics": "Stage times overlap; caller thread CPU excludes native worker CPU"
+    },
+    "workload": {
+      "model_calls": 123,
+      "input_views": 597
+    }
+  },
+  {
+    "label": "default_concurrent",
+    "result": {
+      "sequence": "rgbd_dataset_freiburg1_xyz",
+      "source_rgb_frames": 798,
+      "sampled_frames": 80,
+      "sampling_stride": 10,
+      "max_frames": null,
+      "sampled_duration_s": 26.33612895011902,
+      "sampled_gt_match_fraction": 1.0,
+      "groundtruth_sha256": "aac0319a6ef4e1cdf61e779d2152b95aa7e9f7b1749d6d18717b43ddabffede2",
+      "rgb_list_sha256": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+      "input_manifest_sha256": "01ed726721ee3efa4a38a709102e263aa93d57e0f8b6632c136bbcf0b2ab3714",
+      "config": {
+        "window": 12,
+        "stride": 3,
+        "long_every": 3,
+        "long_window": 6,
+        "long_views_per_submap": 3,
+        "confidence_fraction": 0.5,
+        "minimum_overlap": 0.15,
+        "voxel_size": 0.15,
+        "loop_exclusion": 6,
+        "loop_score": 0.12,
+        "max_loop_rotation_deg": 90.0,
+        "max_loop_translation": 50.0,
+        "metric": false,
+        "lidar": false,
+        "enable_loops": true,
+        "enable_long_context": true,
+        "whiten": true,
+        "graph_iterations": 25
+      },
+      "metrics": {
+        "corrected": {
+          "alignment": "sim3",
+          "alignment_scale": 0.9859466625931522,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.13545452575997546,
+          "rpe_translation_rmse_m": 0.07245792414853931,
+          "rpe_rotation_rmse_deg": 3.538775566468057,
+          "translation_auc": {
+            "0.05": 0.009713525745175002,
+            "0.1": 0.14669857755509624,
+            "0.5": 0.7577764318239496,
+            "1.0": 0.8788882159119747,
+            "10.0": 0.9878888215911974
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        },
+        "online": {
+          "alignment": "sim3",
+          "alignment_scale": 0.5710752644972059,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.1500304042646195,
+          "rpe_translation_rmse_m": 0.08990043235601067,
+          "rpe_rotation_rmse_deg": 5.678778764829107,
+          "translation_auc": {
+            "0.05": 0.004613041598513302,
+            "0.1": 0.06990166015472114,
+            "0.5": 0.7242770358665268,
+            "1.0": 0.8621385179332635,
+            "10.0": 0.9862138517933264
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        }
+      },
+      "statistics": {
+        "frames": 80,
+        "push_latency_ms_p50": 1003.2594744999983,
+        "push_latency_ms_p95": 1991.4177515999984,
+        "push_throughput_fps": 0.758499984750507,
+        "submaps": 18,
+        "edges": 68,
+        "execution_mode": "concurrent",
+        "max_pending_windows": 2,
+        "pending_windows_peak": 2,
+        "backpressure_waits": 4,
+        "backpressure_ms": 21238.56428300019,
+        "replay_elapsed_s": 121.85390351799992,
+        "end_to_end_fps": 0.6565239002637501
+      }
+    },
+    "profile": {
+      "scope": "Replay including tracking, mapping, graph, I/O and final drain; excludes model loading and report generation",
+      "elapsed_s": 121.86398129300005,
+      "cpu_total_s": 391.78699499999993,
+      "cpu_user_s": 368.620755,
+      "cpu_system_s": 23.16624,
+      "cpu_percent_mean": 321.4953186684575,
+      "cpu_percent_p95_sampled": 464.2049198337054,
+      "cpu_percent_peak_sampled": 571.9071140872998,
+      "rss_peak_bytes_sampled": 1789108224,
+      "uss_peak_bytes_sampled": 1799151616,
+      "threads_peak_sampled": 37,
+      "minor_page_faults": 790758,
+      "major_page_faults": 0,
+      "voluntary_context_switches": 362001,
+      "involuntary_context_switches": 168534,
+      "storage_read_bytes": 0,
+      "storage_write_bytes": 70983680,
+      "read_syscalls": 20187,
+      "write_syscalls": 1722,
+      "cgroup_cpu_stat_delta": {
+        "usage_usec": 411131326,
+        "user_usec": 374876046,
+        "system_usec": 36255279,
+        "nice_usec": 0,
+        "nr_periods": 1218,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "cgroup_scope": "container-wide, may include other processes; not host-wide scheduling data",
+      "cpu_affinity_count": 9,
+      "wait_environment": {
+        "OMP_WAIT_POLICY": null,
+        "GOMP_SPINCOUNT": null,
+        "KMP_BLOCKTIME": null
+      },
+      "sample_interval_s": 0.2,
+      "samples": 562,
+      "maximum_sample_gap_s": 0.35733593499992367,
+      "stages": {
+        "graph.integrate": {
+          "calls": 18,
+          "wall_sum_s": 86.9755231959997,
+          "wall_p50_s": 4.6426968620000935,
+          "wall_p95_s": 12.36890547529997,
+          "caller_thread_cpu_sum_s": 77.471148837
+        },
+        "graph.optimize": {
+          "calls": 18,
+          "wall_sum_s": 26.921706263999795,
+          "wall_p50_s": 1.3247809944999744,
+          "wall_p95_s": 3.003655796149932,
+          "caller_thread_cpu_sum_s": 26.424299521999984
+        },
+        "mapping.prepare": {
+          "calls": 18,
+          "wall_sum_s": 35.35101115400039,
+          "wall_p50_s": 1.6947020024999802,
+          "wall_p95_s": 3.7844963661500226,
+          "caller_thread_cpu_sum_s": 26.689153564999994
+        },
+        "tracking": {
+          "calls": 80,
+          "wall_sum_s": 81.59260263800002,
+          "wall_p50_s": 0.9647877689999405,
+          "wall_p95_s": 1.6715004741500705,
+          "caller_thread_cpu_sum_s": 72.41324208399996
+        }
+      },
+      "stage_semantics": "Stage times overlap; caller thread CPU excludes native worker CPU"
+    },
+    "workload": {
+      "model_calls": 123,
+      "input_views": 632
+    }
+  },
+  {
+    "label": "passive_concurrent",
+    "result": {
+      "sequence": "rgbd_dataset_freiburg1_xyz",
+      "source_rgb_frames": 798,
+      "sampled_frames": 80,
+      "sampling_stride": 10,
+      "max_frames": null,
+      "sampled_duration_s": 26.33612895011902,
+      "sampled_gt_match_fraction": 1.0,
+      "groundtruth_sha256": "aac0319a6ef4e1cdf61e779d2152b95aa7e9f7b1749d6d18717b43ddabffede2",
+      "rgb_list_sha256": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+      "input_manifest_sha256": "01ed726721ee3efa4a38a709102e263aa93d57e0f8b6632c136bbcf0b2ab3714",
+      "config": {
+        "window": 12,
+        "stride": 3,
+        "long_every": 3,
+        "long_window": 6,
+        "long_views_per_submap": 3,
+        "confidence_fraction": 0.5,
+        "minimum_overlap": 0.15,
+        "voxel_size": 0.15,
+        "loop_exclusion": 6,
+        "loop_score": 0.12,
+        "max_loop_rotation_deg": 90.0,
+        "max_loop_translation": 50.0,
+        "metric": false,
+        "lidar": false,
+        "enable_loops": true,
+        "enable_long_context": true,
+        "whiten": true,
+        "graph_iterations": 25
+      },
+      "metrics": {
+        "corrected": {
+          "alignment": "sim3",
+          "alignment_scale": 0.9859466625931522,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.13545452575997546,
+          "rpe_translation_rmse_m": 0.07245792414853931,
+          "rpe_rotation_rmse_deg": 3.538775566468057,
+          "translation_auc": {
+            "0.05": 0.009713525745175002,
+            "0.1": 0.14669857755509624,
+            "0.5": 0.7577764318239496,
+            "1.0": 0.8788882159119747,
+            "10.0": 0.9878888215911974
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        },
+        "online": {
+          "alignment": "sim3",
+          "alignment_scale": 0.5781306061600444,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.14979633366662334,
+          "rpe_translation_rmse_m": 0.08955118376944186,
+          "rpe_rotation_rmse_deg": 5.671517661635894,
+          "translation_auc": {
+            "0.05": 0.006411430529398893,
+            "0.1": 0.07499481049004575,
+            "0.5": 0.7253566877467907,
+            "1.0": 0.8626783438733954,
+            "10.0": 0.9862678343873394
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        }
+      },
+      "statistics": {
+        "frames": 80,
+        "push_latency_ms_p50": 966.2952795000024,
+        "push_latency_ms_p95": 1891.8410160500046,
+        "push_throughput_fps": 0.7783036241125322,
+        "submaps": 18,
+        "edges": 68,
+        "execution_mode": "concurrent",
+        "max_pending_windows": 2,
+        "pending_windows_peak": 2,
+        "backpressure_waits": 4,
+        "backpressure_ms": 20801.75248100011,
+        "replay_elapsed_s": 119.24567200199999,
+        "end_to_end_fps": 0.6708838874978895
+      }
+    },
+    "profile": {
+      "scope": "Replay including tracking, mapping, graph, I/O and final drain; excludes model loading and report generation",
+      "elapsed_s": 119.25430620700001,
+      "cpu_total_s": 349.79802,
+      "cpu_user_s": 325.107751,
+      "cpu_system_s": 24.690269,
+      "cpu_percent_mean": 293.3210809115986,
+      "cpu_percent_p95_sampled": 411.4716978341325,
+      "cpu_percent_peak_sampled": 552.5386412989127,
+      "rss_peak_bytes_sampled": 1821704192,
+      "uss_peak_bytes_sampled": 1815875584,
+      "threads_peak_sampled": 31,
+      "minor_page_faults": 1000395,
+      "major_page_faults": 0,
+      "voluntary_context_switches": 605763,
+      "involuntary_context_switches": 137565,
+      "storage_read_bytes": 0,
+      "storage_write_bytes": 71016448,
+      "read_syscalls": 20126,
+      "write_syscalls": 1722,
+      "cgroup_cpu_stat_delta": {
+        "usage_usec": 368338366,
+        "user_usec": 330894541,
+        "system_usec": 37443826,
+        "nice_usec": 0,
+        "nr_periods": 1193,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "cgroup_scope": "container-wide, may include other processes; not host-wide scheduling data",
+      "cpu_affinity_count": 9,
+      "wait_environment": {
+        "OMP_WAIT_POLICY": "PASSIVE",
+        "GOMP_SPINCOUNT": null,
+        "KMP_BLOCKTIME": null
+      },
+      "sample_interval_s": 0.2,
+      "samples": 557,
+      "maximum_sample_gap_s": 0.2984692569999652,
+      "stages": {
+        "graph.integrate": {
+          "calls": 18,
+          "wall_sum_s": 85.274203855,
+          "wall_p50_s": 4.666593410000019,
+          "wall_p95_s": 12.234343821299953,
+          "caller_thread_cpu_sum_s": 74.443063706
+        },
+        "graph.optimize": {
+          "calls": 18,
+          "wall_sum_s": 26.456766867000283,
+          "wall_p50_s": 1.367040652500009,
+          "wall_p95_s": 2.9967657852999974,
+          "caller_thread_cpu_sum_s": 26.032736278000005
+        },
+        "mapping.prepare": {
+          "calls": 18,
+          "wall_sum_s": 35.516261101000055,
+          "wall_p50_s": 1.6218775570000048,
+          "wall_p95_s": 3.468307924050037,
+          "caller_thread_cpu_sum_s": 23.787819892999995
+        },
+        "tracking": {
+          "calls": 80,
+          "wall_sum_s": 79.33705911699985,
+          "wall_p50_s": 0.933385107499987,
+          "wall_p95_s": 1.5860762986500276,
+          "caller_thread_cpu_sum_s": 66.58816349299998
+        }
+      },
+      "stage_semantics": "Stage times overlap; caller thread CPU excludes native worker CPU"
+    },
+    "workload": {
+      "model_calls": 123,
+      "input_views": 632
+    }
+  },
+  {
+    "label": "passive_sequential",
+    "result": {
+      "sequence": "rgbd_dataset_freiburg1_xyz",
+      "source_rgb_frames": 798,
+      "sampled_frames": 80,
+      "sampling_stride": 10,
+      "max_frames": null,
+      "sampled_duration_s": 26.33612895011902,
+      "sampled_gt_match_fraction": 1.0,
+      "groundtruth_sha256": "aac0319a6ef4e1cdf61e779d2152b95aa7e9f7b1749d6d18717b43ddabffede2",
+      "rgb_list_sha256": "532884d60bef0c9a05e14bf311998883baf59a2fa47009d1021f2c7937bd69a3",
+      "input_manifest_sha256": "01ed726721ee3efa4a38a709102e263aa93d57e0f8b6632c136bbcf0b2ab3714",
+      "config": {
+        "window": 12,
+        "stride": 3,
+        "long_every": 3,
+        "long_window": 6,
+        "long_views_per_submap": 3,
+        "confidence_fraction": 0.5,
+        "minimum_overlap": 0.15,
+        "voxel_size": 0.15,
+        "loop_exclusion": 6,
+        "loop_score": 0.12,
+        "max_loop_rotation_deg": 90.0,
+        "max_loop_translation": 50.0,
+        "metric": false,
+        "lidar": false,
+        "enable_loops": true,
+        "enable_long_context": true,
+        "whiten": true,
+        "graph_iterations": 25
+      },
+      "metrics": {
+        "corrected": {
+          "alignment": "sim3",
+          "alignment_scale": 0.9840408077416443,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.140917314893554,
+          "rpe_translation_rmse_m": 0.0748456817749822,
+          "rpe_rotation_rmse_deg": 3.267583997765697,
+          "translation_auc": {
+            "0.05": 0.014166374501077068,
+            "0.1": 0.11074129906250607,
+            "0.5": 0.7454908924595617,
+            "1.0": 0.8727454462297807,
+            "10.0": 0.987274544622978
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        },
+        "online": {
+          "alignment": "sim3",
+          "alignment_scale": 0.6001189584783889,
+          "matched_poses": 80,
+          "reference_coverage": 0.02666666666666667,
+          "estimate_coverage": 1.0,
+          "timestamp_tolerance_s": 0.02,
+          "rpe_delta_frames": 1,
+          "ate_rmse_m": 0.14180068927098624,
+          "rpe_translation_rmse_m": 0.090730069907442,
+          "rpe_rotation_rmse_deg": 5.5271035612591515,
+          "translation_auc": {
+            "0.05": 0.030486139355390334,
+            "0.1": 0.12463776434767448,
+            "0.5": 0.7460518128547465,
+            "1.0": 0.8730259064273733,
+            "10.0": 0.9873025906427373
+          },
+          "protocol": "ATE and RPE after the stated full-trajectory alignment"
+        }
+      },
+      "statistics": {
+        "frames": 80,
+        "push_latency_ms_p50": 841.1526730000105,
+        "push_latency_ms_p95": 8306.161247349984,
+        "push_throughput_fps": 0.49687831700900814,
+        "submaps": 18,
+        "edges": 68,
+        "execution_mode": "sequential",
+        "max_pending_windows": 2,
+        "pending_windows_peak": 0,
+        "backpressure_waits": 0,
+        "backpressure_ms": 0.0,
+        "replay_elapsed_s": 161.482703957,
+        "end_to_end_fps": 0.4954090936036257
+      }
+    },
+    "profile": {
+      "scope": "Replay including tracking, mapping, graph, I/O and final drain; excludes model loading and report generation",
+      "elapsed_s": 161.4909584300001,
+      "cpu_total_s": 323.20994399999995,
+      "cpu_user_s": 300.42770299999995,
+      "cpu_system_s": 22.782241000000003,
+      "cpu_percent_mean": 200.1412011806832,
+      "cpu_percent_p95_sampled": 232.29771832999057,
+      "cpu_percent_peak_sampled": 247.82955435430856,
+      "rss_peak_bytes_sampled": 1621569536,
+      "uss_peak_bytes_sampled": 1617350656,
+      "threads_peak_sampled": 34,
+      "minor_page_faults": 384412,
+      "major_page_faults": 0,
+      "voluntary_context_switches": 324545,
+      "involuntary_context_switches": 162258,
+      "storage_read_bytes": 0,
+      "storage_write_bytes": 71225344,
+      "read_syscalls": 21527,
+      "write_syscalls": 1722,
+      "cgroup_cpu_stat_delta": {
+        "usage_usec": 348085793,
+        "user_usec": 310206627,
+        "system_usec": 37879165,
+        "nice_usec": 0,
+        "nr_periods": 1615,
+        "nr_throttled": 0,
+        "throttled_usec": 0,
+        "nr_bursts": 0,
+        "burst_usec": 0
+      },
+      "cgroup_scope": "container-wide, may include other processes; not host-wide scheduling data",
+      "cpu_affinity_count": 9,
+      "wait_environment": {
+        "OMP_WAIT_POLICY": "PASSIVE",
+        "GOMP_SPINCOUNT": null,
+        "KMP_BLOCKTIME": null
+      },
+      "sample_interval_s": 0.2,
+      "samples": 754,
+      "maximum_sample_gap_s": 0.34702022600004057,
+      "stages": {
+        "graph.integrate": {
+          "calls": 18,
+          "wall_sum_s": 73.47545123800046,
+          "wall_p50_s": 3.4963203920000296,
+          "wall_p95_s": 11.689649142250072,
+          "caller_thread_cpu_sum_s": 70.871539701
+        },
+        "graph.optimize": {
+          "calls": 18,
+          "wall_sum_s": 23.01530681799977,
+          "wall_p50_s": 1.1584968674999345,
+          "wall_p95_s": 2.815481440900009,
+          "caller_thread_cpu_sum_s": 22.977329234999985
+        },
+        "mapping.prepare": {
+          "calls": 18,
+          "wall_sum_s": 23.584654423000302,
+          "wall_p50_s": 1.326706650999995,
+          "wall_p95_s": 1.469915397799957,
+          "caller_thread_cpu_sum_s": 22.26804251100002
+        },
+        "tracking": {
+          "calls": 80,
+          "wall_sum_s": 61.49728665499947,
+          "wall_p50_s": 0.8003219155000352,
+          "wall_p95_s": 0.9565396778998205,
+          "caller_thread_cpu_sum_s": 57.983739459
+        }
+      },
+      "stage_semantics": "Stage times overlap; caller thread CPU excludes native worker CPU"
+    },
+    "workload": {
+      "model_calls": 123,
+      "input_views": 597
+    }
+  }
+]
