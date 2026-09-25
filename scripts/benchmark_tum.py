@@ -25,7 +25,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--download", action="store_true")
     parser.add_argument(
-        "--sequences", nargs="+", choices=TUM_SEQUENCES, default=list(TUM_SEQUENCES)
+        "--sequences", nargs="+", choices=TUM_SEQUENCES, default=["freiburg1_xyz", "freiburg1_desk"]
     )
     parser.add_argument("--checkpoint", default="depth-anything/DA3-SMALL")
     parser.add_argument(

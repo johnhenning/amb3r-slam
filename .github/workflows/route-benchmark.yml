@@ -1,0 +1,59 @@
+name: Full-route TUM profiling
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: full-route-tum-profiling
+  cancel-in-progress: false
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: '0.12.17'
+          python-version-file: '.python-version'
+          enable-cache: false
+      - name: Install locked benchmark dependencies
+        run: |
+          uv sync --locked --extra da3 --extra benchmark --extra tracking
+          uv cache clean
+      - name: Replay matched full-route pairs on this runner
+        run: uv run --no-sync python scripts/profile_tum_routes.py --output reports/room_routes_ci
+      - name: Independently validate and generate comparison
+        run: uv run --no-sync python scripts/report_tum_routes.py reports/room_routes_ci
+      - name: Publish completed runs to the experiment tracker
+        if: always()
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_ENTITY: ${{ vars.WANDB_ENTITY }}
+          WANDB_PROJECT: ${{ vars.WANDB_PROJECT || 'amb3r-slam' }}
+        run: |
+          if ! python -c "from pathlib import Path; import sys; sys.exit(not any(Path('reports/room_routes_ci').rglob('results.json')))"; then
+            echo "No completed runs to publish"
+            exit 0
+          fi
+          mode=offline
+          if [ -n "$WANDB_API_KEY" ] && [ -n "$WANDB_ENTITY" ]; then mode=online; fi
+          uv run --no-sync python scripts/export_wandb.py reports/room_routes_ci --mode "$mode"
+      - name: Preserve raw profiles, trajectories, logs and all report images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-route-tum-profiling
+          retention-days: 90
+          if-no-files-found: error
+          path: |
+            wandb/**
+            reports/room_routes_ci/**
+            !reports/room_routes_ci/**/runtime/frames/**
+            !reports/room_routes_ci/**/runtime/submaps/**
+            !reports/room_routes_ci/**/*.npy
+            !reports/room_routes_ci/**/*.npz

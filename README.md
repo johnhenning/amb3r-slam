@@ -183,3 +183,10 @@ window limit (default 2), or `--no-async-backend` for sequential execution.
 See [state ownership and shutdown](docs/ARCHITECTURE.md#state-and-concurrency)
 and [benchmark comparison commands](docs/BENCHMARKS.md#concurrent-versus-sequential-execution).
 Concurrency is enabled; real-device speedup has not yet been measured.
+
+### CPU profiling
+
+[Profiling documentation](docs/PROFILING.md) covers matched sequential/concurrent
+TUM runs, process CPU and memory traces, stage timing, and passive-wait diagnostics.
+[Experiment tracking](docs/EXPERIMENTS.md) sends each benchmark run, its measured
+resource timelines, and trajectory artifacts to W&B. Generated results stay outside Git.
