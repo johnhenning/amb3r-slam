@@ -2,7 +2,26 @@
 
 Date: 2026-09-25. CPU-only development environment; CUDA unavailable.
 
-## Completed
+## Current validation
+
+- Python remains **3.12** (tested interpreter 3.12.14); no 3.14 migration.
+- All 160 Python functions have parameter and return annotations. Ruff `ANN`
+  rules, lint and formatting checks pass. Pyrefly 1.3.1 reports zero errors in
+  both the full DA3 environment and a clean fast-CI environment. Its 11 advisory
+  warnings concern untyped SciPy dependencies and redundant integer conversions.
+- **27 tests pass, none skipped** when the TUM dataset and report paths are set.
+  Fast CI runs 21 offline tests and explicitly skips six external-data checks.
+- Actual DA3-Small inference completed 80 sampled `freiburg1_xyz` frames and 62
+  sampled `freiburg1_desk` frames. All matched ground truth. Corrected Sim(3) ATE
+  RMSE: 0.1409 m / 0.2100 m; CPU end-to-end throughput: 0.274 / 0.376 FPS.
+- Independent `evo` ATE agrees within 1e-8 m on both sequences. See the
+  [report, plots and raw metrics](../reports/tum_cpu_2026-09-25/README.md) and
+  [reproduction instructions](BENCHMARKS.md). These are reduced-resolution,
+  every-tenth-frame CPU baselines; no published-table parity is claimed.
+- After typing changes, eight-step training again reached validation loss
+  1.3953187, and ONNX parity passed (maximum absolute error 1.91e-6).
+
+## Earlier smoke verification
 
 - 16 pytest cases pass: transform round trips, known similarity recovery,
   metric-depth validation, graph cost reduction/gauge fixing, timestamp matching,

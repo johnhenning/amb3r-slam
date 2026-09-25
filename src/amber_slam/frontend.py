@@ -2,21 +2,18 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
-from .contracts import Array
-
-if TYPE_CHECKING:
-    from .backend import BackendUpdate
-
-
 from collections import deque
+from typing import TYPE_CHECKING
 
 import cv2
 import numpy as np
 
+from .contracts import Array
 from .geometry import Sim3, metric_scale
 from .types import Frame, GeometryModel
+
+if TYPE_CHECKING:
+    from .backend import BackendUpdate
 
 
 class Frontend:

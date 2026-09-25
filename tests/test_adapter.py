@@ -30,11 +30,7 @@ def test_da3_w2c_conversion_and_reference_reordering() -> None:
                 intrinsics=np.repeat(np.eye(3)[None], len(images), 0),
             )
 
-    model_patch = patch.object(adapter, "model", API(), create=True)
-    model_patch.start()
     frames = [Frame(i, float(i), np.full((4, 4, 3), i, np.uint8)) for i in range(3)]
-    try:
+    with patch.object(adapter, "model", API(), create=True):
         result = adapter.reconstruct(frames, reference=1)
-    finally:
-        model_patch.stop()
     np.testing.assert_allclose(result.poses[:, 0, 3], [-1, 0, 1])

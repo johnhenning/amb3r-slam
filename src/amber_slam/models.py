@@ -284,6 +284,10 @@ def build_model(config: ModelConfig) -> GeometryTransformer | UpstreamDA3:
     if kind == "da3":
         return UpstreamDA3(preset=config.get("preset", "da3-small"))
     if kind == "independent":
+        allowed = {"kind", "width", "layers", "heads", "patch", "fusion", "checkpointing"}
+        unknown = config.keys() - allowed
+        if unknown:
+            raise TypeError(f"Unknown independent model options: {sorted(unknown)}")
         return GeometryTransformer(
             width=config.get("width", 96),
             layers=config.get("layers", 6),

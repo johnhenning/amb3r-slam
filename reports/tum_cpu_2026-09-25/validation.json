@@ -1,0 +1,23 @@
+{
+  "date_utc": "2026-09-25",
+  "python": "3.12.14",
+  "pytest": {
+    "passed": 27,
+    "skipped": 0,
+    "command": "TUM_DATA_ROOT=data/tum AMBER_BENCHMARK_REPORT=reports/tum_cpu_2026-09-25 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 uv run --no-sync pytest -q"
+  },
+  "ruff": "lint and format checks pass",
+  "pyrefly": {
+    "version": "1.3.1",
+    "errors": 0,
+    "advisory_warnings": 11,
+    "notes": "Missing upstream SciPy stubs and redundant integer conversions; no blanket type-error suppression."
+  },
+  "independent_metric_check": "evo APE RMSE agrees on both sequences within 1e-8 m",
+  "training_smoke": {
+    "steps": 8,
+    "train_loss": 0.9123470783233643,
+    "val_loss": 1.3953187465667725
+  },
+  "onnx_max_absolute_error": 1.9073486328125e-06
+}

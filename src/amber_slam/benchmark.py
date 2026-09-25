@@ -87,9 +87,11 @@ def plot_sequence(directory: PathLike, title: str) -> None:
 
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+    from matplotlib.ticker import MaxNLocator
 
     directory = Path(directory)
-    fig = plt.figure(figsize=(15, 4.7), layout="constrained")
+    fig = plt.figure(figsize=(16, 5))
+    fig.subplots_adjust(left=0.025, right=0.985, bottom=0.16, top=0.84, wspace=0.42)
     trajectory_ax = fig.add_subplot(131, projection="3d")
     error_ax = fig.add_subplot(132)
     latency_ax = fig.add_subplot(133)
@@ -109,6 +111,8 @@ def plot_sequence(directory: PathLike, title: str) -> None:
         xlabel="x (m)", ylabel="y (m)", zlabel="z (m)", title="Sim(3)-aligned trajectory"
     )
     trajectory_ax.set_box_aspect(np.maximum(np.ptp(truth, axis=0), 0.01))
+    for axis in (trajectory_ax.xaxis, trajectory_ax.yaxis, trajectory_ax.zaxis):
+        axis.set_major_locator(MaxNLocator(4))
     trajectory_ax.legend(fontsize=8)
     error_ax.set(
         xlabel="Elapsed sequence time (s)",

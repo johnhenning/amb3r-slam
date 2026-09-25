@@ -2,21 +2,18 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Literal
-
-from .contracts import FrameRecord, Manifest, PathLike
-
-if TYPE_CHECKING:
-    from torch import Tensor
-
-
 import json
 from pathlib import Path
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 from PIL import Image
 
+from .contracts import FrameRecord, Manifest, PathLike
 from .types import Frame
+
+if TYPE_CHECKING:
+    from torch import Tensor
 
 
 def read_manifest(path: PathLike) -> tuple[Manifest, Path]:

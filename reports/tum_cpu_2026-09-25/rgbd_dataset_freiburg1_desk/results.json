@@ -1,0 +1,84 @@
+{
+  "sequence": "rgbd_dataset_freiburg1_desk",
+  "source_rgb_frames": 613,
+  "sampled_frames": 62,
+  "sampling_stride": 10,
+  "max_frames": null,
+  "sampled_duration_s": 20.336024045944214,
+  "sampled_gt_match_fraction": 1.0,
+  "groundtruth_sha256": "48c4fa61f5d78310ea579f404d31d296738c4210c19c2bdac4a5cdf6bff50831",
+  "rgb_list_sha256": "d1bc510ecca08540e03be8df55af8857753b614d8a5c38526bc669ce6c802284",
+  "input_manifest_sha256": "4a500342f1d087474e654b0ef5b37777bf35dab6e71ba59891328f6e5b2da3a6",
+  "config": {
+    "window": 12,
+    "stride": 3,
+    "long_every": 3,
+    "long_window": 6,
+    "long_views_per_submap": 3,
+    "confidence_fraction": 0.5,
+    "minimum_overlap": 0.15,
+    "voxel_size": 0.15,
+    "loop_exclusion": 6,
+    "loop_score": 0.12,
+    "max_loop_rotation_deg": 90.0,
+    "max_loop_translation": 50.0,
+    "metric": false,
+    "lidar": false,
+    "enable_loops": true,
+    "enable_long_context": true,
+    "whiten": true,
+    "graph_iterations": 25
+  },
+  "metrics": {
+    "corrected": {
+      "alignment": "sim3",
+      "alignment_scale": 1.2047138513486695,
+      "matched_poses": 62,
+      "reference_coverage": 0.026552462526766595,
+      "estimate_coverage": 1.0,
+      "timestamp_tolerance_s": 0.02,
+      "rpe_delta_frames": 1,
+      "ate_rmse_m": 0.20996748083455963,
+      "rpe_translation_rmse_m": 0.0907066317345136,
+      "rpe_rotation_rmse_deg": 7.642317744593831,
+      "translation_auc": {
+        "0.05": 0.0,
+        "0.1": 0.0394429610495354,
+        "0.5": 0.6248157343162001,
+        "1.0": 0.8124078671581001,
+        "10.0": 0.9812407867158099
+      },
+      "protocol": "ATE and RPE after the stated full-trajectory alignment"
+    },
+    "online": {
+      "alignment": "sim3",
+      "alignment_scale": 1.1976511790292421,
+      "matched_poses": 62,
+      "reference_coverage": 0.026552462526766595,
+      "estimate_coverage": 1.0,
+      "timestamp_tolerance_s": 0.02,
+      "rpe_delta_frames": 1,
+      "ate_rmse_m": 0.2397012015372129,
+      "rpe_translation_rmse_m": 0.18314176628906487,
+      "rpe_rotation_rmse_deg": 7.951651139477892,
+      "translation_auc": {
+        "0.05": 0.006736038459382113,
+        "0.1": 0.036722700592918656,
+        "0.5": 0.5814570199928472,
+        "1.0": 0.7894720097939572,
+        "10.0": 0.9789472009793957
+      },
+      "protocol": "ATE and RPE after the stated full-trajectory alignment"
+    }
+  },
+  "statistics": {
+    "frames": 62,
+    "push_latency_ms_p50": 1530.128839000099,
+    "push_latency_ms_p95": 5984.198162200254,
+    "push_throughput_fps": 0.38954895326072403,
+    "submaps": 14,
+    "edges": 35,
+    "replay_elapsed_s": 165.09294091599986,
+    "end_to_end_fps": 0.3755460388312176
+  }
+}

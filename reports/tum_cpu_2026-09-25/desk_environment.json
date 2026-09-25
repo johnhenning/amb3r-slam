@@ -1,0 +1,58 @@
+{
+  "python": "3.12.14",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "processor": "x86_64",
+  "torch_threads": 2,
+  "cuda_available": false,
+  "packages": {
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "torch": "2.14.0",
+    "depth-anything-3": "0.0.0",
+    "matplotlib": "3.11.2"
+  },
+  "checkpoint": "/root/.cache/huggingface/hub/models--depth-anything--DA3-SMALL/snapshots/e08cab65ca0ec38e7826075418411ab90cab4da3",
+  "checkpoint_revision": "e08cab65ca0ec38e7826075418411ab90cab4da3",
+  "checkpoint_hashes": {
+    "config.json": "a486e29e82b7ab4a7d4cefc1ea4526cfe2ae438a572c8ca98917cfbcde7447d2",
+    "model.safetensors": "364492e38a3a06d221ac75da7f6621ada3f2361cd24fde11ba79091e9f40efcf"
+  },
+  "resolution": 168,
+  "command": [
+    "scripts/benchmark_tum.py",
+    "--data",
+    "data/tum",
+    "--sequences",
+    "freiburg1_desk",
+    "--output",
+    "runs/tum_desk_completed",
+    "--checkpoint",
+    "/root/.cache/huggingface/hub/models--depth-anything--DA3-SMALL/snapshots/e08cab65ca0ec38e7826075418411ab90cab4da3"
+  ],
+  "sources": {
+    "src/amber_slam/__init__.py": "58ec61899b313cd899c1cc137ff43c9d4047ea8e4ca0ef97337bf444e125eeeb",
+    "src/amber_slam/__main__.py": "6d8b7d7846a845059d7a3107143f11131f63c5511d669b44085b15ec5e3d2279",
+    "src/amber_slam/adapters.py": "cac9987ba0ddf17b237e0e5c48009b8f865112a75b2e98cf7d97141177655d03",
+    "src/amber_slam/backend.py": "b3f1c9605888d8c64c0399660af3a22fceacc4715a5463f0624b05515961a597",
+    "src/amber_slam/benchmark.py": "08b9621b0ff642cd6a830ee0bc6747c4a7739ab3a27d30d30f5f08a9b1e6ff99",
+    "src/amber_slam/cli.py": "a832af5d5f2689cef6ce26631190d71b1396d67db141a307a7c69c77503bf110",
+    "src/amber_slam/contracts.py": "b4f5148242c3c6aa1ca8528add0394939b9e0883a4f3ed05c45fe3bfcad56db6",
+    "src/amber_slam/data.py": "04b9fd88677484cf856316c8755db0b70bd4f153bd562a182fb4bf9404c83542",
+    "src/amber_slam/datasets.py": "5d58813cf1332468bddeca071ffd4a8608a2e13d1e6eadcdc7f007bc7264daa3",
+    "src/amber_slam/evaluation.py": "1986ae508291d5f605544ccedae5f1afee0c5b02a09a49492090b8a6b15d1957",
+    "src/amber_slam/export.py": "3fc653f15b57e62100d0bba48abd9a97d1f929bcc66158426e9f4e10889ac6c4",
+    "src/amber_slam/frontend.py": "c09ba47d505a6c6c2ad7c45b261beed635fc7898ec825c8eef7bae4477a0f0b6",
+    "src/amber_slam/geometry.py": "99f8d004f7eb784fee394166b9377c3a0de74c63458217652f0cd7def177177f",
+    "src/amber_slam/graph.py": "f28210576f885ee3635a907b31b8e0b8be66f1803328ee7e4ea39cc0814b4d83",
+    "src/amber_slam/losses.py": "9e5383d37f3fde5435e60ee1d8dd5d771fcf0ceafdad31e0e9a5313698d58a5c",
+    "src/amber_slam/modalities.py": "f3c68a7a11d290b009bb365d945edee8ae093fa3e0195d989947c749e77e8336",
+    "src/amber_slam/models.py": "0a3c0c29cff991833574ed208b82607986a04a8a9f108d611d02f3de5a696b38",
+    "src/amber_slam/preprocess.py": "17e325c7b9313285a79df6426efdc771a0caeb7d3cbd0d4daffd988dbc95290b",
+    "src/amber_slam/pseudo.py": "7fdda41fb1c06e232463ae40477525219ddf6df86eb2b3222e600ef08e2e20d4",
+    "src/amber_slam/retrieval.py": "2900848a1a3de8a1c66d2563f707b092fe50c12483e4717a49814c456dad2032",
+    "src/amber_slam/runtime.py": "3b011195e05018ddfea8178f1f28169e3f91c3b493c37753b5c53304ee922c80",
+    "src/amber_slam/store.py": "8e658ea582daa01d29894bcc183fb4ee42f3eda738ddce5786c5696f1eef16df",
+    "src/amber_slam/training.py": "14414044c227d7d73aef9c056cc606cb36e9bfd2c896486efff5efdae5b192ee",
+    "src/amber_slam/types.py": "43fe94a15d2da0a7e13cd75980209daa0b23f65c2f07e48a58f82f8c63d11ce8"
+  }
+}

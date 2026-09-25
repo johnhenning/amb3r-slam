@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import json
+
 import numpy as np
+import pytest
 import torch
 
 from amber_slam.losses import geometry_loss, normalize_targets
-from amber_slam.models import GeometryTransformer
+from amber_slam.models import GeometryTransformer, build_model
 
 
 def test_model_gradient_and_shapes() -> None:
@@ -31,3 +34,8 @@ def test_model_gradient_and_shapes() -> None:
     assert losses[-1] < losses[0]
     assert out["rays"].shape == (1, 2, 32, 32, 6)
     np.testing.assert_allclose(out["poses"][0, 0].detach(), np.eye(4), atol=1e-5)
+
+
+def test_model_config_rejects_unknown_json_options() -> None:
+    with pytest.raises(TypeError, match="Unknown independent model options"):
+        build_model(json.loads('{"kind": "independent", "widht": 32}'))
