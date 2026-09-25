@@ -141,12 +141,14 @@ def run_tum_sequence(
     config: SlamConfig,
     stride: int = 10,
     max_frames: int | None = None,
+    asynchronous: bool = True,
+    max_pending_windows: int = 2,
 ) -> BenchmarkResult:
     """Run one sequence; preserve raw trajectories, timing, and evaluation metadata.
 
     Model construction/download is excluded from measured replay time. RGB decode,
     frame persistence, mapping, optimization, and final backend flush are included.
-    Synchronous execution gives repeatable correction scheduling on CPU.
+    Select asynchronous=False for repeatable sequential correction scheduling.
     """
     directory, output = Path(directory), Path(output)
     if output.exists():
@@ -159,7 +161,14 @@ def run_tum_sequence(
     selected = [(t, p.relative_to(directory).as_posix(), sha256_file(p)) for t, p in samples]
     (output / "inputs.json").write_text(json.dumps(selected, indent=2))
     started = time.perf_counter()
-    with SlamSystem(frontend, backend, output / "runtime", config, asynchronous=False) as system:
+    with SlamSystem(
+        frontend,
+        backend,
+        output / "runtime",
+        config,
+        asynchronous=asynchronous,
+        max_pending_windows=max_pending_windows,
+    ) as system:
         for index, (timestamp, path) in enumerate(samples):
             with Image.open(path) as image:
                 rgb = np.array(image.convert("RGB"))
@@ -237,7 +246,7 @@ def write_report(
         f"- DA3-Small in both frontend/backend roles; processing resolution {metadata['resolution']} (long edge before patch-size rounding).",
         "- RGB-only input: no sensor depth, calibration, or ground-truth poses are supplied to SLAM.",
         "- Every tenth original RGB frame across each sequence; no accuracy-based frame selection.",
-        "- Synchronous backend; window 12, stride 3; loop retrieval and long-context enabled.",
+        "- Execution mode and queue capacity are recorded per sequence below; mapping settings are in results.json.",
         "- Each online/corrected trajectory gets its own full-trajectory Sim(3) alignment to motion-capture ground truth.",
         "- One-to-one timestamp matching within 20 ms. RPE uses consecutive matched sampled frames, not a fixed one-second interval.",
         "- FPS includes image loading, persistence, mapping, graph optimization and final flush; excludes model loading and plotting.",
@@ -266,6 +275,8 @@ def write_report(
             f"## {name}",
             "",
             f"Sampled {result['sampled_frames']} of {result['source_rgb_frames']} RGB frames over {result['sampled_duration_s']:.2f} s; {100 * result['sampled_gt_match_fraction']:.1f}% matched ground truth. Backend: {stats['submaps']} submaps, {stats['edges']} edges. Push p50/p95: {stats['push_latency_ms_p50']:.1f}/{stats['push_latency_ms_p95']:.1f} ms.",
+            "",
+            f"Execution: {stats.get('execution_mode', 'sequential')}; pending-window limit: {stats.get('max_pending_windows', 1)}; peak outstanding: {stats.get('pending_windows_peak', 0)}; submission backpressure: {stats.get('backpressure_ms', 0.0):.1f} ms.",
             "",
             f"![Trajectory, absolute error and latency]({name}/diagnostics.png)",
             "",

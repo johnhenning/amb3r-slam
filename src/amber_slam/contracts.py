@@ -95,6 +95,11 @@ class GraphReport(TypedDict):
 
 class RunStatistics(TypedDict):
     frames: int
+    execution_mode: NotRequired[str]
+    max_pending_windows: NotRequired[int]
+    pending_windows_peak: NotRequired[int]
+    backpressure_waits: NotRequired[int]
+    backpressure_ms: NotRequired[float]
     push_latency_ms_p50: NotRequired[float]
     push_latency_ms_p95: NotRequired[float]
     push_throughput_fps: NotRequired[float]

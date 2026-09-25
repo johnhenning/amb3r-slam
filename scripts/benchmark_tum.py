@@ -33,7 +33,11 @@ def main() -> None:
     )
     parser.add_argument("--resolution", type=int, default=168)
     parser.add_argument("--threads", type=int, default=2)
+    parser.add_argument("--async-backend", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--max-pending-windows", type=int, default=2)
     args = parser.parse_args()
+    if args.max_pending_windows < 1:
+        parser.error("max-pending-windows must be positive")
     if args.output.exists():
         parser.error("Choose a new output directory; benchmark results are never overwritten")
     if args.threads < 1 or args.resolution < 56:
@@ -97,7 +101,15 @@ def main() -> None:
         for name in args.sequences:
             directory = args.data / f"rgbd_dataset_{name}"
             results.append(
-                run_tum_sequence(directory, args.output / directory.name, frontend, backend, config)
+                run_tum_sequence(
+                    directory,
+                    args.output / directory.name,
+                    frontend,
+                    backend,
+                    config,
+                    asynchronous=args.async_backend,
+                    max_pending_windows=args.max_pending_windows,
+                )
             )
     write_report(args.output, results, metadata)
     print(f"Report: {args.output / 'README.md'}")

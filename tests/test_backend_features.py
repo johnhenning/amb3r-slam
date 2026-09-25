@@ -14,7 +14,8 @@ from amber_slam.runtime import SlamSystem
 from amber_slam.types import Frame
 
 
-def test_long_context_adds_verified_edges(tmp_path: Path) -> None:
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_long_context_adds_verified_edges(tmp_path: Path, asynchronous: bool) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -24,13 +25,14 @@ def test_long_context_adds_verified_edges(tmp_path: Path) -> None:
         graph_iterations=2,
         minimum_overlap=0.01,
     )
-    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, False) as system:
+    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, asynchronous) as system:
         for i in range(14):
             system.push(Frame(i, i / 30, np.zeros((32, 32, 3), np.uint8)))
     assert any(edge.kind == "long" for edge in system.backend.graph.edges)
 
 
-def test_rgbd_metric_graph_has_unit_scale(tmp_path: Path) -> None:
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_rgbd_metric_graph_has_unit_scale(tmp_path: Path, asynchronous: bool) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -39,7 +41,7 @@ def test_rgbd_metric_graph_has_unit_scale(tmp_path: Path) -> None:
         enable_long_context=False,
         graph_iterations=2,
     )
-    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, False) as system:
+    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, asynchronous) as system:
         for i in range(10):
             system.push(Frame(i, i / 30, np.zeros((32, 32, 3), np.uint8), np.full((32, 32), 6.0)))
     assert all(node.scale == pytest.approx(1) for node in system.backend.graph.nodes)
@@ -59,7 +61,8 @@ def test_icp_and_depth_projection() -> None:
     assert depth[5, 5] == 2
 
 
-def test_joint_loop_candidate_is_geometrically_verified(tmp_path: Path) -> None:
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_joint_loop_candidate_is_geometrically_verified(tmp_path: Path, asynchronous: bool) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -68,7 +71,7 @@ def test_joint_loop_candidate_is_geometrically_verified(tmp_path: Path) -> None:
         enable_long_context=False,
         graph_iterations=2,
     )
-    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, False) as system:
+    with SlamSystem(OracleModel(), OracleModel(), tmp_path, config, asynchronous) as system:
         # Explicit candidate source exercises verification independently of ORB.
         class CandidateSource:
             count = 0
