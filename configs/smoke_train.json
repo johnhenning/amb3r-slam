@@ -1,0 +1,12 @@
+{
+  "manifest": "data/synthetic/manifest.json",
+  "output": "runs/smoke_training",
+  "device": "cpu",
+  "model": {"kind": "independent", "width": 32, "layers": 4, "heads": 4, "patch": 8, "fusion": 16},
+  "steps": 8,
+  "views": [2, 2],
+  "resolutions": [[32, 32]],
+  "validate_every": 4,
+  "seed": 17,
+  "cpu_threads": 2
+}

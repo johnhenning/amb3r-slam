@@ -1,0 +1,9 @@
+{
+  "window": 24,
+  "stride": 3,
+  "long_every": 3,
+  "long_window": 6,
+  "enable_loops": true,
+  "enable_long_context": true,
+  "metric": false
+}

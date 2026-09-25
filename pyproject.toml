@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amber-slam"
+version = "0.1.0"
+description = "Independent AMB3R-SLAM reproduction and experimental mobile student"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "Pillow>=10", "opencv-python-headless>=4.8"]
+
+[project.optional-dependencies]
+train = ["torch>=2.6"]
+export = ["torch>=2.6", "onnx>=1.16", "onnxruntime>=1.18"]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[project.scripts]
+amber = "amber_slam.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

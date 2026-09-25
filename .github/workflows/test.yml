@@ -1,0 +1,17 @@
+name: Python tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[dev,train,export]'
+      - run: python -m ruff check .
+      - run: python -m ruff format --check .
+      - run: python -m pytest -q
+      - run: python -m amber_slam synthetic data/synthetic --frames 16 --size 32
+      - run: python -m amber_slam train configs/smoke_train.json
+      - run: OMP_NUM_THREADS=2 python -m amber_slam export runs/smoke_training/last.pt runs/smoke_training/model.onnx

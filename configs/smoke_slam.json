@@ -1,0 +1,7 @@
+{
+  "window": 6,
+  "stride": 2,
+  "enable_loops": false,
+  "enable_long_context": false,
+  "graph_iterations": 3
+}
