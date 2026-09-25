@@ -49,3 +49,25 @@ Large frame/submap caches are not committed; the experiment recreates them.
 The earlier six-run summary was recovered from retained tool output after
 workspace maintenance removed its raw traces. It must not be treated as raw
 trace evidence or combined with fresh runs to estimate variance.
+
+## Complete room routes
+
+For spatial traversal and revisit tests, use:
+
+```bash
+uv run --no-sync python scripts/profile_tum_routes.py --output reports/new_routes
+uv run --no-sync python scripts/report_tum_routes.py reports/new_routes
+```
+
+This runs `freiburg3_long_office_household` and `freiburg1_room` sequentially and
+concurrently in separate processes, reversing mode order on the second route.
+Every tenth original RGB frame is retained across the full recording, without a
+frame cap. `--repeats 3` repeats the matched comparisons with reversed order.
+`corrections.json` records when each graph update reaches the tracker;
+`loop_corrections.json` joins those updates to the loop edges admitted by the
+backend. An admitted edge is not independently verified as a true closure.
+
+KITTI 07 and 00 are the next planned scale tests. Official KITTI downloads
+require an account login; provide the licensed odometry sequences, calibration,
+timestamps and ground-truth poses to run those tests. The current route runner
+covers TUM only.

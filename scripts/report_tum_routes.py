@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -59,6 +61,14 @@ def summarize(root: Path) -> None:
         directory = root / run["label"]
         path = directory / ("rgbd_dataset_" + run["sequence"])
         result = json.loads((path / "results.json").read_text())
+        readme = directory / "README.md"
+        text = readme.read_text().replace("on two sequences", "on one sequence")
+        docs = os.path.relpath(Path("docs/BENCHMARKS.md").resolve(), directory.resolve())
+        readme.write_text(text.replace("../../docs/BENCHMARKS.md", docs))
+        log = (root / (run["label"] + ".log")).read_text()
+        views = [int(x) for x in re.findall(r"Shape:  torch.Size\(\[(\d+), 3,", log)]
+        workload = {"model_calls": len(views), "input_views": sum(views)}
+        (path / "model_workload.json").write_text(json.dumps(workload, indent=2) + "\n")
         env = json.loads((directory / "environment.json").read_text())
         profile = json.loads((path / "profile/summary.json").read_text())
         invariant = {
@@ -84,6 +94,7 @@ def summarize(root: Path) -> None:
                 "result": result,
                 "profile": profile,
                 "edge_counts": dict(Counter(e["kind"] for e in edges)),
+                "workload": workload,
                 "corrections": corrections,
             }
         )
