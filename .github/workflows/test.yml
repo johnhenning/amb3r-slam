@@ -14,9 +14,10 @@ jobs:
           python-version-file: '.python-version'
           enable-cache: true
       - name: Install locked development and model dependencies
-        run: uv sync --locked --extra train --extra export
+        run: uv sync --locked --extra train --extra export --extra benchmark
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
+      - run: uv run --no-sync pyrefly check
       - run: uv run --no-sync pytest -q
       - run: uv run --no-sync amber synthetic data/synthetic --frames 16 --size 32
       - run: uv run --no-sync amber train configs/smoke_train.json

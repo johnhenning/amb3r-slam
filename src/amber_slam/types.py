@@ -6,6 +6,8 @@ from typing import Protocol
 
 import numpy as np
 
+from .contracts import Array
+
 
 @dataclass
 class Frame:
@@ -13,20 +15,20 @@ class Frame:
 
     index: int
     timestamp: float
-    rgb: np.ndarray  # HWC RGB uint8
-    depth: np.ndarray | None = None  # registered z-depth in meters
-    intrinsics: np.ndarray | None = None
-    lidar: np.ndarray | None = None  # XYZ in CAMERA frame, meters
+    rgb: Array  # HWC RGB uint8
+    depth: Array | None = None  # registered z-depth in meters
+    intrinsics: Array | None = None
+    lidar: Array | None = None  # XYZ in CAMERA frame, meters
 
 
 @dataclass
 class Reconstruction:
     """Predictions in input-frame order and one shared local coordinate frame."""
 
-    poses: np.ndarray  # V,4,4 camera -> common local world
-    depth: np.ndarray  # V,H,W z-depth in same scale as translations
-    confidence: np.ndarray  # V,H,W positive, comparable within same model
-    intrinsics: np.ndarray  # V,3,3 at DEPTH resolution
+    poses: Array  # V,4,4 camera -> common local world
+    depth: Array  # V,H,W z-depth in same scale as translations
+    confidence: Array  # V,H,W positive, comparable within same model
+    intrinsics: Array  # V,3,3 at DEPTH resolution
 
     def validate(self, n: int) -> "Reconstruction":
         """Reject malformed predictions at the boundary rather than in geometry."""

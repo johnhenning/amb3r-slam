@@ -1,5 +1,15 @@
 """Compact-context tracking with explicit backend correction feedback."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from .contracts import Array
+
+if TYPE_CHECKING:
+    from .backend import BackendUpdate
+
+
 from collections import deque
 
 import cv2
@@ -12,15 +22,15 @@ from .types import Frame, GeometryModel
 class Frontend:
     """Owns anchor, two recent frames, and poses in the current world gauge."""
 
-    def __init__(self, model: GeometryModel):
+    def __init__(self, model: GeometryModel) -> None:
         self.model = model
         self.anchor: Frame | None = None
-        self.anchor_depth: np.ndarray | None = None
+        self.anchor_depth: Array | None = None
         self.recent: deque[Frame] = deque(maxlen=2)
-        self.poses: dict[int, np.ndarray] = {}
+        self.poses: dict[int, Array] = {}
         self.scores: dict[int, float] = {}
 
-    def track(self, frame: Frame) -> tuple[np.ndarray, float]:
+    def track(self, frame: Frame) -> tuple[Array, float]:
         context = {f.index: f for f in ([self.anchor] if self.anchor else []) + list(self.recent)}
         context[frame.index] = frame
         frames = list(context.values())
@@ -31,6 +41,7 @@ class Frontend:
             self.anchor_depth = prediction.depth[0].copy()
             pose = np.eye(4)
         else:
+            assert self.anchor_depth is not None
             h, w = prediction.depth[0].shape
             reference_depth = cv2.resize(
                 self.anchor_depth.astype(np.float32),
@@ -48,7 +59,7 @@ class Frontend:
         self.recent.append(frame)
         return pose.copy(), confidence
 
-    def apply_update(self, update, anchor: Frame) -> None:
+    def apply_update(self, update: BackendUpdate, anchor: Frame) -> None:
         """Correct frames newer than a delayed map, then install a new anchor.
 
         The similarity gauge correction carries the newest mapped pose into the

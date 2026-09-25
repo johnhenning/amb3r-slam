@@ -93,3 +93,29 @@ weight loading in its adapter. Add a dataset converter that emits the manifest
 instead of inserting dataset logic into the tracker. Add an edge source in the
 backend while preserving the direction contract. Validate every change with
 known-transform fixtures before comparing learned-model trajectories.
+
+## Static contracts and checks
+
+All Python function parameters and returns in `src`, `scripts` and `tests` carry
+annotations; Ruff's `ANN` rules enforce this. `contracts.py` defines the manifest,
+training configuration, metrics and report `TypedDict` schemas. `GeometryModel`
+and `CandidateRetriever` are the model and retrieval protocols. Async results
+use `Future[BackendUpdate]`; frame queues and caches have explicit element types.
+
+NumPy uses the shared `Array = NDArray[Any]` alias because several boundaries accept
+mixed floating/integer dtypes. Tensor shapes, coordinate conventions and finite
+values remain runtime contracts rather than promises made by Python's type system.
+`JsonObject` is reserved for open JSON metadata. Upstream DA3 is not fully typed;
+its outputs are checked by `Reconstruction.validate` before entering geometry.
+Pyrefly checks our project, including test doubles and scripts. Only missing optional
+DA3/evo imports are allowed when those extras are absent in fast CI.
+
+```bash
+uv run --no-sync ruff check .
+uv run --no-sync ruff format --check .
+uv run --no-sync pyrefly check
+```
+
+`benchmark.py` keeps evaluation separate from inference: the tracker receives no
+motion-capture poses or sensor depth. `scripts/benchmark_tum.py` owns downloads,
+checkpoint selection and CPU thread limits. See [BENCHMARKS.md](BENCHMARKS.md).

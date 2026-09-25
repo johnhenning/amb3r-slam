@@ -1,11 +1,15 @@
 """Submap graph with block Huber loss (not elementwise Huber)."""
 
+from __future__ import annotations
+
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 import numpy as np
 from scipy.optimize import least_squares
 from scipy.sparse import lil_matrix
 
+from .contracts import Array, GraphReport
 from .geometry import Sim3
 
 
@@ -19,13 +23,19 @@ class Edge:
 
 
 class PoseGraph:
-    def __init__(self, metric=False, huber=1.0, baseline_floor=0.1, whiten=True):
-        self.nodes = []
-        self.edges = []
+    def __init__(
+        self,
+        metric: bool = False,
+        huber: float = 1.0,
+        baseline_floor: float = 0.1,
+        whiten: bool = True,
+    ) -> None:
+        self.nodes: list[Sim3] = []
+        self.edges: list[Edge] = []
         self.metric, self.huber = metric, huber
         self.baseline_floor, self.whiten = baseline_floor, whiten
 
-    def add_edge(self, edge):
+    def add_edge(self, edge: Edge) -> None:
         if not 0 <= edge.i < edge.j < len(self.nodes):
             raise ValueError("Invalid edge indices")
         if edge.weight <= 0 or not np.isfinite(edge.weight):
@@ -34,12 +44,12 @@ class PoseGraph:
             raise ValueError("Metric graph requires unit-scale edges")
         self.edges.append(edge)
 
-    def residuals(self, nodes):
+    def residuals(self, nodes: Sequence[Sim3]) -> Array:
         out = []
         for e in self.edges:
             r = (e.measurement.inverse() @ nodes[e.i].inverse() @ nodes[e.j]).log()
             if self.whiten:
-                r[:3] /= max(np.linalg.norm(e.measurement.translation), self.baseline_floor)
+                r[:3] /= max(float(np.linalg.norm(e.measurement.translation)), self.baseline_floor)
             r *= np.sqrt(e.weight)
             norm = np.linalg.norm(r)
             if norm > self.huber:
@@ -48,20 +58,20 @@ class PoseGraph:
             out.extend(r)
         return np.asarray(out)
 
-    def optimize(self, max_nfev=30):
+    def optimize(self, max_nfev: int = 30) -> GraphReport:
         if len(self.nodes) < 2 or not self.edges:
             return {"initial_cost": 0.0, "final_cost": 0.0, "success": True}
         original = list(self.nodes)
         dof = 6 if self.metric else 7
 
-        def decode(x):
+        def decode(x: Array) -> list[Sim3]:
             dx = x.reshape(-1, dof)
             return [original[0]] + [
                 original[i + 1] @ Sim3.exp(np.r_[v, 0.0] if self.metric else v)
                 for i, v in enumerate(dx)
             ]
 
-        def residual(x):
+        def residual(x: Array) -> Array:
             return self.residuals(decode(x))
 
         n = dof * (len(original) - 1)

@@ -1,0 +1,39 @@
+name: TUM CPU benchmark
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: '0.12.17'
+          python-version-file: '.python-version'
+          enable-cache: true
+      - run: uv sync --locked --extra da3 --extra train --extra export --extra benchmark
+      - name: Replay official TUM sequences with pinned DA3-Small weights
+        run: >-
+          uv run --no-sync scripts/benchmark_tum.py --download
+          --data data/tum --output reports/tum_cpu
+          --revision e08cab65ca0ec38e7826075418411ab90cab4da3
+          --threads 2 --resolution 168
+      - name: Validate data and independently cross-check metrics
+        env:
+          TUM_DATA_ROOT: data/tum
+          AMBER_BENCHMARK_REPORT: reports/tum_cpu
+        run: uv run --no-sync pytest tests/test_benchmarks.py -q
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tum-cpu-report
+          path: |
+            reports/tum_cpu/**
+            !reports/tum_cpu/**/runtime/**

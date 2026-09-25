@@ -5,6 +5,8 @@ checkpoints. Dataset membership is scene-disjoint in the manifest. Large-scale
 DA3 recipe reproduction remains a separately documented research campaign.
 """
 
+from __future__ import annotations
+
 import json
 import math
 import os
@@ -17,12 +19,22 @@ import torch
 from torch import distributed
 from torch.nn.parallel import DistributedDataParallel
 
+from .contracts import PathLike, TrainingConfig
 from .data import SceneDataset
 from .losses import geometry_loss, normalize_targets, teacher_loss
-from .models import build_model
+from .models import GeometryTransformer, UpstreamDA3, build_model
 
 
-def _batch(dataset, index, views, size, seed, batch_size, device, pseudo=False):
+def _batch(
+    dataset: SceneDataset,
+    index: int,
+    views: int,
+    size: tuple[int, int],
+    seed: int,
+    batch_size: int,
+    device: str,
+    pseudo: bool = False,
+) -> dict[str, torch.Tensor]:
     samples = [
         dataset.sample(index + i, views, size, np.random.default_rng(seed + i), pseudo)
         for i in range(batch_size)
@@ -35,7 +47,7 @@ def _batch(dataset, index, views, size, seed, batch_size, device, pseudo=False):
     return batch
 
 
-def _condition(target):
+def _condition(target: dict[str, torch.Tensor]) -> torch.Tensor:
     h, w = target["depth"].shape[-2:]
     k = target["intrinsics"]
     return torch.cat(
@@ -55,7 +67,7 @@ def _condition(target):
     )
 
 
-def train(config_path):
+def train(config_path: PathLike) -> dict[str, float]:
     config = json.loads(Path(config_path).read_text())
     world = int(os.environ.get("WORLD_SIZE", "1"))
     rank = int(os.environ.get("RANK", "0"))
@@ -73,18 +85,19 @@ def train(config_path):
             distributed.destroy_process_group()
 
 
-def _train(config, world, rank, device):
+def _train(config: TrainingConfig, world: int, rank: int, device: str) -> dict[str, float]:
     seed = config.get("seed", 17)
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.set_num_threads(config.get("cpu_threads", 4))
     model_config = config.get("model", {})
-    model = build_model(model_config).to(device)
+    base_model = build_model(model_config).to(device)
+    model: GeometryTransformer | UpstreamDA3 | DistributedDataParallel = base_model
     # Explicit optional backbone initialization; no implicit weight downloads.
     if config.get("backbone_init"):
         state = torch.load(config["backbone_init"], map_location="cpu", weights_only=True)
-        backbone = model.net.backbone if hasattr(model, "net") else model
+        backbone = base_model.net.backbone if isinstance(base_model, UpstreamDA3) else base_model
         backbone.load_state_dict(state, strict=True)
     optimizer = torch.optim.AdamW(
         model.parameters(),
@@ -126,7 +139,7 @@ def _train(config, world, rank, device):
     accumulation = config.get("accumulation", 1)
     if steps < 1 or accumulation < 1:
         raise ValueError("steps and accumulation must be positive")
-    sizes = config.get("resolutions", [[64, 64]])
+    sizes = config.get("resolutions", [(64, 64)])
     min_views, max_views = config.get("views", [2, 4])
     teacher = config.get("stage", "geometry") == "teacher"
     base_lr = config.get("lr", 2e-4)
@@ -137,7 +150,8 @@ def _train(config, world, rank, device):
         model.train()
         optimizer.zero_grad(set_to_none=True)
         schedule = np.random.default_rng(seed + step)  # Same shapes on every rank.
-        size = tuple(sizes[int(schedule.integers(len(sizes)))])
+        height, width = sizes[int(schedule.integers(len(sizes)))]
+        size = (height, width)
         views = 1 if teacher else int(schedule.integers(min_views, max_views + 1))
         token_budget = config.get("pixels_per_step")
         batch_size = (
@@ -163,7 +177,11 @@ def _train(config, world, rank, device):
             condition = None
             if not teacher and schedule.random() < config.get("pose_condition_probability", 0.2):
                 condition = _condition(target)
-            sync = model.no_sync() if world > 1 and micro < accumulation - 1 else nullcontext()
+            sync = (
+                model.no_sync()
+                if isinstance(model, DistributedDataParallel) and micro < accumulation - 1
+                else nullcontext()
+            )
             with sync:
                 with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
                     prediction = model(batch["images"], condition)
@@ -184,7 +202,7 @@ def _train(config, world, rank, device):
         scaler.update()
         if (step + 1) % val_every == 0 or step + 1 == steps:
             # Validate on unwrapped model to avoid rank-0-only DDP collectives.
-            raw = model.module if world > 1 else model
+            raw = base_model
             raw.eval()
             validation = []
             with torch.inference_mode():

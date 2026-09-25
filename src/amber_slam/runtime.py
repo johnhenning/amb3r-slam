@@ -5,26 +5,31 @@ worker. Corrections cross that boundary only through completed immutable-by-
 convention BackendUpdate objects. Separate model instances avoid unsafe reuse.
 """
 
+from __future__ import annotations
+
 import time
-from concurrent.futures import ThreadPoolExecutor
+from collections.abc import Iterator
+from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from queue import Empty, Full, Queue
 from threading import Event, Thread
+from types import TracebackType
 
 import numpy as np
 
-from .backend import HierarchicalBackend, SlamConfig
+from .backend import BackendUpdate, HierarchicalBackend, SlamConfig
+from .contracts import Array, PathLike, RunStatistics
 from .frontend import Frontend
 from .store import FrameStore
-from .types import Frame
+from .types import Frame, GeometryModel
 
 
 @dataclass
 class TrackingResult:
     frame_id: int
     timestamp: float
-    pose: np.ndarray
+    pose: Array
     confidence: float
     latency_ms: float
     backend_pending: bool
@@ -38,7 +43,14 @@ class SlamSystem:
     skipping mandatory submaps. Live capture drops stale frames upstream.
     """
 
-    def __init__(self, frontend_model, backend_model, directory, config=None, asynchronous=True):
+    def __init__(
+        self,
+        frontend_model: GeometryModel,
+        backend_model: GeometryModel,
+        directory: PathLike,
+        config: SlamConfig | None = None,
+        asynchronous: bool = True,
+    ) -> None:
         self.config = config or SlamConfig()
         self.directory = Path(directory)
         self.directory.mkdir(parents=True, exist_ok=True)
@@ -48,7 +60,7 @@ class SlamSystem:
         self.frontend = Frontend(frontend_model)
         self.backend = HierarchicalBackend(backend_model, self.directory, self.config)
         self.executor = ThreadPoolExecutor(max_workers=1) if asynchronous else None
-        self.pending = None
+        self.pending: Future[BackendUpdate] | None = None
         self.count = 0
         self.last_timestamp = -np.inf
         self.last_mapped = -1
@@ -57,13 +69,13 @@ class SlamSystem:
         self.timestamps = []
         self.online_poses = []
 
-    def _collect(self, wait=False):
+    def _collect(self, wait: bool = False) -> None:
         if self.pending is not None and (wait or self.pending.done()):
             update = self.pending.result()  # Worker exceptions must reach caller.
             self.pending = None
             self.frontend.apply_update(update, self.store.get(update.anchor_id))
 
-    def _map(self, start, end):
+    def _map(self, start: int, end: int) -> None:
         self._collect(wait=True)
         frames = [self.store.get(i) for i in range(start, end)]
         scores = [self.frontend.scores[f.index] for f in frames]
@@ -107,7 +119,7 @@ class SlamSystem:
             self.pending is not None,
         )
 
-    def close(self):
+    def close(self) -> None:
         if self.closed:
             return
         try:
@@ -120,14 +132,14 @@ class SlamSystem:
                 self.executor.shutdown(wait=True, cancel_futures=True)
             self.closed = True
 
-    def trajectory(self):
+    def trajectory(self) -> Array:
         return (
             np.stack([self.frontend.poses[i] for i in range(self.count)])
             if self.count
             else np.empty((0, 4, 4))
         )
 
-    def statistics(self):
+    def statistics(self) -> RunStatistics:
         if not self.latencies:
             return {"frames": 0}
         return {
@@ -139,10 +151,15 @@ class SlamSystem:
             "edges": len(self.backend.graph.edges),
         }
 
-    def __enter__(self):
+    def __enter__(self) -> SlamSystem:
         return self
 
-    def __exit__(self, exc_type, exc, traceback):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
         if exc_type is None:
             self.close()
         else:
@@ -154,16 +171,16 @@ class SlamSystem:
 class LatestFrameCapture:
     """A capacity-one queue trades frame completeness for bounded capture age."""
 
-    def __init__(self, source):
+    def __init__(self, source: str | int) -> None:
         self.source = source
-        self.queue = Queue(maxsize=1)
+        self.queue: Queue[tuple[float, Array]] = Queue(maxsize=1)
         self.stop = Event()
         self.finished = Event()
-        self.error = None
+        self.error: Exception | None = None
         self.dropped = 0
         self.thread = Thread(target=self._run, daemon=True)
 
-    def _run(self):
+    def _run(self) -> None:
         import cv2
 
         capture = cv2.VideoCapture(self.source)
@@ -190,7 +207,7 @@ class LatestFrameCapture:
             capture.release()
             self.finished.set()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[tuple[float, Array]]:
         self.thread.start()
         try:
             while not self.finished.is_set() or not self.queue.empty():

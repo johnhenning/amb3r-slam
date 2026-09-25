@@ -1,14 +1,18 @@
 """Trajectory metrics with explicit alignment and timestamp semantics."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import numpy as np
+from numpy.typing import ArrayLike
 from scipy.spatial.transform import Rotation
 
+from .contracts import Array, PathLike, TrajectoryMetrics, WindowAuc
 from .geometry import Sim3, align_points
 
 
-def read_tum(path):
+def read_tum(path: PathLike) -> tuple[Array, Array]:
     rows = np.loadtxt(path, comments="#", ndmin=2)
     if rows.shape[1] != 8 or len(rows) == 0 or not np.isfinite(rows).all():
         raise ValueError("TUM format: timestamp tx ty tz qx qy qz qw")
@@ -22,7 +26,8 @@ def read_tum(path):
     return rows[:, 0], poses
 
 
-def write_tum(path, timestamps, poses):
+def write_tum(path: PathLike, timestamps: ArrayLike, poses: Array) -> None:
+    timestamps = np.asarray(timestamps)
     if len(timestamps) != len(poses):
         raise ValueError("Timestamp/pose length mismatch")
     rows = np.column_stack(
@@ -32,7 +37,7 @@ def write_tum(path, timestamps, poses):
     np.savetxt(path, rows, fmt="%.9f", header="timestamp tx ty tz qx qy qz qw")
 
 
-def associate(reference, estimated, tolerance=0.02):
+def associate(reference: Array, estimated: Array, tolerance: float = 0.02) -> Array:
     """Greedy smallest-time-difference, one-to-one association within tolerance."""
     if tolerance < 0:
         raise ValueError("Negative timestamp tolerance")
@@ -55,7 +60,7 @@ def associate(reference, estimated, tolerance=0.02):
     return np.asarray(accepted, dtype=int).T
 
 
-def align_trajectory(estimated, reference, mode="sim3"):
+def align_trajectory(estimated: Array, reference: Array, mode: str = "sim3") -> tuple[Array, Sim3]:
     if mode == "none":
         return estimated.copy(), Sim3.identity()
     if mode not in {"sim3", "se3"}:
@@ -66,14 +71,14 @@ def align_trajectory(estimated, reference, mode="sim3"):
     return np.stack([transform.pose(p) for p in estimated]), transform
 
 
-def error_auc(errors, threshold):
+def error_auc(errors: ArrayLike, threshold: float) -> float:
     """Exact integral of empirical recall on [0,threshold], normalized to [0,1]."""
     if threshold <= 0:
         raise ValueError("Threshold must be positive")
     return float(np.maximum(0.0, 1.0 - np.asarray(errors) / threshold).mean())
 
 
-def relative_pose_errors(estimated, reference, delta=1):
+def relative_pose_errors(estimated: Array, reference: Array, delta: int = 1) -> tuple[Array, Array]:
     if delta < 1 or delta >= len(estimated):
         raise ValueError("Invalid RPE frame delta")
     predicted = np.linalg.inv(estimated[:-delta]) @ estimated[delta:]
@@ -84,7 +89,7 @@ def relative_pose_errors(estimated, reference, delta=1):
     return translation, rotation
 
 
-def window_auc(estimated, reference, length, ratio=0.05):
+def window_auc(estimated: Array, reference: Array, length: float, ratio: float = 0.05) -> WindowAuc:
     """Our protocol: each reference-distance window is independently Sim3-aligned.
 
     Score all frame translation errors at ratio*length. Windows start at every
@@ -112,7 +117,13 @@ def window_auc(estimated, reference, length, ratio=0.05):
     }
 
 
-def evaluate(reference_path, estimated_path, alignment="sim3", tolerance=0.02, delta=1):
+def evaluate(
+    reference_path: PathLike,
+    estimated_path: PathLike,
+    alignment: str = "sim3",
+    tolerance: float = 0.02,
+    delta: int = 1,
+) -> TrajectoryMetrics:
     tr, reference = read_tum(reference_path)
     te, estimated = read_tum(estimated_path)
     ir, ie = associate(tr, te, tolerance)

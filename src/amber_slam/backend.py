@@ -5,7 +5,10 @@ Submap tensors live on disk; the pose graph and trajectory metadata grow with
 sequence length. This is a research CPU optimizer, not a constant-memory mapper.
 """
 
+from __future__ import annotations
+
 import json
+from collections.abc import Collection, Sequence
 from dataclasses import asdict, dataclass
 from itertools import pairwise
 from pathlib import Path
@@ -14,6 +17,7 @@ import cv2
 import numpy as np
 from scipy.spatial.transform import Rotation
 
+from .contracts import Array, GraphReport, PathLike
 from .geometry import (
     Sim3,
     average_poses,
@@ -24,7 +28,7 @@ from .geometry import (
 )
 from .graph import Edge, PoseGraph
 from .modalities import icp, project_lidar_depth, voxel_overlap
-from .retrieval import LoopRetriever
+from .retrieval import CandidateRetriever, LoopRetriever
 from .store import FrameStore
 from .types import Frame, GeometryModel, Reconstruction
 
@@ -52,7 +56,7 @@ class SlamConfig:
     whiten: bool = True
     graph_iterations: int = 25
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.window < 6 or self.window % 3:
             raise ValueError("window must be >=6 and divisible by 3")
         if self.stride < 1 or self.long_every < 1 or self.long_window < 4:
@@ -69,16 +73,16 @@ class SlamConfig:
         return self.window // 3
 
     @classmethod
-    def load(cls, path):
+    def load(cls, path: PathLike | None) -> SlamConfig:
         return cls(**json.loads(Path(path).read_text())) if path else cls()
 
 
 @dataclass
 class Submap:
     index: int
-    ids: np.ndarray
-    poses: np.ndarray
-    selected: np.ndarray
+    ids: Array
+    poses: Array
+    selected: Array
     reconstruction: Reconstruction
 
     def save(self, path: Path) -> None:
@@ -94,14 +98,14 @@ class Submap:
         )
 
     @classmethod
-    def load(cls, index: int, path: Path):
+    def load(cls, index: int, path: Path) -> Submap:
         with np.load(path, allow_pickle=False) as z:
             reconstruction = Reconstruction(
                 z["selected_poses"], z["depth"], z["confidence"], z["intrinsics"]
             )
             return cls(index, z["ids"], z["poses"], z["selected"], reconstruction)
 
-    def cloud(self, ids=None) -> np.ndarray:
+    def cloud(self, ids: Collection[int] | None = None) -> Array:
         clouds = []
         for i, frame_id in enumerate(self.selected):
             if ids is not None and frame_id not in ids:
@@ -113,7 +117,7 @@ class Submap:
         return np.concatenate(clouds) if clouds else np.empty((0, 3))
 
 
-def align_submaps(source: Submap, target: Submap, metric=False) -> Sim3:
+def align_submaps(source: Submap, target: Submap, metric: bool = False) -> Sim3:
     """Estimate target_from_source using shared-image dense correspondences.
 
     If view selection has no common reconstructed images, use interpolated
@@ -161,14 +165,14 @@ def align_submaps(source: Submap, target: Submap, metric=False) -> Sim3:
 
 @dataclass
 class BackendUpdate:
-    poses: dict[int, np.ndarray]
+    poses: dict[int, Array]
     anchor_id: int
-    anchor_depth: np.ndarray
-    graph_report: dict
+    anchor_depth: Array
+    graph_report: GraphReport
 
 
 class HierarchicalBackend:
-    def __init__(self, model: GeometryModel, directory, config: SlamConfig):
+    def __init__(self, model: GeometryModel, directory: PathLike, config: SlamConfig) -> None:
         self.model, self.config = model, config
         self.directory = Path(directory)
         self.directory.mkdir(parents=True, exist_ok=True)
@@ -176,18 +180,20 @@ class HierarchicalBackend:
         self.submap_directory = self.directory / "submaps"
         self.submap_directory.mkdir(exist_ok=True)
         self.graph = PoseGraph(metric=config.metric, whiten=config.whiten)
-        self.retrieval = LoopRetriever(config.loop_exclusion, config.loop_score)
+        self.retrieval: CandidateRetriever = LoopRetriever(config.loop_exclusion, config.loop_score)
         self.count = 0
         self.rejected = []
         (self.directory / "slam_config.json").write_text(json.dumps(asdict(config), indent=2))
 
-    def _path(self, index):
+    def _path(self, index: int) -> Path:
         return self.submap_directory / f"{index:06d}.npz"
 
-    def _load(self, index):
+    def _load(self, index: int) -> Submap:
         return Submap.load(index, self._path(index))
 
-    def _reconstruct(self, frames, scores=None) -> Submap:
+    def _reconstruct(
+        self, frames: Sequence[Frame], scores: Sequence[float] | None = None
+    ) -> Submap:
         ids = np.array([f.index for f in frames])
         if scores is None:
             selected = list(range(len(frames)))
@@ -209,7 +215,7 @@ class HierarchicalBackend:
                     if frame.lidar is None or frame.intrinsics is None:
                         raise ValueError("LiDAR metric scale requires camera calibration and scans")
                     sensor_depth = project_lidar_depth(
-                        frame.lidar, frame.intrinsics, frame.rgb.shape[:2]
+                        frame.lidar, frame.intrinsics, (frame.rgb.shape[0], frame.rgb.shape[1])
                     )
                 if sensor_depth is None:
                     raise ValueError("Metric mode requires registered sensor depth")
@@ -228,10 +234,12 @@ class HierarchicalBackend:
         poses = interpolate_poses(ids[selected], reconstruction.poses, ids)
         return Submap(self.count, ids, poses, ids[selected], reconstruction)
 
-    def _joint_edge(self, a: Submap, b: Submap, kind: str, context=None):
+    def _joint_edge(
+        self, a: Submap, b: Submap, kind: str, context: Submap | None = None
+    ) -> Edge | None:
         count = self.config.long_views_per_submap
 
-        def sample(submap):
+        def sample(submap: Submap) -> list[int]:
             positions = np.linspace(
                 0, len(submap.selected) - 1, min(count, len(submap.selected))
             ).astype(int)
@@ -269,7 +277,7 @@ class HierarchicalBackend:
                 return None
         return Edge(a.index, b.index, edge, kind=kind)
 
-    def _lidar_local(self, current: Submap, previous: Submap | None):
+    def _lidar_local(self, current: Submap, previous: Submap | None) -> None:
         """Camera-frame scans and sequential ICP replace visual odometry locally.
 
         Reference implementation uses point-to-point ICP, not full KISS-ICP.
@@ -279,6 +287,7 @@ class HierarchicalBackend:
             raise ValueError("LiDAR mode needs calibrated, camera-frame point clouds")
         poses = [np.eye(4)]
         for left, right in pairwise(frames):
+            assert right.lidar is not None and left.lidar is not None
             relative, _, _ = icp(right.lidar, left.lidar)
             poses.append(poses[-1] @ relative.pose(np.eye(4)))
         current.poses = np.stack(poses)
@@ -354,9 +363,13 @@ class HierarchicalBackend:
             if self.config.lidar:
                 a_id, b_id = int(historical.ids[0]), int(current.ids[0])
                 try:
+                    source_scan = self.store.get(b_id).lidar
+                    target_scan = self.store.get(a_id).lidar
+                    if source_scan is None or target_scan is None:
+                        raise ValueError("Loop refinement requires both LiDAR scans")
                     refined, rmse, inliers = icp(
-                        self.store.get(b_id).lidar,
-                        self.store.get(a_id).lidar,
+                        source_scan,
+                        target_scan,
                         initial=edge.measurement,
                     )
                 except ValueError:
@@ -398,8 +411,8 @@ class HierarchicalBackend:
         (self.directory / "graph_report.json").write_text(json.dumps(report, indent=2))
         return BackendUpdate(corrected, anchor, depth, report)
 
-    def trajectory(self) -> dict[int, np.ndarray]:
-        contributions = {}
+    def trajectory(self) -> dict[int, Array]:
+        contributions: dict[int, list[tuple[Array, float]]] = {}
         for i, node in enumerate(self.graph.nodes):
             submap = self._load(i)
             middle = (len(submap.ids) - 1) / 2

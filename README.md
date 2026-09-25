@@ -41,8 +41,10 @@ project pins Python 3.12 in `.python-version`; uv manages the environment and
 resolves dependencies from the committed `uv.lock`. From the repository root:
 
 ```bash
-uv sync --locked --extra train --extra export
+uv sync --locked --extra train --extra export --extra benchmark
 uv run --no-sync pytest -q
+uv run --no-sync pyrefly check
+uv run --no-sync ruff format --check .
 ```
 
 For the actual checkpoint-backed SLAM path, also install the pinned upstream
@@ -54,7 +56,7 @@ uv sync --locked --extra da3 --extra train --extra export
 ```
 
 Development tools are in the default `dev` dependency group. `train`, `export`,
-and `da3` are optional extras. Commands below use `--no-sync` after the explicit
+`da3`, and `benchmark` are optional extras. Commands below use `--no-sync` after the explicit
 sync step so they retain the selected extras. To update dependencies deliberately,
 run `uv lock --upgrade`, review the diff, then `uv sync` with your chosen extras.
 
@@ -99,6 +101,13 @@ Outputs include corrected and originally emitted TUM trajectories, persisted
 frames/submaps, graph nodes/edges, configuration, and timing statistics. Image
 caches are bounded, but disk use, trajectory metadata and the graph grow with
 the sequence. Loss of tracking raises an error rather than inventing poses.
+
+## Standard-dataset results
+
+[Read the TUM CPU report](reports/tum_cpu_2026-09-25/README.md) for measured
+DA3-Small results on `freiburg1_xyz` and `freiburg1_desk`, including trajectories,
+ATE/RPE and latency plots. These are sampled CPU baselines, not a reproduction
+of the paper’s accuracy tables. [Reproduction commands and test protocol](docs/BENCHMARKS.md).
 
 ## Evaluate and export a map
 

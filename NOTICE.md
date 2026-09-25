@@ -25,3 +25,7 @@ The MIT license here applies to this repository's original code. External
 software, model weights and datasets retain their respective licenses. No
 external checkpoints or paper text are redistributed in this repository.
 Citation metadata is provided in `CITATION.cff` and `CITATIONS.bib`.
+
+TUM benchmark reports contain derived trajectories from the TUM RGB-D dataset
+(Sturm et al., IROS 2012), licensed CC BY 4.0. The repository MIT license does
+not replace the dataset license. See docs/BENCHMARKS.md for full attribution.

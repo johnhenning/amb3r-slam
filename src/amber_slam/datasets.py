@@ -1,14 +1,18 @@
 """Dataset conversion keeps image/depth files in place and writes a manifest."""
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
 
 import numpy as np
+from numpy.typing import ArrayLike
 
+from .contracts import DatasetSummary, PathLike
 from .evaluation import associate, read_tum
 
 
-def _list_file(path):
+def _list_file(path: PathLike) -> list[tuple[float, str]]:
     rows = []
     for line in Path(path).read_text().splitlines():
         if line.strip() and not line.lstrip().startswith("#"):
@@ -18,14 +22,14 @@ def _list_file(path):
 
 
 def prepare_tum(
-    directory,
-    destination,
-    sequence_id,
-    intrinsics,
-    depth_scale=0.0002,
-    split="test",
-    tolerance=0.02,
-):
+    directory: PathLike,
+    destination: PathLike,
+    sequence_id: str,
+    intrinsics: ArrayLike,
+    depth_scale: float = 0.0002,
+    split: str = "test",
+    tolerance: float = 0.02,
+) -> DatasetSummary:
     """TUM RGB-D association; user supplies the sequence's calibrated intrinsics."""
     root = Path(directory).resolve()
     rgb = _list_file(root / "rgb.txt")
@@ -57,7 +61,13 @@ def prepare_tum(
     return {"frames": len(records), "manifest": str(destination)}
 
 
-def prepare_kitti(directory, destination, sequence_id, poses_path=None, split="test"):
+def prepare_kitti(
+    directory: PathLike,
+    destination: PathLike,
+    sequence_id: str,
+    poses_path: PathLike | None = None,
+    split: str = "test",
+) -> DatasetSummary:
     """KITTI odometry image_2/image_3 with P2/P3 rectified calibration."""
     root = Path(directory).resolve()
     calibration = {}

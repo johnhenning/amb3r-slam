@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import numpy as np
 import torch
 
@@ -5,7 +7,7 @@ from amber_slam.losses import geometry_loss, normalize_targets
 from amber_slam.models import GeometryTransformer
 
 
-def test_model_gradient_and_shapes():
+def test_model_gradient_and_shapes() -> None:
     torch.set_num_threads(2)
     torch.manual_seed(0)
     model = GeometryTransformer(width=32, layers=4, heads=4, patch=8, fusion=16)

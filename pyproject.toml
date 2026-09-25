@@ -6,16 +6,27 @@ build-backend = "setuptools.build_meta"
 name = "amber-slam"
 version = "0.1.0"
 description = "Independent AMB3R-SLAM reproduction and experimental mobile student"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.12,<3.13"
 dependencies = ["numpy>=1.24,<3", "scipy>=1.10,<2", "Pillow>=10", "opencv-python-headless>=4.8"]
 
 [project.optional-dependencies]
 train = ["torch>=2.6"]
 export = ["torch>=2.6", "onnx>=1.16", "onnxruntime>=1.18"]
-da3 = ["depth-anything-3", "numpy<2", "opencv-python-headless<4.12"]
+da3 = [
+    "addict>=2.4.0",
+    "depth-anything-3",
+    "numpy<2",
+    "opencv-python-headless<4.12",
+]
+
+benchmark = [
+    "huggingface-hub>=0.34",
+    "matplotlib>=3.9",
+    "threadpoolctl>=3.6",
+]
 
 [dependency-groups]
-dev = ["pytest>=8", "ruff>=0.9"]
+dev = ["pytest>=8", "ruff>=0.9", "pyrefly>=1.3.1"]
 
 [tool.uv.sources]
 depth-anything-3 = { git = "https://github.com/ByteDance-Seed/Depth-Anything-3", rev = "3d835ec1a5802d64a8b8b15f817a1ab54809bfe4" }
@@ -28,10 +39,18 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["dataset: external standard data or saved checkpoint benchmark; opt in via environment variables"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E4", "E7", "E9", "F", "I"]
+select = ["E4", "E7", "E9", "F", "I", "ANN"]
+
+[tool.pyrefly]
+project-includes = ["src", "scripts", "tests"]
+search-path = ["src", "tests"]
+python-version = "3.12"
+check-unannotated-defs = true
+ignore-missing-imports = ["depth_anything_3.*", "evo.*"]

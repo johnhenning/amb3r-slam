@@ -1,23 +1,41 @@
 """ORB candidate retrieval. This is an explicit DBoW2 substitute."""
 
+from __future__ import annotations
+
+from collections.abc import Iterable
+from typing import Protocol
+
 import cv2
 import numpy as np
 
+from .contracts import Array, PathLike
+
+
+class CandidateRetriever(Protocol):
+    """Candidate retrieval boundary; geometric verification belongs to the backend."""
+
+    def query_and_add(self, image: Array, top_k: int = 3) -> list[int]: ...
+
 
 class LoopRetriever:
-    def __init__(self, exclusion=6, min_score=0.12, vocabulary=None):
-        self.orb = cv2.ORB_create(nfeatures=500)
-        self.entries = []
+    def __init__(
+        self, exclusion: int = 6, min_score: float = 0.12, vocabulary: PathLike | None = None
+    ) -> None:
+        self.orb = cv2.ORB.create(nfeatures=500)
+        self.entries: list[Array | None] = []
         self.exclusion = exclusion
         self.min_score = min_score
         self.vocabulary = np.load(vocabulary, allow_pickle=False) if vocabulary else None
         self.matcher = cv2.BFMatcher(cv2.NORM_HAMMING)
 
-    def descriptor(self, image):
-        _, desc = self.orb.detectAndCompute(cv2.cvtColor(image, cv2.COLOR_RGB2GRAY), None)
+    def descriptor(self, image: Array) -> Array | None:
+        _, desc = self.orb.detectAndCompute(
+            cv2.cvtColor(image, cv2.COLOR_RGB2GRAY), np.empty(0, dtype=np.uint8)
+        )
         return desc
 
-    def _histogram(self, desc):
+    def _histogram(self, desc: Array | None) -> Array:
+        assert self.vocabulary is not None
         if desc is None:
             return np.zeros(len(self.vocabulary))
         # Nearest binary centroid; vocabulary produced by build_vocabulary.
@@ -25,9 +43,9 @@ class LoopRetriever:
             np.bitwise_xor(desc[:, None], self.vocabulary[None]), axis=-1
         ).sum(-1)
         hist = np.bincount(distances.argmin(1), minlength=len(self.vocabulary)).astype(float)
-        return hist / max(np.linalg.norm(hist), 1e-9)
+        return hist / max(float(np.linalg.norm(hist)), 1e-9)
 
-    def query_and_add(self, image, top_k=3):
+    def query_and_add(self, image: Array, top_k: int = 3) -> list[int]:
         desc = self.descriptor(image)
         representation = self._histogram(desc) if self.vocabulary is not None else desc
         candidates = []
@@ -35,6 +53,7 @@ class LoopRetriever:
             if len(self.entries) - i < self.exclusion:
                 continue
             if self.vocabulary is not None:
+                assert representation is not None and previous is not None
                 score = float(representation @ previous)
             elif desc is None or previous is None or len(previous) < 2:
                 continue
@@ -48,7 +67,9 @@ class LoopRetriever:
         return [i for _, i in sorted(candidates, reverse=True)[:top_k]]
 
 
-def build_vocabulary(images, path, words=256, seed=0):
+def build_vocabulary(
+    images: Iterable[Array], path: PathLike, words: int = 256, seed: int = 0
+) -> None:
     """Binary majority centroids initialized from training ORB descriptors."""
     retrieval = LoopRetriever()
     arrays = [retrieval.descriptor(x) for x in images]
@@ -66,9 +87,9 @@ def build_vocabulary(images, path, words=256, seed=0):
         for chunk in np.array_split(d, max(1, len(d) // 128)):
             dist = np.unpackbits(np.bitwise_xor(chunk[:, None], centers[None]), axis=-1).sum(-1)
             assignments.extend(dist.argmin(1))
-        assignments = np.array(assignments)
+        assignment_ids = np.array(assignments)
         for i in range(words):
-            selected = d[assignments == i]
+            selected = d[assignment_ids == i]
             if len(selected):
                 centers[i] = np.packbits(np.unpackbits(selected, axis=-1).mean(0) >= 0.5)
     np.save(path, centers)

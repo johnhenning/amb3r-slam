@@ -1,8 +1,11 @@
 """Fixed-shape export boundary and numerical parity gate."""
 
+from __future__ import annotations
+
 import hashlib
 import json
 import time
+from collections.abc import Generator
 from contextlib import contextmanager
 from pathlib import Path
 
@@ -10,13 +13,14 @@ import numpy as np
 import torch
 from torch import nn
 
-from .models import build_model
+from .contracts import JsonObject, PathLike
+from .models import GeometryTransformer, UpstreamDA3, build_model
 
 OUTPUTS = ["poses", "depth", "confidence", "intrinsics"]
 
 
 @contextmanager
-def portable_attention():
+def portable_attention() -> Generator[None, None, None]:
     """Avoid PyTorch's fused CPU-only encoder op during legacy ONNX tracing."""
     previous = torch.backends.mha.get_fastpath_enabled()
     torch.backends.mha.set_fastpath_enabled(False)
@@ -27,16 +31,22 @@ def portable_attention():
 
 
 class InferenceGraph(nn.Module):
-    def __init__(self, model):
+    def __init__(self, model: GeometryTransformer | UpstreamDA3) -> None:
         super().__init__()
         self.model = model
 
-    def forward(self, images):
+    def forward(self, images: torch.Tensor) -> tuple[torch.Tensor, ...]:
         prediction = self.model(images)
         return tuple(prediction[name] for name in OUTPUTS)
 
 
-def export_onnx(checkpoint, destination, views=4, height=None, width=None):
+def export_onnx(
+    checkpoint: PathLike,
+    destination: PathLike,
+    views: int = 4,
+    height: int | None = None,
+    width: int | None = None,
+) -> JsonObject:
     """Export owned checkpoint; fail rather than claiming unverified parity."""
     import onnx
     import onnxruntime as ort
@@ -56,7 +66,7 @@ def export_onnx(checkpoint, destination, views=4, height=None, width=None):
     with portable_attention(), torch.inference_mode():
         torch.onnx.export(
             graph,
-            example,
+            (example,),
             str(destination),
             input_names=["images"],
             output_names=OUTPUTS,
@@ -70,7 +80,10 @@ def export_onnx(checkpoint, destination, views=4, height=None, width=None):
         example = torch.randn(1, views, 3, h, w, generator=generator)
         with torch.inference_mode():
             expected = graph(example)
-        actual = session.run(OUTPUTS, {"images": example.numpy()})
+        values = session.run(OUTPUTS, {"images": example.numpy()})
+        if not all(isinstance(value, np.ndarray) for value in values):
+            raise TypeError("ONNX geometry outputs must be dense arrays")
+        actual = [np.asarray(value) for value in values]
         for name, a, b in zip(OUTPUTS, actual, expected):
             b = b.numpy()
             np.testing.assert_allclose(a, b, rtol=3e-4, atol=3e-4, err_msg=name)
@@ -103,7 +116,7 @@ def export_onnx(checkpoint, destination, views=4, height=None, width=None):
     return metadata
 
 
-def benchmark_onnx(path, iterations=100, warmup=10):
+def benchmark_onnx(path: PathLike, iterations: int = 100, warmup: int = 10) -> JsonObject:
     import onnxruntime as ort
 
     if iterations < 1:

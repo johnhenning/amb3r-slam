@@ -1,14 +1,21 @@
 """Thin command dispatch; algorithms live in importable library modules."""
 
+from __future__ import annotations
+
 import argparse
 import json
 import time
+from collections.abc import Sequence
 from pathlib import Path
 
 import numpy as np
 
+from .contracts import JsonObject
+from .runtime import SlamSystem
+from .types import GeometryModel
 
-def _model(kind, checkpoint, device, resolution):
+
+def _model(kind: str, checkpoint: str, device: str, resolution: int) -> GeometryModel:
     from .adapters import DA3Model, ONNXModel, TorchModel
 
     if kind == "da3":
@@ -18,7 +25,9 @@ def _model(kind, checkpoint, device, resolution):
     return ONNXModel(checkpoint)
 
 
-def _save_run(system, output, elapsed, extra=None):
+def _save_run(
+    system: SlamSystem, output: Path, elapsed: float, extra: JsonObject | None = None
+) -> JsonObject:
     from .evaluation import write_tum
 
     write_tum(output / "trajectory.tum", system.timestamps, system.trajectory())
@@ -27,7 +36,7 @@ def _save_run(system, output, elapsed, extra=None):
         system.timestamps,
         np.stack(system.online_poses),
     )
-    stats = system.statistics()
+    stats: JsonObject = dict(system.statistics())
     stats.update(total_elapsed_s=elapsed, end_to_end_fps=system.count / elapsed)
     if extra:
         stats.update(extra)
@@ -35,7 +44,7 @@ def _save_run(system, output, elapsed, extra=None):
     return stats
 
 
-def run(args):
+def run(args: argparse.Namespace) -> JsonObject:
     from .backend import SlamConfig
     from .data import load_frame, read_manifest
     from .runtime import LatestFrameCapture, SlamSystem
@@ -92,7 +101,7 @@ def run(args):
     return _save_run(system, output, time.perf_counter() - start, extra)
 
 
-def main(argv=None):
+def main(argv: Sequence[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="AMB3R-SLAM independent research reproduction")
     commands = parser.add_subparsers(dest="command", required=True)
     synth = commands.add_parser("synthetic", help="Generate analytic smoke-test data")

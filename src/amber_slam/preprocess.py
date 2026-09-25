@@ -1,8 +1,14 @@
+from __future__ import annotations
+
+from collections.abc import Sequence
+
 import cv2
 import numpy as np
 
+from .contracts import Array
 
-def image_tensor(images, size):
+
+def image_tensor(images: Sequence[Array], size: tuple[int, int]) -> Array:
     """NCHW RGB, resize, ImageNet normalization; size=(height,width)."""
     h, w = size
     batch = np.stack([cv2.resize(x, (w, h), interpolation=cv2.INTER_LINEAR) for x in images])

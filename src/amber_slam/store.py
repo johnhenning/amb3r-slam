@@ -1,23 +1,25 @@
 """Disk-backed frame/submap storage; retained RGB LRU is bounded."""
 
+from __future__ import annotations
+
 from collections import OrderedDict
 from pathlib import Path
 
 import numpy as np
 
+from .contracts import Array, PathLike
 from .types import Frame
 
 
 class FrameStore:
-    def __init__(self, path, capacity=96):
+    def __init__(self, path: PathLike, capacity: int = 96) -> None:
         self.path = Path(path)
         self.path.mkdir(parents=True, exist_ok=True)
         self.capacity = capacity
-        self.cache = OrderedDict()
+        self.cache: OrderedDict[int, Frame] = OrderedDict()
 
-    def put(self, frame):
-        # npz is lossless; no silently lossy color changes between live and replay.
-        data = {"rgb": frame.rgb, "timestamp": frame.timestamp}
+    def put(self, frame: Frame) -> None:
+        data: dict[str, Array | float] = {"rgb": frame.rgb, "timestamp": frame.timestamp}
         for key in ["depth", "intrinsics", "lidar"]:
             value = getattr(frame, key)
             if value is not None:
@@ -25,13 +27,13 @@ class FrameStore:
         np.savez_compressed(self.path / f"{frame.index:08d}.npz", **data)
         self._cache(frame)
 
-    def _cache(self, frame):
+    def _cache(self, frame: Frame) -> None:
         self.cache[frame.index] = frame
         self.cache.move_to_end(frame.index)
         while len(self.cache) > self.capacity:
             self.cache.popitem(last=False)
 
-    def get(self, index):
+    def get(self, index: int) -> Frame:
         if index in self.cache:
             self.cache.move_to_end(index)
             return self.cache[index]

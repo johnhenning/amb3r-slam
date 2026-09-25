@@ -1,5 +1,10 @@
 """Oracle geometry isolates orchestration from learned-model quality."""
 
+from __future__ import annotations
+
+from collections.abc import Sequence
+from pathlib import Path
+
 import numpy as np
 import pytest
 
@@ -9,7 +14,7 @@ from amber_slam.types import Frame, Reconstruction
 
 
 class OracleModel:
-    def reconstruct(self, frames, reference=0):
+    def reconstruct(self, frames: Sequence[Frame], reference: int = 0) -> Reconstruction:
         ids = np.array([f.index for f in frames])
         poses = np.repeat(np.eye(4)[None], len(frames), 0)
         poses[:, 0, 3] = 0.03 * ids
@@ -25,7 +30,7 @@ class OracleModel:
 
 
 @pytest.mark.parametrize("asynchronous", [False, True])
-def test_streaming_span_two_and_tail_flush(tmp_path, asynchronous):
+def test_streaming_span_two_and_tail_flush(tmp_path: Path, asynchronous: bool) -> None:
     cfg = SlamConfig(
         window=6,
         stride=1,
@@ -46,15 +51,15 @@ def test_streaming_span_two_and_tail_flush(tmp_path, asynchronous):
         system.push(Frame(15, 0.5, np.zeros((32, 32, 3), np.uint8)))
 
 
-def test_invalid_frame_sequence(tmp_path):
+def test_invalid_frame_sequence(tmp_path: Path) -> None:
     with SlamSystem(OracleModel(), OracleModel(), tmp_path, asynchronous=False) as system:
         with pytest.raises(ValueError):
             system.push(Frame(2, 0, np.zeros((32, 32, 3), np.uint8)))
 
 
-def test_worker_exception_is_not_swallowed(tmp_path):
+def test_worker_exception_is_not_swallowed(tmp_path: Path) -> None:
     class Broken:
-        def reconstruct(self, *args, **kwargs):
+        def reconstruct(self, frames: Sequence[Frame], reference: int = 0) -> Reconstruction:
             raise RuntimeError("backend failed")
 
     cfg = SlamConfig(window=6, stride=1, enable_loops=False, enable_long_context=False)

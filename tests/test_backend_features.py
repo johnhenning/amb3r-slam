@@ -1,15 +1,20 @@
+from __future__ import annotations
+
+from pathlib import Path
+
 import numpy as np
 import pytest
 from test_pipeline import OracleModel
 
 from amber_slam.backend import SlamConfig
+from amber_slam.contracts import Array
 from amber_slam.geometry import Sim3
 from amber_slam.modalities import icp, project_lidar_depth, voxel_overlap
 from amber_slam.runtime import SlamSystem
 from amber_slam.types import Frame
 
 
-def test_long_context_adds_verified_edges(tmp_path):
+def test_long_context_adds_verified_edges(tmp_path: Path) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -25,7 +30,7 @@ def test_long_context_adds_verified_edges(tmp_path):
     assert any(edge.kind == "long" for edge in system.backend.graph.edges)
 
 
-def test_rgbd_metric_graph_has_unit_scale(tmp_path):
+def test_rgbd_metric_graph_has_unit_scale(tmp_path: Path) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -41,7 +46,7 @@ def test_rgbd_metric_graph_has_unit_scale(tmp_path):
     np.testing.assert_allclose(system.trajectory()[:, 0, 3], np.arange(10) * 0.06, atol=1e-6)
 
 
-def test_icp_and_depth_projection():
+def test_icp_and_depth_projection() -> None:
     rng = np.random.default_rng(5)
     points = rng.normal(size=(300, 3))
     transform = Sim3.exp(np.array([0.02, -0.03, 0.01, 0, 0, 0.01, 0]))
@@ -54,7 +59,7 @@ def test_icp_and_depth_projection():
     assert depth[5, 5] == 2
 
 
-def test_joint_loop_candidate_is_geometrically_verified(tmp_path):
+def test_joint_loop_candidate_is_geometrically_verified(tmp_path: Path) -> None:
     config = SlamConfig(
         window=6,
         stride=1,
@@ -68,7 +73,7 @@ def test_joint_loop_candidate_is_geometrically_verified(tmp_path):
         class CandidateSource:
             count = 0
 
-            def query_and_add(self, image):
+            def query_and_add(self, image: Array, top_k: int = 3) -> list[int]:
                 candidates = [0] if self.count >= 3 else []
                 self.count += 1
                 return candidates

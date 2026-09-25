@@ -1,5 +1,15 @@
 """Explicit scene manifests; no dataset is implicitly downloaded or split."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Literal
+
+from .contracts import FrameRecord, Manifest, PathLike
+
+if TYPE_CHECKING:
+    from torch import Tensor
+
+
 import json
 from pathlib import Path
 
@@ -9,7 +19,7 @@ from PIL import Image
 from .types import Frame
 
 
-def read_manifest(path):
+def read_manifest(path: PathLike) -> tuple[Manifest, Path]:
     path = Path(path)
     data = json.loads(path.read_text())
     if data.get("version") != 1 or not data.get("sequences"):
@@ -25,7 +35,7 @@ def read_manifest(path):
     return data, path.parent
 
 
-def load_frame(record, root, index):
+def load_frame(record: FrameRecord, root: Path, index: int) -> Frame:
     rgb = np.asarray(Image.open(root / record["rgb"]).convert("RGB"))
     depth = None
     if "depth" in record:
@@ -51,16 +61,23 @@ def load_frame(record, root, index):
 class SceneDataset:
     """Dataset indices identify scenes; frame count/resolution vary by train step."""
 
-    def __init__(self, manifest, split):
+    def __init__(self, manifest: PathLike, split: str) -> None:
         self.manifest, self.root = read_manifest(manifest)
         self.scenes = [s for s in self.manifest["sequences"] if s.get("split") == split]
         if not self.scenes:
             raise ValueError(f"No scenes in split {split}")
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.scenes)
 
-    def sample(self, index, views, size, rng, pseudo=False):
+    def sample(
+        self,
+        index: int,
+        views: int,
+        size: tuple[int, int],
+        rng: np.random.Generator,
+        pseudo: bool = False,
+    ) -> dict[str, Tensor]:
         import cv2
         import torch
 
@@ -89,7 +106,9 @@ class SceneDataset:
             if pseudo:
                 if "pseudo_depth" not in rec:
                     raise ValueError("Teacher stage needs pseudo_depth on every sampled frame")
-                rec = dict(rec, depth=rec["pseudo_depth"], depth_scale=1.0)
+                rec = rec.copy()
+                rec["depth"] = rec["pseudo_depth"]
+                rec["depth_scale"] = 1.0
             frame = load_frame(rec, self.root, int(i))
             if frame.depth is None or frame.intrinsics is None or "c2w" not in rec:
                 raise ValueError("Training requires z-depth, intrinsics, c2w")
@@ -111,7 +130,11 @@ class SceneDataset:
             )
             poses.append(rec["c2w"])
             ks.append(k)
-            for key, target in [("sky_mask", skies), ("object_mask", objects)]:
+            mask_keys: tuple[Literal["sky_mask"], Literal["object_mask"]] = (
+                "sky_mask",
+                "object_mask",
+            )
+            for key, target in zip(mask_keys, (skies, objects)):
                 if key in rec:
                     target.append(
                         cv2.resize(
@@ -135,7 +158,7 @@ class SceneDataset:
         return {k: torch.as_tensor(v, dtype=torch.float32) for k, v in out.items()}
 
 
-def synthetic_dataset(destination, frames=24, size=64):
+def synthetic_dataset(destination: PathLike, frames: int = 24, size: int = 64) -> Path:
     """Analytic textured plane, translated cameras. Pipeline fixture, not benchmark."""
     root = Path(destination)
     root.mkdir(parents=True, exist_ok=True)

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import numpy as np
 import pytest
 
@@ -5,7 +7,7 @@ from amber_slam.geometry import Sim3, align_points, interpolate_poses, metric_sc
 from amber_slam.graph import Edge, PoseGraph
 
 
-def test_sim3_round_trip_composition_and_action():
+def test_sim3_round_trip_composition_and_action() -> None:
     rng = np.random.default_rng(3)
     for _ in range(12):
         tangent = rng.normal(size=7) * 0.2
@@ -17,7 +19,7 @@ def test_sim3_round_trip_composition_and_action():
         np.testing.assert_allclose(fitted.points(points), transform.points(points), atol=1e-9)
 
 
-def test_depth_scale_rejects_invalid_and_recovers_known_scale():
+def test_depth_scale_rejects_invalid_and_recovers_known_scale() -> None:
     depth = np.linspace(1, 10, 100).reshape(10, 10)
     measured = depth * 3
     measured[:2] = np.nan
@@ -26,7 +28,7 @@ def test_depth_scale_rejects_invalid_and_recovers_known_scale():
         metric_scale(depth, np.zeros_like(depth))
 
 
-def test_graph_reduces_error_and_keeps_gauge_fixed():
+def test_graph_reduces_error_and_keeps_gauge_fixed() -> None:
     graph = PoseGraph()
     truth = [Sim3.exp(np.array([i * 0.4, i * i * 0.05, 0, 0, 0, i * 0.03, 0])) for i in range(5)]
     graph.nodes = [truth[0]] + [
@@ -40,7 +42,7 @@ def test_graph_reduces_error_and_keeps_gauge_fixed():
     np.testing.assert_allclose(graph.nodes[0].log(), truth[0].log())
 
 
-def test_interpolation_includes_endpoints():
+def test_interpolation_includes_endpoints() -> None:
     poses = np.repeat(np.eye(4)[None], 2, 0)
     poses[1, 0, 3] = 2
     result = interpolate_poses([0, 2], poses, [0, 1, 2])

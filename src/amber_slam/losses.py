@@ -1,17 +1,19 @@
+from __future__ import annotations
+
 import torch
 import torch.nn.functional as F
 
 from .models import rays_from_camera
 
 
-def masked_mean(value, mask):
+def masked_mean(value: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
     while mask.ndim < value.ndim:
         mask = mask.unsqueeze(-1)
     mask = mask.expand_as(value)
     return torch.where(mask, value, torch.zeros_like(value)).sum() / mask.sum().clamp_min(1)
 
 
-def normalize_targets(batch):
+def normalize_targets(batch: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
     depth = batch["depth"]
     valid = torch.isfinite(depth) & (depth > 0)
     if not valid.any():
@@ -34,7 +36,7 @@ def normalize_targets(batch):
     return out
 
 
-def gradient_loss(pred, target, valid):
+def gradient_loss(pred: torch.Tensor, target: torch.Tensor, valid: torch.Tensor) -> torch.Tensor:
     dx = (pred[..., 1:] - pred[..., :-1]) - (target[..., 1:] - target[..., :-1])
     dy = (pred[..., 1:, :] - pred[..., :-1, :]) - (target[..., 1:, :] - target[..., :-1, :])
     return masked_mean(dx.abs(), valid[..., 1:] & valid[..., :-1]) + masked_mean(
@@ -42,7 +44,9 @@ def gradient_loss(pred, target, valid):
     )
 
 
-def geometry_loss(pred, target, confidence_weight=0.2):
+def geometry_loss(
+    pred: dict[str, torch.Tensor], target: dict[str, torch.Tensor], confidence_weight: float = 0.2
+) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
     d = pred["depth"].float()
     t = target["depth"]
     valid = target["valid"]
@@ -65,10 +69,10 @@ def geometry_loss(pred, target, confidence_weight=0.2):
     h, w = d.shape[-2:]
     scale = d.new_tensor([w, h, 1.0]).reshape(1, 1, 3, 1)
     terms["intrinsics"] = ((pred["intrinsics"] - target["intrinsics"]) / scale).abs().mean()
-    return sum(terms.values()), terms
+    return torch.stack(list(terms.values())).sum(), terms
 
 
-def affine_depth(pred, target, valid):
+def affine_depth(pred: torch.Tensor, target: torch.Tensor, valid: torch.Tensor) -> torch.Tensor:
     """Differentiable positive scale/shift LS, for teacher loss (not ROE)."""
     x = pred.flatten(1)
     y = target.flatten(1)
@@ -83,7 +87,9 @@ def affine_depth(pred, target, valid):
     return (s * x + shift).reshape_as(pred)
 
 
-def teacher_loss(pred, batch):
+def teacher_loss(
+    pred: dict[str, torch.Tensor], batch: dict[str, torch.Tensor]
+) -> tuple[torch.Tensor, dict[str, torch.Tensor]]:
     raw = batch["depth"]
     valid = torch.isfinite(raw) & (raw > 0)
     if not valid.any():
@@ -113,7 +119,7 @@ def teacher_loss(pred, batch):
     terms["local"] = local / 4
     ray = rays_from_camera(batch["poses"], batch["intrinsics"], h, w)[..., 3:]
 
-    def normals(z):
+    def normals(z: torch.Tensor) -> torch.Tensor:
         p = z[..., None] * ray
         a = p[..., 1:, :-1, :] - p[..., :-1, :-1, :]
         b = p[..., :-1, 1:, :] - p[..., :-1, :-1, :]
@@ -126,4 +132,4 @@ def teacher_loss(pred, batch):
             if "masks" not in pred:
                 raise ValueError("This architecture has no mask heads")
             terms[key] = F.mse_loss(pred["masks"][:, :, i].sigmoid(), batch[key])
-    return sum(terms.values()), terms
+    return torch.stack(list(terms.values())).sum(), terms

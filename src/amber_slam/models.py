@@ -1,11 +1,17 @@
 """Trainable geometry networks. No constructor downloads model weights."""
 
+from __future__ import annotations
+
+from collections.abc import Sequence
+
 import torch
 import torch.nn.functional as F
 from torch import nn
 
+from .contracts import ModelConfig
 
-def rigid_inverse(p):
+
+def rigid_inverse(p: torch.Tensor) -> torch.Tensor:
     r = p[..., :3, :3].transpose(-1, -2)
     t = -(r @ p[..., :3, 3:4])
     last = torch.cat(
@@ -18,14 +24,16 @@ def rigid_inverse(p):
     return torch.cat([torch.cat([r, t], -1), last], -2)
 
 
-def rotation_6d(x):
+def rotation_6d(x: torch.Tensor) -> torch.Tensor:
     a = F.normalize(x[..., :3], dim=-1, eps=1e-6)
     b = x[..., 3:] - (a * x[..., 3:]).sum(-1, keepdim=True) * a
     b = F.normalize(b, dim=-1, eps=1e-6)
     return torch.stack([a, b, torch.cross(a, b, dim=-1)], -1)
 
 
-def rays_from_camera(poses, intrinsics, height, width):
+def rays_from_camera(
+    poses: torch.Tensor, intrinsics: torch.Tensor, height: int, width: int
+) -> torch.Tensor:
     yy, xx = torch.meshgrid(
         torch.arange(height, device=poses.device, dtype=poses.dtype),
         torch.arange(width, device=poses.device, dtype=poses.dtype),
@@ -41,7 +49,7 @@ def rays_from_camera(poses, intrinsics, height, width):
 
 
 class Fusion(nn.Module):
-    def __init__(self, width):
+    def __init__(self, width: int) -> None:
         super().__init__()
         self.layers = nn.ModuleList(
             [
@@ -54,7 +62,7 @@ class Fusion(nn.Module):
             ]
         )
 
-    def forward(self, features):
+    def forward(self, features: Sequence[torch.Tensor]) -> torch.Tensor:
         x = features[-1]
         for i in range(3, -1, -1):
             x = F.interpolate(x, size=features[i].shape[-2:], mode="bilinear", align_corners=False)
@@ -71,7 +79,15 @@ class GeometryTransformer(nn.Module):
     support CPU development; use UpstreamDA3 for the released DA3 architecture.
     """
 
-    def __init__(self, width=96, layers=6, heads=4, patch=8, fusion=32, checkpointing=False):
+    def __init__(
+        self,
+        width: int = 96,
+        layers: int = 6,
+        heads: int = 4,
+        patch: int = 8,
+        fusion: int = 32,
+        checkpointing: bool = False,
+    ) -> None:
         super().__init__()
         if layers < 4 or width % heads:
             raise ValueError("Need >=4 layers and width divisible by heads")
@@ -103,10 +119,14 @@ class GeometryTransformer(nn.Module):
         self.camera_head = nn.Sequential(nn.Linear(width, width), nn.GELU(), nn.Linear(width, 13))
         self.mask_head = nn.Conv2d(fusion, 2, 1)
         with torch.no_grad():
-            self.camera_head[-1].bias.zero_()
-            self.camera_head[-1].bias[3:9] = torch.tensor([1.0, 0.0, 0.0, 0.0, 1.0, 0.0])
+            camera_output = self.camera_head[-1]
+            assert isinstance(camera_output, nn.Linear) and camera_output.bias is not None
+            camera_output.bias.zero_()
+            camera_output.bias[3:9] = torch.tensor([1.0, 0.0, 0.0, 0.0, 1.0, 0.0])
 
-    def forward(self, images, camera_condition=None):
+    def forward(
+        self, images: torch.Tensor, camera_condition: torch.Tensor | None = None
+    ) -> dict[str, torch.Tensor]:
         b, v, _, h, w = images.shape
         x = self.embed(images.reshape(b * v, 3, h, w))
         gh, gw = x.shape[-2:]
@@ -206,7 +226,7 @@ class UpstreamDA3(nn.Module):
     download occurs; DINO initialization is an explicit separate operation.
     """
 
-    def __init__(self, preset="da3-small", **kwargs):
+    def __init__(self, preset: str = "da3-small", **kwargs: object) -> None:
         super().__init__()
         from depth_anything_3.api import DepthAnything3
 
@@ -215,7 +235,9 @@ class UpstreamDA3(nn.Module):
         self.net.gs_adapter = None
         self.preset = preset
 
-    def forward(self, images, camera_condition=None):
+    def forward(
+        self, images: torch.Tensor, camera_condition: torch.Tensor | None = None
+    ) -> dict[str, torch.Tensor]:
         from depth_anything_3.model.utils.transform import pose_encoding_to_extri_intri
 
         cam = None
@@ -257,11 +279,17 @@ class UpstreamDA3(nn.Module):
         }
 
 
-def build_model(config):
-    cfg = dict(config)
-    kind = cfg.pop("kind", "independent")
+def build_model(config: ModelConfig) -> GeometryTransformer | UpstreamDA3:
+    kind = config.get("kind", "independent")
     if kind == "da3":
-        return UpstreamDA3(**cfg)
+        return UpstreamDA3(preset=config.get("preset", "da3-small"))
     if kind == "independent":
-        return GeometryTransformer(**cfg)
+        return GeometryTransformer(
+            width=config.get("width", 96),
+            layers=config.get("layers", 6),
+            heads=config.get("heads", 4),
+            patch=config.get("patch", 8),
+            fusion=config.get("fusion", 32),
+            checkpointing=config.get("checkpointing", False),
+        )
     raise ValueError(f"Unknown model kind {kind}")

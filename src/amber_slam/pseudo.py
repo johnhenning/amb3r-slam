@@ -1,15 +1,26 @@
 """Optional teacher-label generation; robust positive affine depth alignment."""
 
+from __future__ import annotations
+
 import json
 from pathlib import Path
+from typing import Literal
 
 import cv2
 import numpy as np
 
+from .contracts import Array, PathLike
 from .data import load_frame, read_manifest
+from .types import GeometryModel
 
 
-def align_teacher_depth(prediction, measured, seed=0, trials=128, min_inlier_fraction=0.4):
+def align_teacher_depth(
+    prediction: Array,
+    measured: Array,
+    seed: int = 0,
+    trials: int = 128,
+    min_inlier_fraction: float = 0.4,
+) -> tuple[Array, dict[str, float]]:
     valid = np.isfinite(prediction) & np.isfinite(measured) & (prediction > 0) & (measured > 0)
     x = prediction[valid].astype(float)
     y = measured[valid].astype(float)
@@ -50,7 +61,7 @@ def align_teacher_depth(prediction, measured, seed=0, trials=128, min_inlier_fra
     }
 
 
-def generate_labels(manifest, model, destination):
+def generate_labels(manifest: PathLike, model: GeometryModel, destination: PathLike) -> Path:
     data, root = read_manifest(manifest)
     destination = Path(destination).resolve()
     destination.mkdir(parents=True, exist_ok=True)
@@ -72,14 +83,17 @@ def generate_labels(manifest, model, destination):
     # Resolve existing file paths because output manifest has a new parent.
     for sequence in data["sequences"]:
         for record in sequence["frames"]:
-            for key in [
+            path_keys: tuple[
+                Literal["rgb", "depth", "right_rgb", "lidar", "sky_mask", "object_mask"], ...
+            ] = (
                 "rgb",
                 "depth",
                 "right_rgb",
                 "lidar",
                 "sky_mask",
                 "object_mask",
-            ]:
+            )
+            for key in path_keys:
                 if key in record:
                     record[key] = str((root / record[key]).resolve())
     (destination / "manifest.json").write_text(json.dumps(data, indent=2))

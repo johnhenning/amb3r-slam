@@ -1,20 +1,24 @@
 """Float64 geometry, column-vector transforms; tangent order [v, omega, log(s)]."""
 
+from __future__ import annotations
+
+from collections.abc import Sequence
 from dataclasses import dataclass
 
 import numpy as np
+from numpy.typing import ArrayLike
 from scipy.linalg import expm
 from scipy.spatial.transform import Rotation, Slerp
 
+from .contracts import Array
 
-def skew(w):
-    x, y, z = w
+
+def skew(w: ArrayLike) -> Array:
+    x, y, z = np.asarray(w, dtype=float)
     return np.array([[0.0, -z, y], [z, 0.0, -x], [-y, x, 0.0]])
 
 
-def _V(w, sigma):
-    # Block exponential evaluates integral exp(t*(sigma I + skew(w))) dt,
-    # including pure rotation / zero scale without a singular inverse.
+def _V(w: ArrayLike, sigma: float) -> Array:
     a = np.zeros((6, 6))
     a[:3, :3] = skew(w) + sigma * np.eye(3)
     a[:3, 3:] = np.eye(3)
@@ -24,10 +28,10 @@ def _V(w, sigma):
 @dataclass(frozen=True)
 class Sim3:
     scale: float
-    rotation: np.ndarray
-    translation: np.ndarray
+    rotation: Array
+    translation: Array
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if not np.isfinite(self.scale) or self.scale <= 0:
             raise ValueError("Sim3 scale must be finite and positive")
         if self.rotation.shape != (3, 3) or self.translation.shape != (3,):
@@ -36,11 +40,11 @@ class Sim3:
             raise ValueError("Nonfinite transform")
 
     @staticmethod
-    def identity():
+    def identity() -> Sim3:
         return Sim3(1.0, np.eye(3), np.zeros(3))
 
     @staticmethod
-    def exp(x):
+    def exp(x: ArrayLike) -> Sim3:
         x = np.asarray(x, dtype=float)
         return Sim3(
             float(np.exp(x[6])),
@@ -48,33 +52,35 @@ class Sim3:
             _V(x[3:6], x[6]) @ x[:3],
         )
 
-    def log(self):
+    def log(self) -> Array:
         w = Rotation.from_matrix(self.rotation).as_rotvec()
         s = np.log(self.scale)
         return np.r_[np.linalg.solve(_V(w, s), self.translation), w, s]
 
-    def inverse(self):
+    def inverse(self) -> Sim3:
         r = self.rotation.T
         return Sim3(1 / self.scale, r, -r @ self.translation / self.scale)
 
-    def __matmul__(self, other):
+    def __matmul__(self, other: Sim3) -> Sim3:
         return Sim3(
             self.scale * other.scale,
             self.rotation @ other.rotation,
             self.scale * self.rotation @ other.translation + self.translation,
         )
 
-    def points(self, xyz):
+    def points(self, xyz: ArrayLike) -> Array:
         return self.scale * np.asarray(xyz) @ self.rotation.T + self.translation
 
-    def pose(self, c2w):
+    def pose(self, c2w: Array) -> Array:
         out = np.eye(4)
         out[:3, :3] = self.rotation @ c2w[:3, :3]
         out[:3, 3] = self.points(c2w[:3, 3])
         return out
 
 
-def align_points(source, target, with_scale=True, weights=None):
+def align_points(
+    source: ArrayLike, target: ArrayLike, with_scale: bool = True, weights: ArrayLike | None = None
+) -> Sim3:
     """Weighted Umeyama, source -> target. Reject collinear/degenerate clouds."""
     x, y = np.asarray(source, float), np.asarray(target, float)
     if x.shape != y.shape or x.ndim != 2 or x.shape[1] != 3 or len(x) < 3:
@@ -98,7 +104,9 @@ def align_points(source, target, with_scale=True, weights=None):
     return Sim3(s, r, my - s * r @ mx)
 
 
-def robust_align(source, target, with_scale=True, iterations=5):
+def robust_align(
+    source: ArrayLike, target: ArrayLike, with_scale: bool = True, iterations: int = 5
+) -> Sim3:
     x, y = np.asarray(source), np.asarray(target)
     fit = align_points(x, y, with_scale)
     for _ in range(iterations):
@@ -108,7 +116,9 @@ def robust_align(source, target, with_scale=True, iterations=5):
     return fit
 
 
-def metric_scale(predicted, measured, min_inliers=0.5, tolerance=0.25):
+def metric_scale(
+    predicted: ArrayLike, measured: ArrayLike, min_inliers: float = 0.5, tolerance: float = 0.25
+) -> float:
     p, m = np.asarray(predicted), np.asarray(measured)
     valid = np.isfinite(p) & np.isfinite(m) & (p > 1e-6) & (m > 0)
     if valid.sum() < 16:
@@ -120,7 +130,7 @@ def metric_scale(predicted, measured, min_inliers=0.5, tolerance=0.25):
     return s
 
 
-def interpolate_poses(ids, poses, query):
+def interpolate_poses(ids: ArrayLike, poses: Array, query: ArrayLike) -> Array:
     ids, q = np.asarray(ids), np.asarray(query)
     if len(ids) == 1:
         return np.repeat(poses[:1], len(q), axis=0)
@@ -132,7 +142,7 @@ def interpolate_poses(ids, poses, query):
     return out
 
 
-def average_poses(poses, weights):
+def average_poses(poses: Sequence[Array], weights: Sequence[float]) -> Array:
     w = np.asarray(weights, float)
     w /= w.sum()
     out = np.eye(4)
@@ -141,7 +151,7 @@ def average_poses(poses, weights):
     return out
 
 
-def unproject(depth, intrinsics, pose, stride=4):
+def unproject(depth: Array, intrinsics: Array, pose: Array, stride: int = 4) -> tuple[Array, Array]:
     h, w = depth.shape
     yy, xx = np.mgrid[0:h:stride, 0:w:stride]
     z = depth[::stride, ::stride]
