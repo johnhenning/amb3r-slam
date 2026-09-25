@@ -1,0 +1,1107 @@
+[
+  {
+    "replay_s": 10.188299589000053,
+    "tracked_frames": 12,
+    "anchor_id": 11,
+    "anchor_timestamp": 1341847984.406718,
+    "graph": {
+      "initial_cost": 0.0,
+      "final_cost": 0.0,
+      "success": true,
+      "submaps": 1,
+      "edges": 0,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 15.191598110000086,
+    "tracked_frames": 16,
+    "anchor_id": 15,
+    "anchor_timestamp": 1341847985.746954,
+    "graph": {
+      "initial_cost": 7.826203423955633e-32,
+      "final_cost": 7.826203423955633e-32,
+      "success": true,
+      "evaluations": 1,
+      "submaps": 2,
+      "edges": 1,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 19.77128338400007,
+    "tracked_frames": 20,
+    "anchor_id": 19,
+    "anchor_timestamp": 1341847987.091223,
+    "graph": {
+      "initial_cost": 0.03212508381310154,
+      "final_cost": 0.017670640909287823,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 3,
+      "edges": 3,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 24.63235162000001,
+    "tracked_frames": 24,
+    "anchor_id": 23,
+    "anchor_timestamp": 1341847988.433996,
+    "graph": {
+      "initial_cost": 0.03054825534054234,
+      "final_cost": 0.023543094939836657,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 4,
+      "edges": 5,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 29.806152633000238,
+    "tracked_frames": 28,
+    "anchor_id": 27,
+    "anchor_timestamp": 1341847989.80289,
+    "graph": {
+      "initial_cost": 0.04024842270125054,
+      "final_cost": 0.029840126719776084,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 5,
+      "edges": 7,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 38.44017335599983,
+    "tracked_frames": 32,
+    "anchor_id": 31,
+    "anchor_timestamp": 1341847991.142784,
+    "graph": {
+      "initial_cost": 0.15213814896341019,
+      "final_cost": 0.07472430379501883,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 6,
+      "edges": 12,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 43.149519318999864,
+    "tracked_frames": 36,
+    "anchor_id": 35,
+    "anchor_timestamp": 1341847992.486713,
+    "graph": {
+      "initial_cost": 0.08709943604566933,
+      "final_cost": 0.08183959267106596,
+      "success": true,
+      "evaluations": 4,
+      "submaps": 7,
+      "edges": 14,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 48.335091448000185,
+    "tracked_frames": 40,
+    "anchor_id": 39,
+    "anchor_timestamp": 1341847993.826735,
+    "graph": {
+      "initial_cost": 0.19101907680117286,
+      "final_cost": 0.13335109466285255,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 8,
+      "edges": 16,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 56.99331135300008,
+    "tracked_frames": 44,
+    "anchor_id": 43,
+    "anchor_timestamp": 1341847995.198787,
+    "graph": {
+      "initial_cost": 0.20118085455634738,
+      "final_cost": 0.16293564843062297,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 9,
+      "edges": 21,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 62.705763468999976,
+    "tracked_frames": 48,
+    "anchor_id": 47,
+    "anchor_timestamp": 1341847996.538771,
+    "graph": {
+      "initial_cost": 0.18571378336875635,
+      "final_cost": 0.1755851653384734,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 10,
+      "edges": 23,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 67.77717522400008,
+    "tracked_frames": 52,
+    "anchor_id": 51,
+    "anchor_timestamp": 1341847997.882641,
+    "graph": {
+      "initial_cost": 0.1888970371073754,
+      "final_cost": 0.18341249274869853,
+      "success": true,
+      "evaluations": 4,
+      "submaps": 11,
+      "edges": 25,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 77.5590038360001,
+    "tracked_frames": 56,
+    "anchor_id": 55,
+    "anchor_timestamp": 1341847999.254873,
+    "graph": {
+      "initial_cost": 0.2296297579717955,
+      "final_cost": 0.20849197621606447,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 12,
+      "edges": 30,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 82.92287145299997,
+    "tracked_frames": 60,
+    "anchor_id": 59,
+    "anchor_timestamp": 1341848000.594838,
+    "graph": {
+      "initial_cost": 0.2319590229737168,
+      "final_cost": 0.22200946294119955,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 13,
+      "edges": 32,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 88.57920052999998,
+    "tracked_frames": 64,
+    "anchor_id": 63,
+    "anchor_timestamp": 1341848001.970708,
+    "graph": {
+      "initial_cost": 0.25800739869331624,
+      "final_cost": 0.24334292050938577,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 14,
+      "edges": 34,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 98.86181574500006,
+    "tracked_frames": 68,
+    "anchor_id": 67,
+    "anchor_timestamp": 1341848003.310739,
+    "graph": {
+      "initial_cost": 0.3277118973220995,
+      "final_cost": 0.27811803446906613,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 15,
+      "edges": 39,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 104.45120387499992,
+    "tracked_frames": 72,
+    "anchor_id": 71,
+    "anchor_timestamp": 1341848004.657882,
+    "graph": {
+      "initial_cost": 0.29817216178399647,
+      "final_cost": 0.2893693515167116,
+      "success": true,
+      "evaluations": 4,
+      "submaps": 16,
+      "edges": 41,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 110.78217940500008,
+    "tracked_frames": 76,
+    "anchor_id": 75,
+    "anchor_timestamp": 1341848005.997804,
+    "graph": {
+      "initial_cost": 0.35693484744891296,
+      "final_cost": 0.3217052241972479,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 17,
+      "edges": 43,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 121.24231180400011,
+    "tracked_frames": 80,
+    "anchor_id": 79,
+    "anchor_timestamp": 1341848007.331423,
+    "graph": {
+      "initial_cost": 0.9234860740390076,
+      "final_cost": 0.5415006795963837,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 18,
+      "edges": 48,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 128.2188246300002,
+    "tracked_frames": 84,
+    "anchor_id": 83,
+    "anchor_timestamp": 1341848008.674639,
+    "graph": {
+      "initial_cost": 0.6234511034605515,
+      "final_cost": 0.5663747000613046,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 19,
+      "edges": 50,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 135.41758131400002,
+    "tracked_frames": 88,
+    "anchor_id": 87,
+    "anchor_timestamp": 1341848010.014819,
+    "graph": {
+      "initial_cost": 0.6194909778271926,
+      "final_cost": 0.593140801838681,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 20,
+      "edges": 52,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 146.65225954900006,
+    "tracked_frames": 92,
+    "anchor_id": 91,
+    "anchor_timestamp": 1341848011.35475,
+    "graph": {
+      "initial_cost": 0.7130471222538812,
+      "final_cost": 0.6728811616850462,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 21,
+      "edges": 57,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 153.2191496119999,
+    "tracked_frames": 96,
+    "anchor_id": 95,
+    "anchor_timestamp": 1341848012.695339,
+    "graph": {
+      "initial_cost": 0.6800059766249503,
+      "final_cost": 0.6760641263686495,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 22,
+      "edges": 59,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 160.2850926440001,
+    "tracked_frames": 100,
+    "anchor_id": 99,
+    "anchor_timestamp": 1341848014.034942,
+    "graph": {
+      "initial_cost": 0.7053439671844263,
+      "final_cost": 0.6918734099580033,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 23,
+      "edges": 61,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 173.7180577529998,
+    "tracked_frames": 104,
+    "anchor_id": 103,
+    "anchor_timestamp": 1341848015.374733,
+    "graph": {
+      "initial_cost": 1.0965413330606293,
+      "final_cost": 0.8722625887991154,
+      "success": true,
+      "evaluations": 9,
+      "submaps": 24,
+      "edges": 66,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 181.70076070999994,
+    "tracked_frames": 108,
+    "anchor_id": 107,
+    "anchor_timestamp": 1341848016.757848,
+    "graph": {
+      "initial_cost": 2.529919967311514,
+      "final_cost": 1.0588248193553835,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 25,
+      "edges": 68,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 189.57472008100012,
+    "tracked_frames": 112,
+    "anchor_id": 111,
+    "anchor_timestamp": 1341848018.090894,
+    "graph": {
+      "initial_cost": 1.670959559405194,
+      "final_cost": 1.3328322090805305,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 26,
+      "edges": 70,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 202.63892317699992,
+    "tracked_frames": 116,
+    "anchor_id": 115,
+    "anchor_timestamp": 1341848019.467021,
+    "graph": {
+      "initial_cost": 3.40606486851956,
+      "final_cost": 1.7223106512923179,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 27,
+      "edges": 75,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 213.2261029020001,
+    "tracked_frames": 120,
+    "anchor_id": 119,
+    "anchor_timestamp": 1341848020.807216,
+    "graph": {
+      "initial_cost": 1.7660217472382027,
+      "final_cost": 1.7505008215371216,
+      "success": true,
+      "evaluations": 10,
+      "submaps": 28,
+      "edges": 77,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 221.65219907400024,
+    "tracked_frames": 124,
+    "anchor_id": 123,
+    "anchor_timestamp": 1341848022.178988,
+    "graph": {
+      "initial_cost": 1.8248919742715612,
+      "final_cost": 1.786918625175561,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 29,
+      "edges": 79,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 236.574556991,
+    "tracked_frames": 128,
+    "anchor_id": 127,
+    "anchor_timestamp": 1341848023.518675,
+    "graph": {
+      "initial_cost": 2.335053452331756,
+      "final_cost": 2.069148817964218,
+      "success": true,
+      "evaluations": 10,
+      "submaps": 30,
+      "edges": 84,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 246.97665396799994,
+    "tracked_frames": 132,
+    "anchor_id": 131,
+    "anchor_timestamp": 1341848024.862797,
+    "graph": {
+      "initial_cost": 2.104047564206342,
+      "final_cost": 2.0852654785237594,
+      "success": true,
+      "evaluations": 9,
+      "submaps": 31,
+      "edges": 86,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 257.35597459500013,
+    "tracked_frames": 136,
+    "anchor_id": 135,
+    "anchor_timestamp": 1341848026.202754,
+    "graph": {
+      "initial_cost": 2.3865614962484707,
+      "final_cost": 2.1932778037091927,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 32,
+      "edges": 88,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 272.7275449640001,
+    "tracked_frames": 140,
+    "anchor_id": 139,
+    "anchor_timestamp": 1341848027.54331,
+    "graph": {
+      "initial_cost": 2.547427114251938,
+      "final_cost": 2.285688784526534,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 33,
+      "edges": 93,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 281.66307305400005,
+    "tracked_frames": 144,
+    "anchor_id": 143,
+    "anchor_timestamp": 1341848028.950881,
+    "graph": {
+      "initial_cost": 2.3202265831609488,
+      "final_cost": 2.3021447861538564,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 34,
+      "edges": 95,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 292.60214439799984,
+    "tracked_frames": 148,
+    "anchor_id": 147,
+    "anchor_timestamp": 1341848030.290864,
+    "graph": {
+      "initial_cost": 2.3412767694314525,
+      "final_cost": 2.323659551601036,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 35,
+      "edges": 97,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 309.8935889909999,
+    "tracked_frames": 152,
+    "anchor_id": 151,
+    "anchor_timestamp": 1341848031.630816,
+    "graph": {
+      "initial_cost": 2.369156645967839,
+      "final_cost": 2.345230480878862,
+      "success": true,
+      "evaluations": 11,
+      "submaps": 36,
+      "edges": 102,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 318.3912620350002,
+    "tracked_frames": 156,
+    "anchor_id": 155,
+    "anchor_timestamp": 1341848032.970816,
+    "graph": {
+      "initial_cost": 2.3494024460563367,
+      "final_cost": 2.3472808874164293,
+      "success": true,
+      "evaluations": 5,
+      "submaps": 37,
+      "edges": 104,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 328.8413449899999,
+    "tracked_frames": 160,
+    "anchor_id": 159,
+    "anchor_timestamp": 1341848034.318061,
+    "graph": {
+      "initial_cost": 2.4312268792788543,
+      "final_cost": 2.382009824570285,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 38,
+      "edges": 106,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 343.8135575780002,
+    "tracked_frames": 164,
+    "anchor_id": 163,
+    "anchor_timestamp": 1341848035.718791,
+    "graph": {
+      "initial_cost": 2.5109262380701183,
+      "final_cost": 2.4189881680104675,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 39,
+      "edges": 111,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 356.27963477599997,
+    "tracked_frames": 168,
+    "anchor_id": 167,
+    "anchor_timestamp": 1341848037.061042,
+    "graph": {
+      "initial_cost": 2.4734524164263822,
+      "final_cost": 2.4506450144558096,
+      "success": true,
+      "evaluations": 9,
+      "submaps": 40,
+      "edges": 113,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 366.13140701600014,
+    "tracked_frames": 172,
+    "anchor_id": 171,
+    "anchor_timestamp": 1341848038.409802,
+    "graph": {
+      "initial_cost": 2.4596924868146375,
+      "final_cost": 2.4564120463704917,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 41,
+      "edges": 115,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 384.65224382199995,
+    "tracked_frames": 176,
+    "anchor_id": 175,
+    "anchor_timestamp": 1341848039.742862,
+    "graph": {
+      "initial_cost": 2.55917795578601,
+      "final_cost": 2.5042180539554098,
+      "success": true,
+      "evaluations": 11,
+      "submaps": 42,
+      "edges": 120,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 395.47373802599986,
+    "tracked_frames": 180,
+    "anchor_id": 179,
+    "anchor_timestamp": 1341848041.094347,
+    "graph": {
+      "initial_cost": 2.515243617223488,
+      "final_cost": 2.5097909351272962,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 43,
+      "edges": 122,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 407.5902862359999,
+    "tracked_frames": 184,
+    "anchor_id": 183,
+    "anchor_timestamp": 1341848042.461752,
+    "graph": {
+      "initial_cost": 2.518805796087864,
+      "final_cost": 2.5147005153414193,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 44,
+      "edges": 124,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 427.907290869,
+    "tracked_frames": 188,
+    "anchor_id": 187,
+    "anchor_timestamp": 1341848043.805817,
+    "graph": {
+      "initial_cost": 3.180587127018347,
+      "final_cost": 2.725351392640886,
+      "success": true,
+      "evaluations": 9,
+      "submaps": 45,
+      "edges": 129,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 438.361529021,
+    "tracked_frames": 192,
+    "anchor_id": 191,
+    "anchor_timestamp": 1341848045.170759,
+    "graph": {
+      "initial_cost": 2.7396668187760604,
+      "final_cost": 2.7311021840253207,
+      "success": true,
+      "evaluations": 6,
+      "submaps": 46,
+      "edges": 131,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 450.0443334669999,
+    "tracked_frames": 196,
+    "anchor_id": 195,
+    "anchor_timestamp": 1341848046.51776,
+    "graph": {
+      "initial_cost": 2.7373510097594265,
+      "final_cost": 2.7335091189370426,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 47,
+      "edges": 133,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 470.62138064600003,
+    "tracked_frames": 200,
+    "anchor_id": 199,
+    "anchor_timestamp": 1341848047.850811,
+    "graph": {
+      "initial_cost": 3.180695181637583,
+      "final_cost": 2.8695431540115486,
+      "success": true,
+      "evaluations": 11,
+      "submaps": 48,
+      "edges": 138,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 489.09712020200004,
+    "tracked_frames": 204,
+    "anchor_id": 203,
+    "anchor_timestamp": 1341848049.194708,
+    "graph": {
+      "initial_cost": 2.9742484186782514,
+      "final_cost": 2.9175190941440876,
+      "success": true,
+      "evaluations": 14,
+      "submaps": 49,
+      "edges": 140,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 508.2855998670002,
+    "tracked_frames": 208,
+    "anchor_id": 207,
+    "anchor_timestamp": 1341848050.534849,
+    "graph": {
+      "initial_cost": 3.1036573255126525,
+      "final_cost": 3.012657398080588,
+      "success": true,
+      "evaluations": 13,
+      "submaps": 50,
+      "edges": 142,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 544.8708961960001,
+    "tracked_frames": 212,
+    "anchor_id": 211,
+    "anchor_timestamp": 1341848051.874951,
+    "graph": {
+      "initial_cost": 3.6689030509124763,
+      "final_cost": 3.2451163916497747,
+      "success": true,
+      "evaluations": 25,
+      "submaps": 51,
+      "edges": 147,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 559.7558741849998,
+    "tracked_frames": 216,
+    "anchor_id": 215,
+    "anchor_timestamp": 1341848053.214816,
+    "graph": {
+      "initial_cost": 3.257968753223571,
+      "final_cost": 3.2513359246304607,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 52,
+      "edges": 149,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 577.4954411130002,
+    "tracked_frames": 220,
+    "anchor_id": 219,
+    "anchor_timestamp": 1341848054.554861,
+    "graph": {
+      "initial_cost": 3.2758625110049793,
+      "final_cost": 3.2606159850713308,
+      "success": true,
+      "evaluations": 11,
+      "submaps": 53,
+      "edges": 151,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": []
+  },
+  {
+    "replay_s": 601.2924094350001,
+    "tracked_frames": 224,
+    "anchor_id": 223,
+    "anchor_timestamp": 1341848055.894792,
+    "graph": {
+      "initial_cost": 12.768370556177615,
+      "final_cost": 3.7517974150934004,
+      "success": true,
+      "evaluations": 9,
+      "submaps": 54,
+      "edges": 159,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 1,
+        "j": 53
+      },
+      {
+        "i": 0,
+        "j": 53
+      },
+      {
+        "i": 2,
+        "j": 53
+      }
+    ]
+  },
+  {
+    "replay_s": 623.695731369,
+    "tracked_frames": 228,
+    "anchor_id": 227,
+    "anchor_timestamp": 1341848057.234679,
+    "graph": {
+      "initial_cost": 5.431827666897302,
+      "final_cost": 3.9482223062703277,
+      "success": true,
+      "evaluations": 11,
+      "submaps": 55,
+      "edges": 164,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 1,
+        "j": 54
+      },
+      {
+        "i": 0,
+        "j": 54
+      },
+      {
+        "i": 2,
+        "j": 54
+      }
+    ]
+  },
+  {
+    "replay_s": 641.378583149,
+    "tracked_frames": 232,
+    "anchor_id": 231,
+    "anchor_timestamp": 1341848058.578948,
+    "graph": {
+      "initial_cost": 4.781586583043302,
+      "final_cost": 4.087287480166241,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 56,
+      "edges": 168,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 2,
+        "j": 55
+      },
+      {
+        "i": 1,
+        "j": 55
+      }
+    ]
+  },
+  {
+    "replay_s": 670.9496659269998,
+    "tracked_frames": 236,
+    "anchor_id": 235,
+    "anchor_timestamp": 1341848059.918755,
+    "graph": {
+      "initial_cost": 4.634280079808504,
+      "final_cost": 4.270449403591666,
+      "success": true,
+      "evaluations": 13,
+      "submaps": 57,
+      "edges": 175,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 2,
+        "j": 56
+      },
+      {
+        "i": 3,
+        "j": 56
+      }
+    ]
+  },
+  {
+    "replay_s": 688.5139224509999,
+    "tracked_frames": 240,
+    "anchor_id": 239,
+    "anchor_timestamp": 1341848061.290885,
+    "graph": {
+      "initial_cost": 4.3562427236577665,
+      "final_cost": 4.320523882466758,
+      "success": true,
+      "evaluations": 8,
+      "submaps": 58,
+      "edges": 178,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 3,
+        "j": 57
+      }
+    ]
+  },
+  {
+    "replay_s": 704.9868953619998,
+    "tracked_frames": 244,
+    "anchor_id": 243,
+    "anchor_timestamp": 1341848062.630793,
+    "graph": {
+      "initial_cost": 4.489305298708545,
+      "final_cost": 4.452599622852971,
+      "success": true,
+      "evaluations": 7,
+      "submaps": 59,
+      "edges": 181,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 3,
+        "j": 58
+      }
+    ]
+  },
+  {
+    "replay_s": 749.421334272,
+    "tracked_frames": 248,
+    "anchor_id": 247,
+    "anchor_timestamp": 1341848063.977856,
+    "graph": {
+      "initial_cost": 5.479614512965346,
+      "final_cost": 5.125760270890591,
+      "success": true,
+      "evaluations": 21,
+      "submaps": 60,
+      "edges": 188,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 3,
+        "j": 59
+      },
+      {
+        "i": 2,
+        "j": 59
+      }
+    ]
+  },
+  {
+    "replay_s": 774.1184086369999,
+    "tracked_frames": 252,
+    "anchor_id": 251,
+    "anchor_timestamp": 1341848065.346776,
+    "graph": {
+      "initial_cost": 5.352909802172007,
+      "final_cost": 5.255511351948961,
+      "success": true,
+      "evaluations": 10,
+      "submaps": 61,
+      "edges": 192,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 2,
+        "j": 60
+      },
+      {
+        "i": 3,
+        "j": 60
+      }
+    ]
+  },
+  {
+    "replay_s": 812.606632427,
+    "tracked_frames": 256,
+    "anchor_id": 255,
+    "anchor_timestamp": 1341848066.697724,
+    "graph": {
+      "initial_cost": 5.9895102182848206,
+      "final_cost": 5.609698834487906,
+      "success": true,
+      "evaluations": 17,
+      "submaps": 62,
+      "edges": 197,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 55,
+        "j": 61
+      },
+      {
+        "i": 2,
+        "j": 61
+      },
+      {
+        "i": 53,
+        "j": 61
+      }
+    ]
+  },
+  {
+    "replay_s": 861.7571187879998,
+    "tracked_frames": 259,
+    "anchor_id": 258,
+    "anchor_timestamp": 1341848067.726732,
+    "graph": {
+      "initial_cost": 6.436464748580844,
+      "final_cost": 6.0581490462154575,
+      "success": true,
+      "evaluations": 21,
+      "submaps": 63,
+      "edges": 205,
+      "rejected_loops": 0
+    },
+    "new_loop_edges": [
+      {
+        "i": 53,
+        "j": 62
+      },
+      {
+        "i": 54,
+        "j": 62
+      },
+      {
+        "i": 55,
+        "j": 62
+      }
+    ]
+  }
+]
