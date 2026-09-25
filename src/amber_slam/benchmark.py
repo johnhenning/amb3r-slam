@@ -18,8 +18,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from .backend import SlamConfig
-from .contracts import Array, BenchmarkEnvironment, BenchmarkResult, PathLike
+from .backend import BackendUpdate, SlamConfig
+from .contracts import Array, BenchmarkEnvironment, BenchmarkResult, JsonObject, PathLike
 from .datasets import _list_file
 from .evaluation import (
     align_trajectory,
@@ -33,6 +33,14 @@ from .runtime import SlamSystem
 from .types import Frame, GeometryModel
 
 TUM_SEQUENCES = {
+    "freiburg3_long_office_household": {
+        "sha256": "c7cd8e1afb87c80e5744a356214819b110fa09b4744fa4ba0cc2382f9ba59e9c",
+        "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg3/rgbd_dataset_freiburg3_long_office_household.tgz",
+    },
+    "freiburg1_room": {
+        "sha256": "5ace47a1d2e53696bc939a84999293a04a7226958e848a609666691fd3cc38da",
+        "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_room.tgz",
+    },
     "freiburg1_xyz": {
         "sha256": "a0236d97b8c30cd93b653656d2b6c293ff7c982a4130ef2a1a8beecdb124ef98",
         "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_xyz.tgz",
@@ -161,6 +169,7 @@ def run_tum_sequence(
     write_tum(output / "reference.tum", gt_times, gt_poses)
     selected = [(t, p.relative_to(directory).as_posix(), sha256_file(p)) for t, p in samples]
     (output / "inputs.json").write_text(json.dumps(selected, indent=2))
+    corrections: list[JsonObject] = []
     with ReplayProfiler(output / "profile") as profile:
         started = time.perf_counter()
         with SlamSystem(
@@ -171,6 +180,21 @@ def run_tum_sequence(
             asynchronous=asynchronous,
             max_pending_windows=max_pending_windows,
         ) as system:
+            apply_update = system._apply
+
+            def record_correction(update: BackendUpdate) -> None:
+                apply_update(update)
+                corrections.append(
+                    {
+                        "replay_s": time.perf_counter() - started,
+                        "tracked_frames": system.count,
+                        "anchor_id": update.anchor_id,
+                        "anchor_timestamp": samples[update.anchor_id][0],
+                        "graph": dict(update.graph_report),
+                    }
+                )
+
+            system._apply = record_correction
             system.frontend.track = profile.wrap("tracking", system.frontend.track)
             system.backend.prepare = profile.wrap("mapping.prepare", system.backend.prepare)
             system.backend.integrate = profile.wrap("graph.integrate", system.backend.integrate)
@@ -184,6 +208,7 @@ def run_tum_sequence(
                 if index % 10 == 0:
                     print(f"{directory.name}: {index + 1}/{len(samples)}", flush=True)
         elapsed = time.perf_counter() - started
+    (output / "corrections.json").write_text(json.dumps(corrections, indent=2))
     write_tum(output / "trajectory.tum", system.timestamps, system.trajectory())
     write_tum(output / "trajectory_online.tum", system.timestamps, np.stack(system.online_poses))
     np.savetxt(
