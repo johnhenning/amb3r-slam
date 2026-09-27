@@ -19,9 +19,11 @@ from amber_slam.experiments import run_experiment
 
 # Preload frontend/backend models and config as in benchmark_tum.py.
 run_experiment(
-    Path("data/tum/rgbd_dataset_freiburg1_room"), Path("reports/trial-001"),
+    Path("data/tum/rgbd_dataset_freiburg1_room"),
+    Path("reports/trial-001"),
     lambda output: AmberApproach(output, frontend, backend, config),
-    approach="amb3r-slam", revision="<immutable git SHA>",
+    approach="amb3r-slam",
+    revision="<immutable git SHA>",
     config={"execution_mode": "concurrent"},
     environment={"checkpoint_hashes": checkpoint_hashes},
 )
