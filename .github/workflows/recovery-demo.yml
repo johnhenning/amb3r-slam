@@ -1,0 +1,48 @@
+name: Verify full-route tracking recovery
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/tracking-scale-recovery]
+permissions:
+  contents: read
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: '0.12.17'
+          python-version-file: '.python-version'
+          enable-cache: false
+      - run: uv sync --locked --extra da3 --extra benchmark --extra tracking
+      - name: Replay concurrent full office route
+        run: >-
+          uv run --no-sync python scripts/benchmark_tum.py --download
+          --output reports/recovery/concurrent --sequences freiburg3_long_office_household
+          --threads 2 --resolution 168 --async-backend
+          --revision e08cab65ca0ec38e7826075418411ab90cab4da3
+      - name: Replay matched sequential route
+        run: >-
+          uv run --no-sync python scripts/benchmark_tum.py
+          --output reports/recovery/sequential --sequences freiburg3_long_office_household
+          --threads 2 --resolution 168 --no-async-backend
+          --revision e08cab65ca0ec38e7826075418411ab90cab4da3
+      - name: Prepare offline tracker demo
+        run: uv run --no-sync python scripts/export_wandb.py reports/recovery --mode offline
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tracking-recovery-demo
+          retention-days: 90
+          path: |
+            reports/recovery/**
+            !reports/recovery/**/runtime/frames/**
+            !reports/recovery/**/runtime/submaps/**
+            !reports/recovery/**/*.npy
+            !reports/recovery/**/*.npz

@@ -100,6 +100,7 @@ class RunStatistics(TypedDict):
     pending_windows_peak: NotRequired[int]
     backpressure_waits: NotRequired[int]
     backpressure_ms: NotRequired[float]
+    tracking_scale_retries: NotRequired[int]
     push_latency_ms_p50: NotRequired[float]
     push_latency_ms_p95: NotRequired[float]
     push_throughput_fps: NotRequired[float]

@@ -22,7 +22,7 @@ import numpy as np
 
 from .backend import BackendUpdate, HierarchicalBackend, SlamConfig, Submap
 from .contracts import Array, PathLike, RunStatistics
-from .frontend import Frontend
+from .frontend import Frontend, TrackingScaleError
 from .store import FrameStore
 from .types import Frame, GeometryModel
 
@@ -92,6 +92,7 @@ class SlamSystem:
         self.latencies = []
         self.timestamps = []
         self.online_poses = []
+        self.tracking_scale_retries = 0
 
     @property
     def pending(self) -> Future[BackendUpdate] | None:
@@ -164,7 +165,17 @@ class SlamSystem:
         start = time.perf_counter()
         self._collect()
         self.store.put(frame)
-        pose, confidence = self.frontend.track(frame)
+        try:
+            pose, confidence = self.frontend.track(frame)
+        except TrackingScaleError:
+            # A delayed map may leave tracking on an obsolete anchor. Install
+            # queued corrections and retry exactly once; do not relax depth
+            # validation or invent a pose if the new anchor also fails.
+            if not self._pending:
+                raise
+            self.tracking_scale_retries += 1
+            self._collect(wait=True)
+            pose, confidence = self.frontend.track(frame)
         self.count += 1
         self.last_timestamp = frame.timestamp
         self.timestamps.append(frame.timestamp)
@@ -219,6 +230,7 @@ class SlamSystem:
             "pending_windows_peak": self._pending_peak,
             "backpressure_waits": self._backpressure_waits,
             "backpressure_ms": self._backpressure_ms,
+            "tracking_scale_retries": self.tracking_scale_retries,
         }
 
     def __enter__(self) -> SlamSystem:
