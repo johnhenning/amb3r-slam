@@ -69,7 +69,9 @@ def export_run(
     import wandb
 
     result_path, profile_path = directory / "results.json", directory / "profile/summary.json"
-    env_path = directory.parent / "environment.json"
+    env_path = directory / "environment.json"
+    if not env_path.is_file():
+        env_path = directory.parent / "environment.json"
     result = json.loads(result_path.read_text())
     profile = json.loads(profile_path.read_text())
     environment = json.loads(env_path.read_text())
@@ -95,11 +97,14 @@ def export_run(
         "sampled_frames": result["sampled_frames"],
         "sampling_stride": result["sampling_stride"],
         "max_frames": result["max_frames"],
-        "resolution": environment["resolution"],
-        "torch_threads": environment["torch_threads"],
-        "checkpoint": environment["checkpoint"],
-        "checkpoint_hashes": environment["checkpoint_hashes"],
-        "sources": environment["sources"],
+        "approach": result.get("approach", "amb3r-slam"),
+        "approach_revision": result.get("approach_revision"),
+        "protocol": result.get("protocol", "tum-monocular-rgb-sim3-v1"),
+        "resolution": environment.get("resolution"),
+        "torch_threads": environment.get("torch_threads"),
+        "checkpoint": environment.get("checkpoint"),
+        "checkpoint_hashes": environment.get("checkpoint_hashes", {}),
+        "sources": environment.get("sources", {}),
         "slam": result["config"],
         "input_manifest_sha256": result["input_manifest_sha256"],
         "groundtruth_sha256": result["groundtruth_sha256"],
@@ -133,22 +138,27 @@ def export_run(
         for record in resource_history(directory / "profile/samples.csv"):
             run.log(record)
         stages = profile["stages"]
-        table = wandb.Table(
-            columns=["stage", "calls", "wall_sum_s", "caller_cpu_s"],
-            data=[
-                [name, values["calls"], values["wall_sum_s"], values["caller_thread_cpu_sum_s"]]
-                for name, values in stages.items()
-            ],
-        )
-        run.log(
-            {
-                "stages/table": table,
-                "stages/wall_time": wandb.plot.bar(
-                    table, "stage", "wall_sum_s", title="Overlapping stage wall sums (not additive)"
-                ),
-                "trajectory/diagnostics": wandb.Image(str(directory / "diagnostics.png")),
-            }
-        )
+        if stages:
+            table = wandb.Table(
+                columns=["stage", "calls", "wall_sum_s", "caller_cpu_s"],
+                data=[
+                    [name, values["calls"], values["wall_sum_s"], values["caller_thread_cpu_sum_s"]]
+                    for name, values in stages.items()
+                ],
+            )
+            run.log(
+                {
+                    "stages/table": table,
+                    "stages/wall_time": wandb.plot.bar(
+                        table,
+                        "stage",
+                        "wall_sum_s",
+                        title="Overlapping stage wall sums (not additive)",
+                    ),
+                }
+            )
+        if (directory / "diagnostics.png").is_file():
+            run.log({"trajectory/diagnostics": wandb.Image(str(directory / "diagnostics.png"))})
         with (directory / "latency.csv").open() as stream:
             latency = list(csv.DictReader(stream))
         run.define_metric("tracking/frame")
