@@ -55,17 +55,50 @@ rotation block of an emitted rigid camera pose.
 
 ## State and concurrency
 
-The caller owns the frontend and its trajectory. A single worker owns the
-backend, submaps and pose graph. Backend results become visible only when a
-future completes. Each side has a separate model instance and frame-cache
-instance; both may read persisted frame files after the caller finishes writing.
-There are no simultaneous graph writes.
+Concurrent execution is the default in the Python API, CLI, and TUM runner.
+The stages have explicit ownership:
 
-One backend job may be pending. At the next mandatory map boundary the caller
-waits for it, applies corrections, then submits the next window. This preserves
-span-2 overlap under load. Camera acquisition runs in a separate thread with a
-capacity-one queue, so overload drops old captures rather than growing memory.
-Benchmark replay is synchronous by default and never drops frames.
+| Stage | Owner | Work |
+|---|---|---|
+| Live capture | Capture thread | Latest-frame queue, capacity one |
+| Tracking | Caller thread | Frame persistence, frontend inference, applying completed corrections |
+| Local mapping | `amber-mapping` worker | View selection, local reconstruction, metric scale, interpolation |
+| Graph processing | `amber-graph` worker | Submap persistence/alignment, long context, loop verification, optimization, corrected trajectory |
+
+Local mapping of window N+1 can overlap graph work for window N, while the caller
+tracks newer frames. Two outstanding windows are allowed by default, including
+active jobs and completed corrections not yet collected. Set
+`max_pending_windows` / `--max-pending-windows` to change this bound. At capacity,
+submission waits for the oldest correction only. No mandatory mapping windows
+are dropped, preserving window/3 stride and span-2 overlap. Live capture can still
+drop stale inputs; manifest/TUM replay processes every selected input.
+
+Frontend and backend must use distinct model instances in concurrent mode.
+Local mapping and graph-side loop/long-context inference share a backend model
+lock: those inference calls serialize, but graph geometry and optimization can
+overlap local inference. This avoids a third checkpoint copy. Python threads do
+not guarantee parallel Python bytecode or simultaneous GPU kernels. CPU thread
+oversubscription, shared GPU capacity, and memory pressure can negate the benefit.
+
+Only the graph worker mutates graph/retrieval state or submap files. The caller
+finishes each frame write before submitting it; graph and caller use separate
+frame caches. Inputs and configuration must not be mutated during a run. Prepared
+submaps transfer to graph ownership; corrections transfer to caller ownership.
+Live statistics read completed-message snapshots rather than mutable graph state.
+Public `push`, `close`, `trajectory`, and `statistics` calls belong to one caller
+thread; they are not a multi-producer API.
+
+Corrections are consumed FIFO on push, backpressure, or close. Close drains all
+submitted jobs, maps any remaining tail, then joins both workers. An error cancels
+queued jobs and joins active work before returning; native calls that hang cannot
+be forcibly interrupted by this thread-based runtime. Worker errors propagate
+through push/close; a caller exception remains the primary error on context exit.
+
+Use `--no-async-backend` (or `asynchronous=False`) for the sequential reference.
+Concurrent correction arrival depends on scheduling, so online trajectories and
+confidence-based view selection can differ from the sequential run even with
+the same inputs. Final parity tests use deterministic oracle geometry; learned
+model accuracy and device throughput must be measured separately in both modes.
 
 Delayed graph corrections revise stored past poses and propagate a similarity
 correction through the unmapped tail. The new anchor depth establishes scale
@@ -119,3 +152,4 @@ uv run --no-sync pyrefly check
 `benchmark.py` keeps evaluation separate from inference: the tracker receives no
 motion-capture poses or sensor depth. `scripts/benchmark_tum.py` owns downloads,
 checkpoint selection and CPU thread limits. See [BENCHMARKS.md](BENCHMARKS.md).
+

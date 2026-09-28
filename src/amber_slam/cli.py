@@ -56,7 +56,14 @@ def run(args: argparse.Namespace) -> JsonObject:
     config = SlamConfig.load(args.config)
     start = time.perf_counter()
     extra = {}
-    with SlamSystem(frontend, backend, output, config, asynchronous=args.async_backend) as system:
+    with SlamSystem(
+        frontend,
+        backend,
+        output,
+        config,
+        asynchronous=args.async_backend,
+        max_pending_windows=args.max_pending_windows,
+    ) as system:
         (output / "invocation.json").write_text(json.dumps(vars(args), indent=2))
         if args.manifest:
             data, root = read_manifest(args.manifest)
@@ -138,7 +145,13 @@ def main(argv: Sequence[str] | None = None) -> None:
     inference.add_argument("--config")
     inference.add_argument("--max-frames", type=int, default=0)
     inference.add_argument("--log-every", type=int, default=30)
-    inference.add_argument("--async-backend", action="store_true")
+    inference.add_argument(
+        "--async-backend",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Concurrent tracking/mapping/graph pipeline (default); --no-async-backend for sequential",
+    )
+    inference.add_argument("--max-pending-windows", type=int, default=2)
     pseudo = commands.add_parser("pseudo-label", help="Optional aligned teacher depth cache")
     pseudo.add_argument("manifest")
     pseudo.add_argument("output")

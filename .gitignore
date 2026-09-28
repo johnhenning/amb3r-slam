@@ -12,3 +12,8 @@ runs/
 *.npz
 .venv-da3/
 reports/**/runtime/
+
+# Experiment data belongs in the tracker/artifact store.
+/reports/
+/wandb/
+/wandb-data/

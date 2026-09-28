@@ -16,6 +16,10 @@ if TYPE_CHECKING:
     from .backend import BackendUpdate
 
 
+class TrackingScaleError(ValueError):
+    """Current prediction cannot be aligned to the installed anchor depth."""
+
+
 class Frontend:
     """Owns anchor, two recent frames, and poses in the current world gauge."""
 
@@ -45,7 +49,10 @@ class Frontend:
                 (w, h),
                 interpolation=cv2.INTER_NEAREST,
             )
-            scale = metric_scale(prediction.depth[0], reference_depth)
+            try:
+                scale = metric_scale(prediction.depth[0], reference_depth)
+            except ValueError as error:
+                raise TrackingScaleError(str(error)) from error
             anchor_pose = self.poses[self.anchor.index]
             local_from_anchor = np.linalg.inv(prediction.poses[0]) @ local_pose
             local_from_anchor[:3, 3] *= scale

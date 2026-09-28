@@ -23,7 +23,7 @@ OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 \
   --download --data data/tum --output reports/tum_cpu_new \
   --checkpoint depth-anything/DA3-SMALL \
   --revision e08cab65ca0ec38e7826075418411ab90cab4da3 \
-  --resolution 168 --threads 2
+  --resolution 168 --threads 2 --no-async-backend
 ```
 
 `--download` explicitly downloads approximately 0.8 GB of compressed TUM data
@@ -41,7 +41,7 @@ calibration or ground-truth camera poses to monocular inference.
 
 DA3-Small is used in both roles at processing resolution 168 (126×168 for these
 images after patch rounding). Mapping uses window 12, view-selection stride 3,
-long-context constraints and loop candidates. Execution is synchronous, with
+long-context constraints and loop candidates. The archived baseline used synchronous execution, with
 explicit CPU thread limits, to make backend correction scheduling repeatable.
 This is a reduced CPU baseline, not the paper's Small/Giant configuration.
 
@@ -94,3 +94,23 @@ Cremers, *A Benchmark for the Evaluation of RGB-D SLAM Systems*, IROS 2012.
 [sequence descriptions](https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download).
 Data is CC BY 4.0; derived ground-truth trajectories in reports retain that credit.
 See [CITATIONS.bib](../CITATIONS.bib) for the AMB3R-SLAM and Depth Anything 3 papers.
+
+
+## Concurrent versus sequential execution
+
+The runner now defaults to concurrent tracking, local mapping, and graph processing.
+Use separate output directories to compare modes on the same checkpoint and data:
+
+```bash
+uv run --no-sync python scripts/benchmark_tum.py --data data/tum \
+  --output runs/tum_concurrent --resolution 168 --threads 2 --max-pending-windows 2
+uv run --no-sync python scripts/benchmark_tum.py --data data/tum \
+  --output runs/tum_sequential --resolution 168 --threads 2 --no-async-backend
+```
+
+`statistics` records execution mode, outstanding-window capacity/peak, and total
+submission backpressure time. Compare end-to-end FPS (including final drain),
+ATE/RPE, and online as well as corrected trajectories. Push latency alone omits
+outstanding work. The archived TUM report remains a sequential baseline; it is
+not evidence of concurrency speedup. No new pretrained-data benchmark was run
+for this scheduling change.

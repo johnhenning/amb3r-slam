@@ -18,8 +18,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from .backend import SlamConfig
-from .contracts import Array, BenchmarkEnvironment, BenchmarkResult, PathLike
+from .backend import BackendUpdate, SlamConfig
+from .contracts import Array, BenchmarkEnvironment, BenchmarkResult, JsonObject, PathLike
 from .datasets import _list_file
 from .evaluation import (
     align_trajectory,
@@ -28,10 +28,19 @@ from .evaluation import (
     read_tum,
     write_tum,
 )
+from .profiling import ReplayProfiler
 from .runtime import SlamSystem
 from .types import Frame, GeometryModel
 
 TUM_SEQUENCES = {
+    "freiburg3_long_office_household": {
+        "sha256": "c7cd8e1afb87c80e5744a356214819b110fa09b4744fa4ba0cc2382f9ba59e9c",
+        "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg3/rgbd_dataset_freiburg3_long_office_household.tgz",
+    },
+    "freiburg1_room": {
+        "sha256": "5ace47a1d2e53696bc939a84999293a04a7226958e848a609666691fd3cc38da",
+        "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_room.tgz",
+    },
     "freiburg1_xyz": {
         "sha256": "a0236d97b8c30cd93b653656d2b6c293ff7c982a4130ef2a1a8beecdb124ef98",
         "url": "https://webshare.cvg.cit.tum.de/g/rgbd/dataset/freiburg1/rgbd_dataset_freiburg1_xyz.tgz",
@@ -141,12 +150,14 @@ def run_tum_sequence(
     config: SlamConfig,
     stride: int = 10,
     max_frames: int | None = None,
+    asynchronous: bool = True,
+    max_pending_windows: int = 2,
 ) -> BenchmarkResult:
     """Run one sequence; preserve raw trajectories, timing, and evaluation metadata.
 
     Model construction/download is excluded from measured replay time. RGB decode,
     frame persistence, mapping, optimization, and final backend flush are included.
-    Synchronous execution gives repeatable correction scheduling on CPU.
+    Select asynchronous=False for repeatable sequential correction scheduling.
     """
     directory, output = Path(directory), Path(output)
     if output.exists():
@@ -158,15 +169,46 @@ def run_tum_sequence(
     write_tum(output / "reference.tum", gt_times, gt_poses)
     selected = [(t, p.relative_to(directory).as_posix(), sha256_file(p)) for t, p in samples]
     (output / "inputs.json").write_text(json.dumps(selected, indent=2))
-    started = time.perf_counter()
-    with SlamSystem(frontend, backend, output / "runtime", config, asynchronous=False) as system:
-        for index, (timestamp, path) in enumerate(samples):
-            with Image.open(path) as image:
-                rgb = np.array(image.convert("RGB"))
-            system.push(Frame(index, timestamp, rgb))
-            if index % 10 == 0:
-                print(f"{directory.name}: {index + 1}/{len(samples)}", flush=True)
-    elapsed = time.perf_counter() - started
+    corrections: list[JsonObject] = []
+    with ReplayProfiler(output / "profile") as profile:
+        started = time.perf_counter()
+        with SlamSystem(
+            frontend,
+            backend,
+            output / "runtime",
+            config,
+            asynchronous=asynchronous,
+            max_pending_windows=max_pending_windows,
+        ) as system:
+            apply_update = system._apply
+
+            def record_correction(update: BackendUpdate) -> None:
+                apply_update(update)
+                corrections.append(
+                    {
+                        "replay_s": time.perf_counter() - started,
+                        "tracked_frames": system.count,
+                        "anchor_id": update.anchor_id,
+                        "anchor_timestamp": samples[update.anchor_id][0],
+                        "graph": dict(update.graph_report),
+                    }
+                )
+
+            system._apply = record_correction
+            system.frontend.track = profile.wrap("tracking", system.frontend.track)
+            system.backend.prepare = profile.wrap("mapping.prepare", system.backend.prepare)
+            system.backend.integrate = profile.wrap("graph.integrate", system.backend.integrate)
+            system.backend.graph.optimize = profile.wrap(
+                "graph.optimize", system.backend.graph.optimize
+            )
+            for index, (timestamp, path) in enumerate(samples):
+                with Image.open(path) as image:
+                    rgb = np.array(image.convert("RGB"))
+                system.push(Frame(index, timestamp, rgb))
+                if index % 10 == 0:
+                    print(f"{directory.name}: {index + 1}/{len(samples)}", flush=True)
+        elapsed = time.perf_counter() - started
+    (output / "corrections.json").write_text(json.dumps(corrections, indent=2))
     write_tum(output / "trajectory.tum", system.timestamps, system.trajectory())
     write_tum(output / "trajectory_online.tum", system.timestamps, np.stack(system.online_poses))
     np.savetxt(
@@ -237,7 +279,7 @@ def write_report(
         f"- DA3-Small in both frontend/backend roles; processing resolution {metadata['resolution']} (long edge before patch-size rounding).",
         "- RGB-only input: no sensor depth, calibration, or ground-truth poses are supplied to SLAM.",
         "- Every tenth original RGB frame across each sequence; no accuracy-based frame selection.",
-        "- Synchronous backend; window 12, stride 3; loop retrieval and long-context enabled.",
+        "- Execution mode and queue capacity are recorded per sequence below; mapping settings are in results.json.",
         "- Each online/corrected trajectory gets its own full-trajectory Sim(3) alignment to motion-capture ground truth.",
         "- One-to-one timestamp matching within 20 ms. RPE uses consecutive matched sampled frames, not a fixed one-second interval.",
         "- FPS includes image loading, persistence, mapping, graph optimization and final flush; excludes model loading and plotting.",
@@ -266,6 +308,8 @@ def write_report(
             f"## {name}",
             "",
             f"Sampled {result['sampled_frames']} of {result['source_rgb_frames']} RGB frames over {result['sampled_duration_s']:.2f} s; {100 * result['sampled_gt_match_fraction']:.1f}% matched ground truth. Backend: {stats['submaps']} submaps, {stats['edges']} edges. Push p50/p95: {stats['push_latency_ms_p50']:.1f}/{stats['push_latency_ms_p95']:.1f} ms.",
+            "",
+            f"Execution: {stats.get('execution_mode', 'sequential')}; pending-window limit: {stats.get('max_pending_windows', 1)}; peak outstanding: {stats.get('pending_windows_peak', 0)}; submission backpressure: {stats.get('backpressure_ms', 0.0):.1f} ms.",
             "",
             f"![Trajectory, absolute error and latency]({name}/diagnostics.png)",
             "",

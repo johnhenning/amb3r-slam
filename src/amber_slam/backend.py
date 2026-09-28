@@ -1,6 +1,7 @@
 """Hierarchical reconstruction and graph optimization.
 
-The backend is single-owner state: only its worker thread may call ``process``.
+Graph state is single-owner: only its worker calls ``integrate`` or ``process``.
+Local ``prepare`` may run concurrently; model calls are protected by a lock.
 Submap tensors live on disk; the pose graph and trajectory metadata grow with
 sequence length. This is a research CPU optimizer, not a constant-memory mapper.
 """
@@ -12,6 +13,7 @@ from collections.abc import Collection, Sequence
 from dataclasses import asdict, dataclass
 from itertools import pairwise
 from pathlib import Path
+from threading import Lock
 
 import cv2
 import numpy as np
@@ -174,6 +176,9 @@ class BackendUpdate:
 class HierarchicalBackend:
     def __init__(self, model: GeometryModel, directory: PathLike, config: SlamConfig) -> None:
         self.model, self.config = model, config
+        # Local mapping and graph-side loop/context inference share one model.
+        # Serialize only model calls; graph optimization can overlap mapping.
+        self._model_lock = Lock()
         self.directory = Path(directory)
         self.directory.mkdir(parents=True, exist_ok=True)
         self.store = FrameStore(self.directory / "frames")
@@ -192,7 +197,10 @@ class HierarchicalBackend:
         return Submap.load(index, self._path(index))
 
     def _reconstruct(
-        self, frames: Sequence[Frame], scores: Sequence[float] | None = None
+        self,
+        frames: Sequence[Frame],
+        scores: Sequence[float] | None = None,
+        index: int = 0,
     ) -> Submap:
         ids = np.array([f.index for f in frames])
         if scores is None:
@@ -206,7 +214,8 @@ class HierarchicalBackend:
             selected = sorted(set(selected + [0, len(frames) // 2, len(frames) - 1]))
         reference = min(range(len(selected)), key=lambda i: abs(selected[i] - len(frames) // 2))
         chosen = [frames[i] for i in selected]
-        reconstruction = self.model.reconstruct(chosen, reference).validate(len(chosen))
+        with self._model_lock:
+            reconstruction = self.model.reconstruct(chosen, reference).validate(len(chosen))
         if self.config.metric:
             predicted, measured = [], []
             for i, frame in enumerate(chosen):
@@ -232,7 +241,15 @@ class HierarchicalBackend:
             reconstruction.depth *= scale
             reconstruction.poses[:, :3, 3] *= scale
         poses = interpolate_poses(ids[selected], reconstruction.poses, ids)
-        return Submap(self.count, ids, poses, ids[selected], reconstruction)
+        return Submap(index, ids, poses, ids[selected], reconstruction)
+
+    def prepare(self, frames: list[Frame], scores: list[float], index: int) -> Submap:
+        """Reconstruct a local window without reading or mutating graph state.
+
+        The returned submap transfers ownership to the graph worker. Configuration
+        and input frames must remain unchanged while a run is active.
+        """
+        return self._reconstruct(frames, scores, index)
 
     def _joint_edge(
         self, a: Submap, b: Submap, kind: str, context: Submap | None = None
@@ -311,7 +328,13 @@ class HierarchicalBackend:
         current.reconstruction.depth *= fit.scale
 
     def process(self, frames: list[Frame], scores: list[float]) -> BackendUpdate:
-        current = self._reconstruct(frames, scores)
+        """Sequential compatibility entry point."""
+        return self.integrate(self.prepare(frames, scores, self.count), frames)
+
+    def integrate(self, current: Submap, frames: list[Frame]) -> BackendUpdate:
+        """Consume prepared submaps in order; exclusively owns graph/disk state."""
+        if current.index != self.count:
+            raise ValueError("Prepared submaps must be integrated in order")
         previous = self._load(self.count - 1) if self.count else None
         if self.config.lidar:
             self._lidar_local(current, previous)

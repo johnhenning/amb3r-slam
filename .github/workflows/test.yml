@@ -14,7 +14,7 @@ jobs:
           python-version-file: '.python-version'
           enable-cache: true
       - name: Install locked development and model dependencies
-        run: uv sync --locked --extra train --extra export --extra benchmark
+        run: uv sync --locked --extra train --extra export --extra benchmark --extra tracking
       - run: uv run --no-sync ruff check .
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync pyrefly check
