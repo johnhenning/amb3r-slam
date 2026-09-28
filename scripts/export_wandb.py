@@ -13,8 +13,8 @@ from amber_slam.experiment_tracking import export_run
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("reports", nargs="+", type=Path)
-    parser.add_argument("--project", default=os.environ.get("WANDB_PROJECT", "amb3r-slam"))
-    parser.add_argument("--entity", default=os.environ.get("WANDB_ENTITY") or None)
+    parser.add_argument("--project", default=os.environ.get("WANDB_PROJECT") or "slam")
+    parser.add_argument("--entity", default=os.environ.get("WANDB_ENTITY") or "jlh15")
     parser.add_argument("--group")
     parser.add_argument("--mode", choices=["offline", "online"], default="offline")
     parser.add_argument("--output", type=Path, default=Path("wandb"))

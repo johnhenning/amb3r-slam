@@ -32,7 +32,7 @@ variable and give the intended destination:
 ```bash
 uv run --no-sync wandb login
 uv run --no-sync python scripts/export_wandb.py reports/my_experiment \
-  --entity YOUR_ENTITY --project amb3r-slam --mode online
+  --entity jlh15 --project slam --mode online
 ```
 
 Keep API keys out of source and command-line arguments. `WANDB_ENTITY` and
@@ -54,13 +54,27 @@ The full-route workflow retains reports as a GitHub Actions artifact for 90 days
 It also exports each completed run to W&B when these repository settings exist:
 
 - Secret: `WANDB_API_KEY`
-- Variable: `WANDB_ENTITY`
-- Optional variable: `WANDB_PROJECT` (default `amb3r-slam`)
+- Optional variable: `WANDB_ENTITY` (default `jlh15`)
+- Optional variable: `WANDB_PROJECT` (default `slam`)
 
-Without those settings, it creates offline W&B records and preserves the original
+Without the API-key secret, it creates offline W&B records and preserves the original
 reports for later import. The workflow is manually triggered to avoid rerunning
 expensive experiments on every code change. It never commits result files.
 Configure the project visibility/access policy in W&B before publishing.
 
 An already-running workflow uses its original checkout; its artifact can be
 imported with the same exporter after completion.
+
+## Interactive Plotly report
+
+```bash
+uv sync --locked --extra benchmark --extra tracking
+uv run --no-sync python scripts/report_interactive.py reports/my_experiment comparison.html
+```
+
+The self-contained HTML includes rotatable 3D trajectories, hoverable error and
+resource curves, tracking latency and comparison bars. It works without a CDN.
+It validates saved ATE against raw trajectories and rejects comparisons with
+different input/ground-truth hashes, SLAM configurations, source hashes,
+checkpoints, resolutions or thread counts. Hardware and trial order still need
+to be matched by the experiment protocol. Keep HTML results outside Git.
