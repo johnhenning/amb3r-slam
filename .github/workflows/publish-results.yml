@@ -1,0 +1,59 @@
+name: Publish saved results to W&B
+on:
+  workflow_dispatch:
+    inputs:
+      source-run-id:
+        description: Actions run containing the completed result artifact
+        default: '36358033366'
+        required: true
+        type: string
+      artifact-name:
+        description: Name of the source artifact
+        default: tracking-recovery-demo
+        required: true
+        type: string
+  push:
+    branches: [codex/project-handoff-and-publish]
+    paths: [.github/workflows/publish-results.yml]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: publish-jlh15-slam
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9
+        with:
+          version: '0.12.17'
+          python-version-file: '.python-version'
+          enable-cache: false
+      - run: uv sync --locked --extra benchmark --extra tracking
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name || 'tracking-recovery-demo' }}
+          run-id: ${{ inputs.source-run-id || '36358033366' }}
+          github-token: ${{ github.token }}
+          path: reports/imported
+      - name: Publish measured runs
+        env:
+          WANDB_API_KEY: ${{ secrets.WANDB_API_KEY }}
+          WANDB_BASE_URL: https://api.wandb.ai
+        run: |
+          if [ -z "$WANDB_API_KEY" ]; then
+            echo "WANDB_API_KEY repository secret is required"
+            exit 1
+          fi
+          uv run --no-sync python scripts/export_wandb.py reports/imported \
+            --entity jlh15 --project slam --group full-office-recovery --mode online
+      - name: Preserve upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wandb-upload-receipts
+          path: reports/imported/**/wandb-export.json
+          retention-days: 90
